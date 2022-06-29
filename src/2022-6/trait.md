@@ -48,3 +48,5 @@ pub trait Summary {
 }
 # }
 ```
+
+テスト
