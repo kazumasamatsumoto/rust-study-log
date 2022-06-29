@@ -1,4 +1,4 @@
 # Summary
 
-- [ジェネリック型、トレイト、ライフタイム](./2022-6/june.md)
-  - [トレイト：共通の振る舞いを定義する](./2022-6/trait.md)
+- [ジェネリック型、トレイト、ライフタイム](./generic_trait_liftime/june.md)
+  - [トレイト：共通の振る舞いを定義する](./generic_trait_liftime/trait.md)
