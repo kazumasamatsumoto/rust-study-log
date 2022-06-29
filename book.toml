@@ -1,0 +1,6 @@
+[book]
+authors = ["kazumasamatsumoto"]
+language = "en"
+multilingual = false
+src = "src"
+title = "rust-study-log"
