@@ -1,0 +1,743 @@
+azureuser@symbol-main-09:/datadrive/symbol-bootstrap$ docker logs https-proxy
+[s6-init] making user provided files available at /var/run/s6/etc...exited 0.
+[s6-init] ensuring user provided files have correct perms...exited 0.
+[fix-attrs.d] applying ownership & permissions fixes...
+[fix-attrs.d] done.
+[cont-init.d] executing container initialization scripts...
+[cont-init.d] 00-welcome: executing...
+
+========================================
+HTTPS-PORTAL v1.19.2
+========================================
+
+[cont-init.d] 00-welcome: exited 0.
+[cont-init.d] 20-setup: executing...
+Generating dummy certificate for default fallback server
+Generating a RSA private key
+....+++++
+........................................................................+++++
+writing new private key to '/var/lib/https-portal/default_server/default_server.key'
+-----
+Generating DH parameters, 2048 bit long safe prime, generator 2
+This is going to take a long time
+.................................................................................................................................................................................................................................................................+....................+............+....................................................................+............................................................................................................................+.............................................+.......................................................................................................................+......................................................................++*++*++*++*
+Generating RSA private key, 4096 bit long modulus (2 primes)
+........................................................................++++
+................................................++++
+e is 65537 (0x010001)
+Generating RSA private key, 2048 bit long modulus (2 primes)
+.............................................+++++
+.............................+++++
+e is 65537 (0x010001)
+Signing certificates from https://acme-v02.api.letsencrypt.org/directory ...
+Parsing account key...
+Parsing CSR...
+Found domains: sym-main-09.opening-line.jp
+Getting directory...
+Directory found!
+Registering account...
+Registered!
+Creating new order...
+Order created!
+Verifying sym-main-09.opening-line.jp...
+Traceback (most recent call last):
+  File "/bin/acme_tiny", line 198, in <module>
+    main(sys.argv[1:])
+  File "/bin/acme_tiny", line 194, in main
+    signed_crt = get_crt(args.account_key, args.csr, args.acme_dir, log=LOGGER, CA=args.ca, disable_check=args.disable_check, directory_url=args.directory_url, contact=args.contact)
+  File "/bin/acme_tiny", line 149, in get_crt
+    raise ValueError("Challenge did not pass for {0}: {1}".format(domain, authorization))
+ValueError: Challenge did not pass for sym-main-09.opening-line.jp: {u'status': u'invalid', u'challenges': [{u'status': u'invalid', u'validationRecord': [{u'url': u'http://sym-main-09.opening-line.jp/.well-known/acme-challenge/lrmb0b-AfAQ8_WFoPYL8l9J2ysCR-HYCzJ7ibgeGFbg', u'hostname': u'sym-main-09.opening-line.jp', u'addressUsed': u'20.55.59.12', u'port': u'80', u'addressesResolved': [u'20.55.59.12']}], u'url': u'https://acme-v02.api.letsencrypt.org/acme/chall-v3/126342816336/CS5Uzw', u'token': u'lrmb0b-AfAQ8_WFoPYL8l9J2ysCR-HYCzJ7ibgeGFbg', u'error': {u'status': 400, u'type': u'urn:ietf:params:acme:error:connection', u'detail': u'20.55.59.12: Fetching http://sym-main-09.opening-line.jp/.well-known/acme-challenge/lrmb0b-AfAQ8_WFoPYL8l9J2ysCR-HYCzJ7ibgeGFbg: Timeout during connect (likely firewall problem)'}, u'validated': u'2022-07-03T02:44:38Z', u'type': u'http-01'}], u'identifier': {u'type': u'dns', u'value': u'sym-main-09.opening-line.jp'}, u'expires': u'2022-07-10T02:44:37Z'}
+================================================================================
+Failed to sign sym-main-09.opening-line.jp.
+Make sure you DNS is configured correctly and is propagated to this host
+machine. Sometimes that takes a while.
+================================================================================
+Failed to obtain certs for sym-main-09.opening-line.jp
+[cont-init.d] 20-setup: exited 1.
+[cont-finish.d] executing container finish scripts...
+[cont-finish.d] done.
+[s6-finish] waiting for services.
+[s6-finish] sending all processes the TERM signal.
+[s6-finish] sending all processes the KILL signal and exiting.
+[s6-init] making user provided files available at /var/run/s6/etc...exited 0.
+[s6-init] ensuring user provided files have correct perms...exited 0.
+[fix-attrs.d] applying ownership & permissions fixes...
+[fix-attrs.d] done.
+[cont-init.d] executing container initialization scripts...
+[cont-init.d] 00-welcome: executing...
+
+========================================
+HTTPS-PORTAL v1.19.2
+========================================
+
+[cont-init.d] 00-welcome: exited 0.
+[cont-init.d] 20-setup: executing...
+DH parameters appear to be ok.
+-----BEGIN DH PARAMETERS-----
+MIIBCAKCAQEAqIEcVxfgqLs0krmK3AkErDIw88uN5mNIFbUXgKby5gvONPffptTd
++ceZfMc/md33DlcM6DolRQ4vABwOnhM95CR/BgW3rNel/q5ImHKIXdxxb3fQ8cYk
+Uz9V2goy2rOFGrpkfc3hE/mqzgh6DEAmMrdkHHdBle48vEsVVsKJs/bVbJ+mEZpH
+Gar0w+GIfHRvso1B+aTccr8INfncZJXgSuU71bkq2RVYTwvDwI3NKovD1tYEcHz9
+Sebu2Bau3eViBPtu06nWRZHasPArOzFA8JA+SolOr4LLHRdJFMzS4JqGR16UvDbH
+oCSWVOPJpc2vddbdlJ9ubwIcwSH5t+QhOwIBAg==
+-----END DH PARAMETERS-----
+RSA key ok
+Generating RSA private key, 2048 bit long modulus (2 primes)
+......................................................................................................................................................+++++
+.................................................+++++
+e is 65537 (0x010001)
+Signing certificates from https://acme-v02.api.letsencrypt.org/directory ...
+Parsing account key...
+Parsing CSR...
+Found domains: sym-main-09.opening-line.jp
+Getting directory...
+Directory found!
+Registering account...
+Already registered!
+Creating new order...
+Order created!
+Verifying sym-main-09.opening-line.jp...
+Traceback (most recent call last):
+  File "/bin/acme_tiny", line 198, in <module>
+    main(sys.argv[1:])
+  File "/bin/acme_tiny", line 194, in main
+    signed_crt = get_crt(args.account_key, args.csr, args.acme_dir, log=LOGGER, CA=args.ca, disable_check=args.disable_check, directory_url=args.directory_url, contact=args.contact)
+  File "/bin/acme_tiny", line 149, in get_crt
+    raise ValueError("Challenge did not pass for {0}: {1}".format(domain, authorization))
+ValueError: Challenge did not pass for sym-main-09.opening-line.jp: {u'status': u'invalid', u'challenges': [{u'status': u'invalid', u'validationRecord': [{u'url': u'http://sym-main-09.opening-line.jp/.well-known/acme-challenge/sxUaQIGk6V2TMIro50y_Kz_8Q_ogN6iBnFTI-XD4__s', u'hostname': u'sym-main-09.opening-line.jp', u'addressUsed': u'20.55.59.12', u'port': u'80', u'addressesResolved': [u'20.55.59.12']}], u'url': u'https://acme-v02.api.letsencrypt.org/acme/chall-v3/126342873026/V0mIUQ', u'token': u'sxUaQIGk6V2TMIro50y_Kz_8Q_ogN6iBnFTI-XD4__s', u'error': {u'status': 400, u'type': u'urn:ietf:params:acme:error:connection', u'detail': u'20.55.59.12: Fetching http://sym-main-09.opening-line.jp/.well-known/acme-challenge/sxUaQIGk6V2TMIro50y_Kz_8Q_ogN6iBnFTI-XD4__s: Timeout during connect (likely firewall problem)'}, u'validated': u'2022-07-03T02:44:56Z', u'type': u'http-01'}], u'identifier': {u'type': u'dns', u'value': u'sym-main-09.opening-line.jp'}, u'expires': u'2022-07-10T02:44:55Z'}
+================================================================================
+Failed to sign sym-main-09.opening-line.jp.
+Make sure you DNS is configured correctly and is propagated to this host
+machine. Sometimes that takes a while.
+================================================================================
+Failed to obtain certs for sym-main-09.opening-line.jp
+[cont-init.d] 20-setup: exited 1.
+[cont-finish.d] executing container finish scripts...
+[cont-finish.d] done.
+[s6-finish] waiting for services.
+[s6-finish] sending all processes the TERM signal.
+[s6-finish] sending all processes the KILL signal and exiting.
+[s6-init] making user provided files available at /var/run/s6/etc...exited 0.
+[s6-init] ensuring user provided files have correct perms...exited 0.
+[fix-attrs.d] applying ownership & permissions fixes...
+[fix-attrs.d] done.
+[cont-init.d] executing container initialization scripts...
+[cont-init.d] 00-welcome: executing...
+
+========================================
+HTTPS-PORTAL v1.19.2
+========================================
+
+[cont-init.d] 00-welcome: exited 0.
+[cont-init.d] 20-setup: executing...
+DH parameters appear to be ok.
+-----BEGIN DH PARAMETERS-----
+MIIBCAKCAQEAqIEcVxfgqLs0krmK3AkErDIw88uN5mNIFbUXgKby5gvONPffptTd
++ceZfMc/md33DlcM6DolRQ4vABwOnhM95CR/BgW3rNel/q5ImHKIXdxxb3fQ8cYk
+Uz9V2goy2rOFGrpkfc3hE/mqzgh6DEAmMrdkHHdBle48vEsVVsKJs/bVbJ+mEZpH
+Gar0w+GIfHRvso1B+aTccr8INfncZJXgSuU71bkq2RVYTwvDwI3NKovD1tYEcHz9
+Sebu2Bau3eViBPtu06nWRZHasPArOzFA8JA+SolOr4LLHRdJFMzS4JqGR16UvDbH
+oCSWVOPJpc2vddbdlJ9ubwIcwSH5t+QhOwIBAg==
+-----END DH PARAMETERS-----
+RSA key ok
+Generating RSA private key, 2048 bit long modulus (2 primes)
+...+++++
+..................................................................................................................+++++
+e is 65537 (0x010001)
+Signing certificates from https://acme-v02.api.letsencrypt.org/directory ...
+Parsing account key...
+Parsing CSR...
+Found domains: sym-main-09.opening-line.jp
+Getting directory...
+Directory found!
+Registering account...
+Already registered!
+Creating new order...
+Order created!
+Verifying sym-main-09.opening-line.jp...
+Traceback (most recent call last):
+  File "/bin/acme_tiny", line 198, in <module>
+    main(sys.argv[1:])
+  File "/bin/acme_tiny", line 194, in main
+    signed_crt = get_crt(args.account_key, args.csr, args.acme_dir, log=LOGGER, CA=args.ca, disable_check=args.disable_check, directory_url=args.directory_url, contact=args.contact)
+  File "/bin/acme_tiny", line 149, in get_crt
+    raise ValueError("Challenge did not pass for {0}: {1}".format(domain, authorization))
+ValueError: Challenge did not pass for sym-main-09.opening-line.jp: {u'status': u'invalid', u'challenges': [{u'status': u'invalid', u'validationRecord': [{u'url': u'http://sym-main-09.opening-line.jp/.well-known/acme-challenge/k-c_urR6X9gF-8DDhhXjt4h_NuqOXBu2eO6mgPlCoLc', u'hostname': u'sym-main-09.opening-line.jp', u'addressUsed': u'20.55.59.12', u'port': u'80', u'addressesResolved': [u'20.55.59.12']}], u'url': u'https://acme-v02.api.letsencrypt.org/acme/chall-v3/126342974656/2xpDrQ', u'token': u'k-c_urR6X9gF-8DDhhXjt4h_NuqOXBu2eO6mgPlCoLc', u'error': {u'status': 400, u'type': u'urn:ietf:params:acme:error:connection', u'detail': u'20.55.59.12: Fetching http://sym-main-09.opening-line.jp/.well-known/acme-challenge/k-c_urR6X9gF-8DDhhXjt4h_NuqOXBu2eO6mgPlCoLc: Timeout during connect (likely firewall problem)'}, u'validated': u'2022-07-03T02:45:14Z', u'type': u'http-01'}], u'identifier': {u'type': u'dns', u'value': u'sym-main-09.opening-line.jp'}, u'expires': u'2022-07-10T02:45:14Z'}
+================================================================================
+Failed to sign sym-main-09.opening-line.jp.
+Make sure you DNS is configured correctly and is propagated to this host
+machine. Sometimes that takes a while.
+================================================================================
+Failed to obtain certs for sym-main-09.opening-line.jp
+[cont-init.d] 20-setup: exited 1.
+[cont-finish.d] executing container finish scripts...
+[cont-finish.d] done.
+[s6-finish] waiting for services.
+[s6-finish] sending all processes the TERM signal.
+[s6-finish] sending all processes the KILL signal and exiting.
+[s6-init] making user provided files available at /var/run/s6/etc...exited 0.
+[s6-init] ensuring user provided files have correct perms...exited 0.
+[fix-attrs.d] applying ownership & permissions fixes...
+[fix-attrs.d] done.
+[cont-init.d] executing container initialization scripts...
+[cont-init.d] 00-welcome: executing...
+
+========================================
+HTTPS-PORTAL v1.19.2
+========================================
+
+[cont-init.d] 00-welcome: exited 0.
+[cont-init.d] 20-setup: executing...
+DH parameters appear to be ok.
+-----BEGIN DH PARAMETERS-----
+MIIBCAKCAQEAqIEcVxfgqLs0krmK3AkErDIw88uN5mNIFbUXgKby5gvONPffptTd
++ceZfMc/md33DlcM6DolRQ4vABwOnhM95CR/BgW3rNel/q5ImHKIXdxxb3fQ8cYk
+Uz9V2goy2rOFGrpkfc3hE/mqzgh6DEAmMrdkHHdBle48vEsVVsKJs/bVbJ+mEZpH
+Gar0w+GIfHRvso1B+aTccr8INfncZJXgSuU71bkq2RVYTwvDwI3NKovD1tYEcHz9
+Sebu2Bau3eViBPtu06nWRZHasPArOzFA8JA+SolOr4LLHRdJFMzS4JqGR16UvDbH
+oCSWVOPJpc2vddbdlJ9ubwIcwSH5t+QhOwIBAg==
+-----END DH PARAMETERS-----
+RSA key ok
+Generating RSA private key, 2048 bit long modulus (2 primes)
+.................................................+++++
+..............................................................+++++
+e is 65537 (0x010001)
+Signing certificates from https://acme-v02.api.letsencrypt.org/directory ...
+Parsing account key...
+Parsing CSR...
+Found domains: sym-main-09.opening-line.jp
+Getting directory...
+Directory found!
+Registering account...
+Already registered!
+Creating new order...
+Order created!
+Verifying sym-main-09.opening-line.jp...
+Traceback (most recent call last):
+  File "/bin/acme_tiny", line 198, in <module>
+    main(sys.argv[1:])
+  File "/bin/acme_tiny", line 194, in main
+    signed_crt = get_crt(args.account_key, args.csr, args.acme_dir, log=LOGGER, CA=args.ca, disable_check=args.disable_check, directory_url=args.directory_url, contact=args.contact)
+  File "/bin/acme_tiny", line 149, in get_crt
+    raise ValueError("Challenge did not pass for {0}: {1}".format(domain, authorization))
+ValueError: Challenge did not pass for sym-main-09.opening-line.jp: {u'status': u'invalid', u'challenges': [{u'status': u'invalid', u'validationRecord': [{u'url': u'http://sym-main-09.opening-line.jp/.well-known/acme-challenge/qhLO5mqEJ_Coo4rvTxATj4o_5TjOreZL1KQ4xsLy0y4', u'hostname': u'sym-main-09.opening-line.jp', u'addressUsed': u'20.55.59.12', u'port': u'80', u'addressesResolved': [u'20.55.59.12']}], u'url': u'https://acme-v02.api.letsencrypt.org/acme/chall-v3/126343564846/Cr9Vsw', u'token': u'qhLO5mqEJ_Coo4rvTxATj4o_5TjOreZL1KQ4xsLy0y4', u'error': {u'status': 400, u'type': u'urn:ietf:params:acme:error:connection', u'detail': u'20.55.59.12: Fetching http://sym-main-09.opening-line.jp/.well-known/acme-challenge/qhLO5mqEJ_Coo4rvTxATj4o_5TjOreZL1KQ4xsLy0y4: Timeout during connect (likely firewall problem)'}, u'validated': u'2022-07-03T02:47:50Z', u'type': u'http-01'}], u'identifier': {u'type': u'dns', u'value': u'sym-main-09.opening-line.jp'}, u'expires': u'2022-07-10T02:47:49Z'}
+================================================================================
+Failed to sign sym-main-09.opening-line.jp.
+Make sure you DNS is configured correctly and is propagated to this host
+machine. Sometimes that takes a while.
+================================================================================
+Failed to obtain certs for sym-main-09.opening-line.jp
+[cont-init.d] 20-setup: exited 1.
+[cont-finish.d] executing container finish scripts...
+[cont-finish.d] done.
+[s6-finish] waiting for services.
+[s6-finish] sending all processes the TERM signal.
+[s6-finish] sending all processes the KILL signal and exiting.
+[s6-init] making user provided files available at /var/run/s6/etc...exited 0.
+[s6-init] ensuring user provided files have correct perms...exited 0.
+[fix-attrs.d] applying ownership & permissions fixes...
+[fix-attrs.d] done.
+[cont-init.d] executing container initialization scripts...
+[cont-init.d] 00-welcome: executing...
+
+========================================
+HTTPS-PORTAL v1.19.2
+========================================
+
+[cont-init.d] 00-welcome: exited 0.
+[cont-init.d] 20-setup: executing...
+DH parameters appear to be ok.
+-----BEGIN DH PARAMETERS-----
+MIIBCAKCAQEAqIEcVxfgqLs0krmK3AkErDIw88uN5mNIFbUXgKby5gvONPffptTd
++ceZfMc/md33DlcM6DolRQ4vABwOnhM95CR/BgW3rNel/q5ImHKIXdxxb3fQ8cYk
+Uz9V2goy2rOFGrpkfc3hE/mqzgh6DEAmMrdkHHdBle48vEsVVsKJs/bVbJ+mEZpH
+Gar0w+GIfHRvso1B+aTccr8INfncZJXgSuU71bkq2RVYTwvDwI3NKovD1tYEcHz9
+Sebu2Bau3eViBPtu06nWRZHasPArOzFA8JA+SolOr4LLHRdJFMzS4JqGR16UvDbH
+oCSWVOPJpc2vddbdlJ9ubwIcwSH5t+QhOwIBAg==
+-----END DH PARAMETERS-----
+RSA key ok
+Generating RSA private key, 2048 bit long modulus (2 primes)
+.............+++++
+.............+++++
+e is 65537 (0x010001)
+Signing certificates from https://acme-v02.api.letsencrypt.org/directory ...
+Parsing account key...
+Parsing CSR...
+Found domains: sym-main-09.opening-line.jp
+Getting directory...
+Directory found!
+Registering account...
+Already registered!
+Creating new order...
+Order created!
+Verifying sym-main-09.opening-line.jp...
+Traceback (most recent call last):
+  File "/bin/acme_tiny", line 198, in <module>
+    main(sys.argv[1:])
+  File "/bin/acme_tiny", line 194, in main
+    signed_crt = get_crt(args.account_key, args.csr, args.acme_dir, log=LOGGER, CA=args.ca, disable_check=args.disable_check, directory_url=args.directory_url, contact=args.contact)
+  File "/bin/acme_tiny", line 149, in get_crt
+    raise ValueError("Challenge did not pass for {0}: {1}".format(domain, authorization))
+ValueError: Challenge did not pass for sym-main-09.opening-line.jp: {u'status': u'invalid', u'challenges': [{u'status': u'invalid', u'validationRecord': [{u'url': u'http://sym-main-09.opening-line.jp/.well-known/acme-challenge/81IaT6zALzG5BgGRQM6KNACCbOhDqGYpg6s_7Vep3Rk', u'hostname': u'sym-main-09.opening-line.jp', u'addressUsed': u'20.55.59.12', u'port': u'80', u'addressesResolved': [u'20.55.59.12']}], u'url': u'https://acme-v02.api.letsencrypt.org/acme/chall-v3/126343643326/KMLl3w', u'token': u'81IaT6zALzG5BgGRQM6KNACCbOhDqGYpg6s_7Vep3Rk', u'error': {u'status': 400, u'type': u'urn:ietf:params:acme:error:connection', u'detail': u'20.55.59.12: Fetching http://sym-main-09.opening-line.jp/.well-known/acme-challenge/81IaT6zALzG5BgGRQM6KNACCbOhDqGYpg6s_7Vep3Rk: Timeout during connect (likely firewall problem)'}, u'validated': u'2022-07-03T02:48:09Z', u'type': u'http-01'}], u'identifier': {u'type': u'dns', u'value': u'sym-main-09.opening-line.jp'}, u'expires': u'2022-07-10T02:48:08Z'}
+================================================================================
+Failed to sign sym-main-09.opening-line.jp.
+Make sure you DNS is configured correctly and is propagated to this host
+machine. Sometimes that takes a while.
+================================================================================
+Failed to obtain certs for sym-main-09.opening-line.jp
+[cont-init.d] 20-setup: exited 1.
+[cont-finish.d] executing container finish scripts...
+[cont-finish.d] done.
+[s6-finish] waiting for services.
+[s6-finish] sending all processes the TERM signal.
+[s6-finish] sending all processes the KILL signal and exiting.
+[s6-init] making user provided files available at /var/run/s6/etc...exited 0.
+[s6-init] ensuring user provided files have correct perms...exited 0.
+[fix-attrs.d] applying ownership & permissions fixes...
+[fix-attrs.d] done.
+[cont-init.d] executing container initialization scripts...
+[cont-init.d] 00-welcome: executing...
+
+========================================
+HTTPS-PORTAL v1.19.2
+========================================
+
+[cont-init.d] 00-welcome: exited 0.
+[cont-init.d] 20-setup: executing...
+DH parameters appear to be ok.
+-----BEGIN DH PARAMETERS-----
+MIIBCAKCAQEAqIEcVxfgqLs0krmK3AkErDIw88uN5mNIFbUXgKby5gvONPffptTd
++ceZfMc/md33DlcM6DolRQ4vABwOnhM95CR/BgW3rNel/q5ImHKIXdxxb3fQ8cYk
+Uz9V2goy2rOFGrpkfc3hE/mqzgh6DEAmMrdkHHdBle48vEsVVsKJs/bVbJ+mEZpH
+Gar0w+GIfHRvso1B+aTccr8INfncZJXgSuU71bkq2RVYTwvDwI3NKovD1tYEcHz9
+Sebu2Bau3eViBPtu06nWRZHasPArOzFA8JA+SolOr4LLHRdJFMzS4JqGR16UvDbH
+oCSWVOPJpc2vddbdlJ9ubwIcwSH5t+QhOwIBAg==
+-----END DH PARAMETERS-----
+RSA key ok
+Generating RSA private key, 2048 bit long modulus (2 primes)
+.........+++++
+............+++++
+e is 65537 (0x010001)
+Signing certificates from https://acme-v02.api.letsencrypt.org/directory ...
+Parsing account key...
+Parsing CSR...
+Found domains: sym-main-09.opening-line.jp
+Getting directory...
+Directory found!
+Registering account...
+Already registered!
+Creating new order...
+Traceback (most recent call last):
+  File "/bin/acme_tiny", line 198, in <module>
+    main(sys.argv[1:])
+  File "/bin/acme_tiny", line 194, in main
+    signed_crt = get_crt(args.account_key, args.csr, args.acme_dir, log=LOGGER, CA=args.ca, disable_check=args.disable_check, directory_url=args.directory_url, contact=args.contact)
+  File "/bin/acme_tiny", line 121, in get_crt
+    order, _, order_headers = _send_signed_request(directory['newOrder'], order_payload, "Error creating new order")
+  File "/bin/acme_tiny", line 60, in _send_signed_request
+    return _do_request(url, data=data.encode('utf8'), err_msg=err_msg, depth=depth)
+  File "/bin/acme_tiny", line 46, in _do_request
+    raise ValueError("{0}:\nUrl: {1}\nData: {2}\nResponse Code: {3}\nResponse: {4}".format(err_msg, url, data, code, resp_data))
+ValueError: Error creating new order:
+Url: https://acme-v02.api.letsencrypt.org/acme/new-order
+Data: {"protected": "eyJ1cmwiOiAiaHR0cHM6Ly9hY21lLXYwMi5hcGkubGV0c2VuY3J5cHQub3JnL2FjbWUvbmV3LW9yZGVyIiwgImFsZyI6ICJSUzI1NiIsICJub25jZSI6ICIwMTAxbERjNHVIZnk4U2JVcTNBZ1ZYQ0YtSHFtUEw1M21zQmExcGdIbUY2bWJodyIsICJraWQiOiAiaHR0cHM6Ly9hY21lLXYwMi5hcGkubGV0c2VuY3J5cHQub3JnL2FjbWUvYWNjdC82MTUwNDY5NTYifQ", "payload": "eyJpZGVudGlmaWVycyI6IFt7InR5cGUiOiAiZG5zIiwgInZhbHVlIjogInN5bS1tYWluLTA5Lm9wZW5pbmctbGluZS5qcCJ9XX0", "signature": "pPkhuZnk1sOm_kljNuE_A01EItbAuG38hzb8HrKDKfcgLHnEAkEfkL0a6nq6oJiSJzme9oO7tCBRs_GahUHQp85r-uwnyEz8fxLR36Makb5-6oR7LNzNjOAyf8E9PyHCrv-f-nFqobJQLvnHXAfy0h86FoW-YsYg1oqwMDjCUwsmKNSQFK4fBFoqxBsRhnBENcWOvsAhBjvOE-sIGNekw-9A0UHFwQZ0APGERw2HIe27G9GgLCKQL6hBYlqVwGytIunpLmMQPZTzF_bfXjoQkO2oj-tVH3XoCHMWNWRD7sx6e_t37kHyoqUmgwVg7A_20NRN1X-_GB1zAGd6SuOlyyat4oYE163l2w_wK6J6lIBct8w7p0X1P8jajKgmwh_BOGiUvLkng7Nhbqhs6K3k08oQDETYCOI84SFB4vvAek_DHHjTYT1CCNZu-c7ffRSuWzpE-7X8yTZOx1usJOVDH2WBHAd-4yOHbd82w59SUSCyIqWVaoNswW6hJ2yBZDuYvYq5cEJf37vmpi1NgQ9d8Y3I_soUUTuDFW0Hl5paoLXhM7WghlHhQ7QN-ZADOO5cX-MCzHx_D4tb-Xl9UpucTY6BN3LnvyfNFT-JR54b7B62VxENBDMdU8knKpedCPyX-TsjW1qhsWVPA5CuHX_qdIjvATCwpwpkXJGCsdI-2bs"}
+Response Code: 429
+Response: {u'status': 429, u'type': u'urn:ietf:params:acme:error:rateLimited', u'detail': u'Error creating new order :: too many failed authorizations recently: see https://letsencrypt.org/docs/rate-limits/'}
+================================================================================
+Failed to sign sym-main-09.opening-line.jp.
+Make sure you DNS is configured correctly and is propagated to this host
+machine. Sometimes that takes a while.
+================================================================================
+Failed to obtain certs for sym-main-09.opening-line.jp
+[cont-init.d] 20-setup: exited 1.
+[cont-finish.d] executing container finish scripts...
+[cont-finish.d] done.
+[s6-finish] waiting for services.
+[s6-finish] sending all processes the TERM signal.
+[s6-finish] sending all processes the KILL signal and exiting.
+[s6-init] making user provided files available at /var/run/s6/etc...exited 0.
+[s6-init] ensuring user provided files have correct perms...exited 0.
+[fix-attrs.d] applying ownership & permissions fixes...
+[fix-attrs.d] done.
+[cont-init.d] executing container initialization scripts...
+[cont-init.d] 00-welcome: executing...
+
+========================================
+HTTPS-PORTAL v1.19.2
+========================================
+
+[cont-init.d] 00-welcome: exited 0.
+[cont-init.d] 20-setup: executing...
+DH parameters appear to be ok.
+-----BEGIN DH PARAMETERS-----
+MIIBCAKCAQEAqIEcVxfgqLs0krmK3AkErDIw88uN5mNIFbUXgKby5gvONPffptTd
++ceZfMc/md33DlcM6DolRQ4vABwOnhM95CR/BgW3rNel/q5ImHKIXdxxb3fQ8cYk
+Uz9V2goy2rOFGrpkfc3hE/mqzgh6DEAmMrdkHHdBle48vEsVVsKJs/bVbJ+mEZpH
+Gar0w+GIfHRvso1B+aTccr8INfncZJXgSuU71bkq2RVYTwvDwI3NKovD1tYEcHz9
+Sebu2Bau3eViBPtu06nWRZHasPArOzFA8JA+SolOr4LLHRdJFMzS4JqGR16UvDbH
+oCSWVOPJpc2vddbdlJ9ubwIcwSH5t+QhOwIBAg==
+-----END DH PARAMETERS-----
+RSA key ok
+Generating RSA private key, 2048 bit long modulus (2 primes)
+...............................+++++
+.+++++
+e is 65537 (0x010001)
+Signing certificates from https://acme-v02.api.letsencrypt.org/directory ...
+Parsing account key...
+Parsing CSR...
+Found domains: sym-main-09.opening-line.jp
+Getting directory...
+Directory found!
+Registering account...
+Already registered!
+Creating new order...
+Traceback (most recent call last):
+  File "/bin/acme_tiny", line 198, in <module>
+    main(sys.argv[1:])
+  File "/bin/acme_tiny", line 194, in main
+    signed_crt = get_crt(args.account_key, args.csr, args.acme_dir, log=LOGGER, CA=args.ca, disable_check=args.disable_check, directory_url=args.directory_url, contact=args.contact)
+  File "/bin/acme_tiny", line 121, in get_crt
+    order, _, order_headers = _send_signed_request(directory['newOrder'], order_payload, "Error creating new order")
+  File "/bin/acme_tiny", line 60, in _send_signed_request
+    return _do_request(url, data=data.encode('utf8'), err_msg=err_msg, depth=depth)
+  File "/bin/acme_tiny", line 46, in _do_request
+    raise ValueError("{0}:\nUrl: {1}\nData: {2}\nResponse Code: {3}\nResponse: {4}".format(err_msg, url, data, code, resp_data))
+ValueError: Error creating new order:
+Url: https://acme-v02.api.letsencrypt.org/acme/new-order
+Data: {"protected": "eyJ1cmwiOiAiaHR0cHM6Ly9hY21lLXYwMi5hcGkubGV0c2VuY3J5cHQub3JnL2FjbWUvbmV3LW9yZGVyIiwgImFsZyI6ICJSUzI1NiIsICJub25jZSI6ICIwMTAyMnBxX0pHekJXRXVKcG5XWjVZM1VjNzUtWUs3anJHdjJCSWltUFFnbk9KcyIsICJraWQiOiAiaHR0cHM6Ly9hY21lLXYwMi5hcGkubGV0c2VuY3J5cHQub3JnL2FjbWUvYWNjdC82MTUwNDY5NTYifQ", "payload": "eyJpZGVudGlmaWVycyI6IFt7InR5cGUiOiAiZG5zIiwgInZhbHVlIjogInN5bS1tYWluLTA5Lm9wZW5pbmctbGluZS5qcCJ9XX0", "signature": "s7IN9pxTDL0jTJrpPRu3mcJFy6CJZKhg7ncHhIZD1yTzUyl43tFCBYr19IsCxaSmNha6fAFsBee8Jkq4jf07xMMWi0hu7iMWPhvjtVNv1ZVX-ipyhgb3xDWR6QbeolxF3e1bKTEJrfyHStPnXr-beHqPT0-SV3-98uUvjbVKdCxH5zbrw1cOOMvO5wPv-s8Y3BCkWMqTjq17ue5ANIgqjOLQe54cpbV-OFtU9b3cTfee1NbYA8F5GXNK8oeMTBItSMMciG5Dg413E8qUAL3-1qy_4Ph2g49px0YQ1MSehgvttBdjnY7VulwBHRibZNpdGhPBQIa7f0Z2AmnIxhgzLTEQLfAZ7RxzNkwelPQj5JZOj7R8i5nYl8VW5VcFTfNE31HvGxtxzDy2C-FZuDTJ-fpcY0d8SM_NzDSeiOsgBv002o60qv2iE4uRF_3SASaP4vdbaV_nn0QJnnZrwfPLpOcArLUlRr-ZtKsJ7IvsYukGVlXNv4kopKepEa3C7pFwjsyoyIr7eeJYn2M1FKE3grXkd14iN99qdWDrl9GHXXmtcsNhwnTTfmMA3TUa1y7jYnh32D4cex3cERmtQsS8DpcmmSaiwcvxLeUd_WrLhhbMaFqPpyE_M12yHfttktZWgJMD9pJHCBDYmE8NuUNeAgAfXjZNBkqPjkj0h_cfRL4"}
+Response Code: 429
+Response: {u'status': 429, u'type': u'urn:ietf:params:acme:error:rateLimited', u'detail': u'Error creating new order :: too many failed authorizations recently: see https://letsencrypt.org/docs/rate-limits/'}
+================================================================================
+Failed to sign sym-main-09.opening-line.jp.
+Make sure you DNS is configured correctly and is propagated to this host
+machine. Sometimes that takes a while.
+================================================================================
+Failed to obtain certs for sym-main-09.opening-line.jp
+[cont-init.d] 20-setup: exited 1.
+[cont-finish.d] executing container finish scripts...
+[cont-finish.d] done.
+[s6-finish] waiting for services.
+[s6-finish] sending all processes the TERM signal.
+[s6-finish] sending all processes the KILL signal and exiting.
+[s6-init] making user provided files available at /var/run/s6/etc...exited 0.
+[s6-init] ensuring user provided files have correct perms...exited 0.
+[fix-attrs.d] applying ownership & permissions fixes...
+[fix-attrs.d] done.
+[cont-init.d] executing container initialization scripts...
+[cont-init.d] 00-welcome: executing...
+
+========================================
+HTTPS-PORTAL v1.19.2
+========================================
+
+[cont-init.d] 00-welcome: exited 0.
+[cont-init.d] 20-setup: executing...
+DH parameters appear to be ok.
+-----BEGIN DH PARAMETERS-----
+MIIBCAKCAQEAqIEcVxfgqLs0krmK3AkErDIw88uN5mNIFbUXgKby5gvONPffptTd
++ceZfMc/md33DlcM6DolRQ4vABwOnhM95CR/BgW3rNel/q5ImHKIXdxxb3fQ8cYk
+Uz9V2goy2rOFGrpkfc3hE/mqzgh6DEAmMrdkHHdBle48vEsVVsKJs/bVbJ+mEZpH
+Gar0w+GIfHRvso1B+aTccr8INfncZJXgSuU71bkq2RVYTwvDwI3NKovD1tYEcHz9
+Sebu2Bau3eViBPtu06nWRZHasPArOzFA8JA+SolOr4LLHRdJFMzS4JqGR16UvDbH
+oCSWVOPJpc2vddbdlJ9ubwIcwSH5t+QhOwIBAg==
+-----END DH PARAMETERS-----
+RSA key ok
+Generating RSA private key, 2048 bit long modulus (2 primes)
+....................+++++
+.+++++
+e is 65537 (0x010001)
+Signing certificates from https://acme-v02.api.letsencrypt.org/directory ...
+Parsing account key...
+Parsing CSR...
+Found domains: sym-main-09.opening-line.jp
+Getting directory...
+Directory found!
+Registering account...
+Already registered!
+Creating new order...
+Traceback (most recent call last):
+  File "/bin/acme_tiny", line 198, in <module>
+    main(sys.argv[1:])
+  File "/bin/acme_tiny", line 194, in main
+    signed_crt = get_crt(args.account_key, args.csr, args.acme_dir, log=LOGGER, CA=args.ca, disable_check=args.disable_check, directory_url=args.directory_url, contact=args.contact)
+  File "/bin/acme_tiny", line 121, in get_crt
+    order, _, order_headers = _send_signed_request(directory['newOrder'], order_payload, "Error creating new order")
+  File "/bin/acme_tiny", line 60, in _send_signed_request
+    return _do_request(url, data=data.encode('utf8'), err_msg=err_msg, depth=depth)
+  File "/bin/acme_tiny", line 46, in _do_request
+    raise ValueError("{0}:\nUrl: {1}\nData: {2}\nResponse Code: {3}\nResponse: {4}".format(err_msg, url, data, code, resp_data))
+ValueError: Error creating new order:
+Url: https://acme-v02.api.letsencrypt.org/acme/new-order
+Data: {"protected": "eyJ1cmwiOiAiaHR0cHM6Ly9hY21lLXYwMi5hcGkubGV0c2VuY3J5cHQub3JnL2FjbWUvbmV3LW9yZGVyIiwgImFsZyI6ICJSUzI1NiIsICJub25jZSI6ICIwMDAyUUExRldxQ2dINkRXXzRGcElycFRaeW8tZmxObW1PRkRHT3N0OU9aakYwSSIsICJraWQiOiAiaHR0cHM6Ly9hY21lLXYwMi5hcGkubGV0c2VuY3J5cHQub3JnL2FjbWUvYWNjdC82MTUwNDY5NTYifQ", "payload": "eyJpZGVudGlmaWVycyI6IFt7InR5cGUiOiAiZG5zIiwgInZhbHVlIjogInN5bS1tYWluLTA5Lm9wZW5pbmctbGluZS5qcCJ9XX0", "signature": "N_DotbDLlMWz3kxcXPPhxGu3Rrrtyd01JKfvRsvCMv9t5FDlonwclXZ3wpyBXY4MyZWWQKtP_fIl-PVPG3N66xjGaxUFAd498k9tX3GShTfrEy87zQlPBJthIfZxLtNiircbL5ybQWDmZsjfkSnJM6KP7NfcIx9pIql-jMF0aw8Lt93FyZSFkjQFzdfYU3oLljakGJE-0Tzjiq0_dfPHraYvqogPNmUNpH0xfCDohXa6w2ijOadcWLXBuyV5Ukybb7dnik85dAlU1M7mu5Sw3n6h6X6PVEPxzaYcP1hsw5nXRpPkDZp2bv2QdSuZ5lCQsCmMfBQu3D0VEV-ogqCruzl2iOGbGExbkJa8D5LW8KVP-yI_mzvb8r3o36xwVXnBCVq7DXepv_09syMmp4la-EgnIk_ZSia5cPl5IMbrzSwbgfwAnBDIcWQb9bK7c_P3OuBvrcyg_8pc881rGyoXsL6kEBdURoTEw4POcswbssXkFBszfhI5YYRwG_AenrCLh4VW0YalsKRNtrtnBWMuyVvJdTIhvK3a1QngKDS5IKiFp9zMM5ltog9MX_Sl8fs-GHI2RjH3mlMnnlI7fKbxquc1vpXsR4n2EQT9AFsdUGUJ331jOxbjO9673MNBlgzONE3bY2VQXdeSAzksNuQbUWVC_KW4GfSKjanycX7V9hQ"}
+Response Code: 429
+Response: {u'status': 429, u'type': u'urn:ietf:params:acme:error:rateLimited', u'detail': u'Error creating new order :: too many failed authorizations recently: see https://letsencrypt.org/docs/rate-limits/'}
+================================================================================
+Failed to sign sym-main-09.opening-line.jp.
+Make sure you DNS is configured correctly and is propagated to this host
+machine. Sometimes that takes a while.
+================================================================================
+Failed to obtain certs for sym-main-09.opening-line.jp
+[cont-init.d] 20-setup: exited 1.
+[cont-finish.d] executing container finish scripts...
+[cont-finish.d] done.
+[s6-finish] waiting for services.
+[s6-finish] sending all processes the TERM signal.
+[s6-finish] sending all processes the KILL signal and exiting.
+[s6-init] making user provided files available at /var/run/s6/etc...exited 0.
+[s6-init] ensuring user provided files have correct perms...exited 0.
+[fix-attrs.d] applying ownership & permissions fixes...
+[fix-attrs.d] done.
+[cont-init.d] executing container initialization scripts...
+[cont-init.d] 00-welcome: executing...
+
+========================================
+HTTPS-PORTAL v1.19.2
+========================================
+
+[cont-init.d] 00-welcome: exited 0.
+[cont-init.d] 20-setup: executing...
+DH parameters appear to be ok.
+-----BEGIN DH PARAMETERS-----
+MIIBCAKCAQEAqIEcVxfgqLs0krmK3AkErDIw88uN5mNIFbUXgKby5gvONPffptTd
++ceZfMc/md33DlcM6DolRQ4vABwOnhM95CR/BgW3rNel/q5ImHKIXdxxb3fQ8cYk
+Uz9V2goy2rOFGrpkfc3hE/mqzgh6DEAmMrdkHHdBle48vEsVVsKJs/bVbJ+mEZpH
+Gar0w+GIfHRvso1B+aTccr8INfncZJXgSuU71bkq2RVYTwvDwI3NKovD1tYEcHz9
+Sebu2Bau3eViBPtu06nWRZHasPArOzFA8JA+SolOr4LLHRdJFMzS4JqGR16UvDbH
+oCSWVOPJpc2vddbdlJ9ubwIcwSH5t+QhOwIBAg==
+-----END DH PARAMETERS-----
+RSA key ok
+Generating RSA private key, 2048 bit long modulus (2 primes)
+................................+++++
+...........+++++
+e is 65537 (0x010001)
+Signing certificates from https://acme-v02.api.letsencrypt.org/directory ...
+Parsing account key...
+Parsing CSR...
+Found domains: sym-main-09.opening-line.jp
+Getting directory...
+Directory found!
+Registering account...
+Already registered!
+Creating new order...
+Traceback (most recent call last):
+  File "/bin/acme_tiny", line 198, in <module>
+    main(sys.argv[1:])
+  File "/bin/acme_tiny", line 194, in main
+    signed_crt = get_crt(args.account_key, args.csr, args.acme_dir, log=LOGGER, CA=args.ca, disable_check=args.disable_check, directory_url=args.directory_url, contact=args.contact)
+  File "/bin/acme_tiny", line 121, in get_crt
+    order, _, order_headers = _send_signed_request(directory['newOrder'], order_payload, "Error creating new order")
+  File "/bin/acme_tiny", line 60, in _send_signed_request
+    return _do_request(url, data=data.encode('utf8'), err_msg=err_msg, depth=depth)
+  File "/bin/acme_tiny", line 46, in _do_request
+    raise ValueError("{0}:\nUrl: {1}\nData: {2}\nResponse Code: {3}\nResponse: {4}".format(err_msg, url, data, code, resp_data))
+ValueError: Error creating new order:
+Url: https://acme-v02.api.letsencrypt.org/acme/new-order
+Data: {"protected": "eyJ1cmwiOiAiaHR0cHM6Ly9hY21lLXYwMi5hcGkubGV0c2VuY3J5cHQub3JnL2FjbWUvbmV3LW9yZGVyIiwgImFsZyI6ICJSUzI1NiIsICJub25jZSI6ICIwMTAyMk0zMFVBS2pDVkNraHFDVnBqbVdzakhoN21fWG5jUGtQUjFBbjVFRUc0YyIsICJraWQiOiAiaHR0cHM6Ly9hY21lLXYwMi5hcGkubGV0c2VuY3J5cHQub3JnL2FjbWUvYWNjdC82MTUwNDY5NTYifQ", "payload": "eyJpZGVudGlmaWVycyI6IFt7InR5cGUiOiAiZG5zIiwgInZhbHVlIjogInN5bS1tYWluLTA5Lm9wZW5pbmctbGluZS5qcCJ9XX0", "signature": "i2beJv9yFAAypC3S37tldHD4_e33ltMKjIXBzV9psDKxBF8gcSAMb7dBvnVpOvMnu5Ic2u_qO2YfFkill4kyo12mAqnmFdWDXnOHt4yjiGJ-qi9ovYolXyUWeDskFnqFU0gUyxA-zzX1zKRq4iUMl-VuYTCMb7gml65Y_AI6M8x_oc7v0sZH-0qN0wKtSDHftp852Gx_5p-9ZsdD0yoeIstn7AlHYAYlQHhI35Kgx2Mzh7mJ2t-zx65zNjNBOaVava1Wy4N57P9UiPlndDp8ZyEZP-nfIGcnBwrsdA4hECysuwlJ8LMUcWhQMtYWsmc8bMgKtwE8wPJx8b9Yef6xf5l2jmuAIFw_P14Vx9o_aiyjmpJU7-0ZTR5BWz3msd7PlKTavIZkgEWM9tE8X8GGYpKu8CuGBXzO8hL_p-mL9ZqDLKHgJ4MzKoXb8txmKA3jHME5poGMizmTP5UCHBdwc-aNC-x8103Dik93A4o16Qe906LMWvI8KvlHxkhGAJPdgNL7bQjHoeWFERAGxMnSr1O45FlJYA8yJfDhmjpZQGlFqFTb3fuD20apMXdDLZpg1Q6TyM2517F4bWS9NLA6LjqOXekSWvRoln2QsupBDGch18tz-jSiUTmwUtYs_oj85cFh50gmwOIn1q2bG4k2qrAr94FoxpIIvHoZsMQRKh8"}
+Response Code: 429
+Response: {u'status': 429, u'type': u'urn:ietf:params:acme:error:rateLimited', u'detail': u'Error creating new order :: too many failed authorizations recently: see https://letsencrypt.org/docs/rate-limits/'}
+================================================================================
+Failed to sign sym-main-09.opening-line.jp.
+Make sure you DNS is configured correctly and is propagated to this host
+machine. Sometimes that takes a while.
+================================================================================
+Failed to obtain certs for sym-main-09.opening-line.jp
+[cont-init.d] 20-setup: exited 1.
+[cont-finish.d] executing container finish scripts...
+[cont-finish.d] done.
+[s6-finish] waiting for services.
+[s6-finish] sending all processes the TERM signal.
+[s6-finish] sending all processes the KILL signal and exiting.
+[s6-init] making user provided files available at /var/run/s6/etc...exited 0.
+[s6-init] ensuring user provided files have correct perms...exited 0.
+[fix-attrs.d] applying ownership & permissions fixes...
+[fix-attrs.d] done.
+[cont-init.d] executing container initialization scripts...
+[cont-init.d] 00-welcome: executing...
+
+========================================
+HTTPS-PORTAL v1.19.2
+========================================
+
+[cont-init.d] 00-welcome: exited 0.
+[cont-init.d] 20-setup: executing...
+DH parameters appear to be ok.
+-----BEGIN DH PARAMETERS-----
+MIIBCAKCAQEAqIEcVxfgqLs0krmK3AkErDIw88uN5mNIFbUXgKby5gvONPffptTd
++ceZfMc/md33DlcM6DolRQ4vABwOnhM95CR/BgW3rNel/q5ImHKIXdxxb3fQ8cYk
+Uz9V2goy2rOFGrpkfc3hE/mqzgh6DEAmMrdkHHdBle48vEsVVsKJs/bVbJ+mEZpH
+Gar0w+GIfHRvso1B+aTccr8INfncZJXgSuU71bkq2RVYTwvDwI3NKovD1tYEcHz9
+Sebu2Bau3eViBPtu06nWRZHasPArOzFA8JA+SolOr4LLHRdJFMzS4JqGR16UvDbH
+oCSWVOPJpc2vddbdlJ9ubwIcwSH5t+QhOwIBAg==
+-----END DH PARAMETERS-----
+RSA key ok
+Generating RSA private key, 2048 bit long modulus (2 primes)
+...................+++++
+........................................................................................................................................................................+++++
+e is 65537 (0x010001)
+Signing certificates from https://acme-v02.api.letsencrypt.org/directory ...
+Parsing account key...
+Parsing CSR...
+Found domains: sym-main-09.opening-line.jp
+Getting directory...
+Directory found!
+Registering account...
+Already registered!
+Creating new order...
+Traceback (most recent call last):
+  File "/bin/acme_tiny", line 198, in <module>
+    main(sys.argv[1:])
+  File "/bin/acme_tiny", line 194, in main
+    signed_crt = get_crt(args.account_key, args.csr, args.acme_dir, log=LOGGER, CA=args.ca, disable_check=args.disable_check, directory_url=args.directory_url, contact=args.contact)
+  File "/bin/acme_tiny", line 121, in get_crt
+    order, _, order_headers = _send_signed_request(directory['newOrder'], order_payload, "Error creating new order")
+  File "/bin/acme_tiny", line 60, in _send_signed_request
+    return _do_request(url, data=data.encode('utf8'), err_msg=err_msg, depth=depth)
+  File "/bin/acme_tiny", line 46, in _do_request
+    raise ValueError("{0}:\nUrl: {1}\nData: {2}\nResponse Code: {3}\nResponse: {4}".format(err_msg, url, data, code, resp_data))
+ValueError: Error creating new order:
+Url: https://acme-v02.api.letsencrypt.org/acme/new-order
+Data: {"protected": "eyJ1cmwiOiAiaHR0cHM6Ly9hY21lLXYwMi5hcGkubGV0c2VuY3J5cHQub3JnL2FjbWUvbmV3LW9yZGVyIiwgImFsZyI6ICJSUzI1NiIsICJub25jZSI6ICIwMTAyNEJFRGlqUjg3a2lpdjZkWTZEellyS0NQc0ZFeEdwV0ZyVmpfNld6VXZ6SSIsICJraWQiOiAiaHR0cHM6Ly9hY21lLXYwMi5hcGkubGV0c2VuY3J5cHQub3JnL2FjbWUvYWNjdC82MTUwNDY5NTYifQ", "payload": "eyJpZGVudGlmaWVycyI6IFt7InR5cGUiOiAiZG5zIiwgInZhbHVlIjogInN5bS1tYWluLTA5Lm9wZW5pbmctbGluZS5qcCJ9XX0", "signature": "GsEvYBeiQ-15XYCXCjihmfIKJ21ZpaK2x5uNkXW_UvPbcujngf8C-rxURMs9EN17FBcvDXd38LFK9H2jzOB1-YfaBze2uKCpQjLMTi1UUGO_d6Be4qLm4qBNGjQb_WAeO-joYXp58mFyiKSyFNkF4X3jZoLIWg2JivEpsAMbjCsdclg9fBSr0QdtAjNIS6nixsy8i-Yq24kygtR7u1Zd-UaVA4SwNlwWkL1SFnpFCH2rv6vndbExoycf2DOzZgWFzWG3gMM7KDTan0XDsOgpYNMOyDGDskpMkgPrHlnwqgG6f0NCG_xzw2P5YpaIWP2zOdT8DfXJ7RzOL1ShPUu4eO9nWKjRyN76lRsNUoCxI76IHEs2GUyiDYeCLx7ENdX3KkbWTvTwqVIPmn7-8h8vh_GxAT6EAfXVlXDGUWJaHXGNiqfyEFuSwd-SOZwyomphivhfyeuznZUrmpbXoVlI62qLI6U1SFbd7NUbYTzpWuEMciplVLfN8Hm75dR5ji1YheHdA50dSZ_J1cXzdWe0xsaCy15azfNy2iBBpPZ60lXlmim3bv_rqR1jpreqilzdGG_YHLsNl77KrHvBbx0ta9T8TeMIGnyBYRGhMIq92IWiT8fO2XhiMO6bTqWKI_WEoaLyT7OHErVe37Bf9NE9lKMdiNZgQxu8NqpdSGbH38w"}
+Response Code: 429
+Response: {u'status': 429, u'type': u'urn:ietf:params:acme:error:rateLimited', u'detail': u'Error creating new order :: too many failed authorizations recently: see https://letsencrypt.org/docs/rate-limits/'}
+================================================================================
+Failed to sign sym-main-09.opening-line.jp.
+Make sure you DNS is configured correctly and is propagated to this host
+machine. Sometimes that takes a while.
+================================================================================
+Failed to obtain certs for sym-main-09.opening-line.jp
+[cont-init.d] 20-setup: exited 1.
+[cont-finish.d] executing container finish scripts...
+[cont-finish.d] done.
+[s6-finish] waiting for services.
+[s6-finish] sending all processes the TERM signal.
+[s6-finish] sending all processes the KILL signal and exiting.
+[s6-init] making user provided files available at /var/run/s6/etc...exited 0.
+[s6-init] ensuring user provided files have correct perms...exited 0.
+[fix-attrs.d] applying ownership & permissions fixes...
+[fix-attrs.d] done.
+[cont-init.d] executing container initialization scripts...
+[cont-init.d] 00-welcome: executing...
+
+========================================
+HTTPS-PORTAL v1.19.2
+========================================
+
+[cont-init.d] 00-welcome: exited 0.
+[cont-init.d] 20-setup: executing...
+DH parameters appear to be ok.
+-----BEGIN DH PARAMETERS-----
+MIIBCAKCAQEAqIEcVxfgqLs0krmK3AkErDIw88uN5mNIFbUXgKby5gvONPffptTd
++ceZfMc/md33DlcM6DolRQ4vABwOnhM95CR/BgW3rNel/q5ImHKIXdxxb3fQ8cYk
+Uz9V2goy2rOFGrpkfc3hE/mqzgh6DEAmMrdkHHdBle48vEsVVsKJs/bVbJ+mEZpH
+Gar0w+GIfHRvso1B+aTccr8INfncZJXgSuU71bkq2RVYTwvDwI3NKovD1tYEcHz9
+Sebu2Bau3eViBPtu06nWRZHasPArOzFA8JA+SolOr4LLHRdJFMzS4JqGR16UvDbH
+oCSWVOPJpc2vddbdlJ9ubwIcwSH5t+QhOwIBAg==
+-----END DH PARAMETERS-----
+RSA key ok
+Generating RSA private key, 2048 bit long modulus (2 primes)
+...................+++++
+..............................+++++
+e is 65537 (0x010001)
+Signing certificates from https://acme-v02.api.letsencrypt.org/directory ...
+Parsing account key...
+Parsing CSR...
+Found domains: sym-main-09.opening-line.jp
+Getting directory...
+Directory found!
+Registering account...
+Already registered!
+Creating new order...
+Traceback (most recent call last):
+  File "/bin/acme_tiny", line 198, in <module>
+    main(sys.argv[1:])
+  File "/bin/acme_tiny", line 194, in main
+    signed_crt = get_crt(args.account_key, args.csr, args.acme_dir, log=LOGGER, CA=args.ca, disable_check=args.disable_check, directory_url=args.directory_url, contact=args.contact)
+  File "/bin/acme_tiny", line 121, in get_crt
+    order, _, order_headers = _send_signed_request(directory['newOrder'], order_payload, "Error creating new order")
+  File "/bin/acme_tiny", line 60, in _send_signed_request
+    return _do_request(url, data=data.encode('utf8'), err_msg=err_msg, depth=depth)
+  File "/bin/acme_tiny", line 46, in _do_request
+    raise ValueError("{0}:\nUrl: {1}\nData: {2}\nResponse Code: {3}\nResponse: {4}".format(err_msg, url, data, code, resp_data))
+ValueError: Error creating new order:
+Url: https://acme-v02.api.letsencrypt.org/acme/new-order
+Data: {"protected": "eyJ1cmwiOiAiaHR0cHM6Ly9hY21lLXYwMi5hcGkubGV0c2VuY3J5cHQub3JnL2FjbWUvbmV3LW9yZGVyIiwgImFsZyI6ICJSUzI1NiIsICJub25jZSI6ICIwMDAyOVJpaGlQVFlmOVh2VkpFczEzeV9ZLVpEU3prU3NZMGlUWjlUZm1NTENfWSIsICJraWQiOiAiaHR0cHM6Ly9hY21lLXYwMi5hcGkubGV0c2VuY3J5cHQub3JnL2FjbWUvYWNjdC82MTUwNDY5NTYifQ", "payload": "eyJpZGVudGlmaWVycyI6IFt7InR5cGUiOiAiZG5zIiwgInZhbHVlIjogInN5bS1tYWluLTA5Lm9wZW5pbmctbGluZS5qcCJ9XX0", "signature": "hCrctTMua0ljrnBg8usVoITj1_D9N8a37TmiVQwKpTlpfzytXFchpcdrzar_7lO7AhspQRz7mzrqxl-EtMXE5tNaFKR3WXX2Bp5OevzI3QNodrx-GPjiIJp8sgMHxH4uMOQqnOztKMqEny-wM1LdWEVWyewKhTZC_8Yrf1JzMvORNNn09Wzgj9F2TIUbzoMNkErwzP8clq_eV48RFexJOsEKd86mZTXnTcfgah99VV5RDXJqGrfmUFh3DeREkYrwLE_QcWSAHVgGJeyxGQs4mBmC1hx6xOdxG0iNoQp2qn8yOMkcwI73DSd5vGkzoys9bWkf90zw0iO4FJOxYeUtxU9UtVwzd0l9ml2FLakg_VIe7cqg-ti2CfE0_QyPHAtxU77CURV_q8BOV5U0G-JmfGG2BEkR7s_K503e3e9uEWB7ZaLPx3TldsNj50V_leRiA46mmk24v7u6MIaoEZ6Rtvt5Y9sfoToU4Xt2RzkGaLdV8KWc2KXBFPc4VZyglq9wzO5e0a3S8lyd2OYsOjDTOybaLglzcdQtTl3-uglT0ocRfTn-wJXh0vnYjLpCUK_aRFN0qJ72KYSJvjOjhYkQtSzGVrNeUd9TZ31efpWZViKcgNAL7viApWElSFTRotjc11EMUFFxvG28xSOzkJaohUntS6kiLuQ5p8bl6ZJiXH8"}
+Response Code: 429
+Response: {u'status': 429, u'type': u'urn:ietf:params:acme:error:rateLimited', u'detail': u'Error creating new order :: too many failed authorizations recently: see https://letsencrypt.org/docs/rate-limits/'}
+================================================================================
+Failed to sign sym-main-09.opening-line.jp.
+Make sure you DNS is configured correctly and is propagated to this host
+machine. Sometimes that takes a while.
+================================================================================
+Failed to obtain certs for sym-main-09.opening-line.jp
+[cont-init.d] 20-setup: exited 1.
+[cont-finish.d] executing container finish scripts...
+[cont-finish.d] done.
+[s6-finish] waiting for services.
+[s6-finish] sending all processes the TERM signal.
+[s6-finish] sending all processes the KILL signal and exiting.
+[s6-init] making user provided files available at /var/run/s6/etc...exited 0.
+[s6-init] ensuring user provided files have correct perms...exited 0.
+[fix-attrs.d] applying ownership & permissions fixes...
+[fix-attrs.d] done.
+[cont-init.d] executing container initialization scripts...
+[cont-init.d] 00-welcome: executing...
+
+========================================
+HTTPS-PORTAL v1.19.2
+========================================
+
+[cont-init.d] 00-welcome: exited 0.
+[cont-init.d] 20-setup: executing...
+DH parameters appear to be ok.
+-----BEGIN DH PARAMETERS-----
+MIIBCAKCAQEAqIEcVxfgqLs0krmK3AkErDIw88uN5mNIFbUXgKby5gvONPffptTd
++ceZfMc/md33DlcM6DolRQ4vABwOnhM95CR/BgW3rNel/q5ImHKIXdxxb3fQ8cYk
+Uz9V2goy2rOFGrpkfc3hE/mqzgh6DEAmMrdkHHdBle48vEsVVsKJs/bVbJ+mEZpH
+Gar0w+GIfHRvso1B+aTccr8INfncZJXgSuU71bkq2RVYTwvDwI3NKovD1tYEcHz9
+Sebu2Bau3eViBPtu06nWRZHasPArOzFA8JA+SolOr4LLHRdJFMzS4JqGR16UvDbH
+oCSWVOPJpc2vddbdlJ9ubwIcwSH5t+QhOwIBAg==
+-----END DH PARAMETERS-----
+RSA key ok
+Generating RSA private key, 2048 bit long modulus (2 primes)
+.....+++++
+.............+++++
+e is 65537 (0x010001)
+Signing certificates from https://acme-v02.api.letsencrypt.org/directory ...
+Parsing account key...
+Parsing CSR...
+Found domains: sym-main-09.opening-line.jp
+Getting directory...
+Directory found!
+Registering account...
+Already registered!
+Creating new order...
+Traceback (most recent call last):
+  File "/bin/acme_tiny", line 198, in <module>
+    main(sys.argv[1:])
+  File "/bin/acme_tiny", line 194, in main
+    signed_crt = get_crt(args.account_key, args.csr, args.acme_dir, log=LOGGER, CA=args.ca, disable_check=args.disable_check, directory_url=args.directory_url, contact=args.contact)
+  File "/bin/acme_tiny", line 121, in get_crt
+    order, _, order_headers = _send_signed_request(directory['newOrder'], order_payload, "Error creating new order")
+  File "/bin/acme_tiny", line 60, in _send_signed_request
+    return _do_request(url, data=data.encode('utf8'), err_msg=err_msg, depth=depth)
+  File "/bin/acme_tiny", line 46, in _do_request
+    raise ValueError("{0}:\nUrl: {1}\nData: {2}\nResponse Code: {3}\nResponse: {4}".format(err_msg, url, data, code, resp_data))
+ValueError: Error creating new order:
+Url: https://acme-v02.api.letsencrypt.org/acme/new-order
+Data: {"protected": "eyJ1cmwiOiAiaHR0cHM6Ly9hY21lLXYwMi5hcGkubGV0c2VuY3J5cHQub3JnL2FjbWUvbmV3LW9yZGVyIiwgImFsZyI6ICJSUzI1NiIsICJub25jZSI6ICIwMTAyVUd4d3FxWGxsOEN6SFFXOFp2WGlCM1dORHZ4NWgwOG9tRnQyNGsya2pjbyIsICJraWQiOiAiaHR0cHM6Ly9hY21lLXYwMi5hcGkubGV0c2VuY3J5cHQub3JnL2FjbWUvYWNjdC82MTUwNDY5NTYifQ", "payload": "eyJpZGVudGlmaWVycyI6IFt7InR5cGUiOiAiZG5zIiwgInZhbHVlIjogInN5bS1tYWluLTA5Lm9wZW5pbmctbGluZS5qcCJ9XX0", "signature": "rMOs5BqnkAvqzx59MoX1nz7CnlMcSs59hv39jTfWrgNpPVVwm-RohhR6iyTjyuoVNVh3nO70iEU7kpUPQ7e9MVozr0x8zaKJSWE20AAWuqgXhQXqGf2pzDrszhLCA6fCrRTrQTghbt4H16rijfPMpntCy5PtBUUMk_UtPn0RLZ9Uwn8dpQtjG47x5i4wgKb02LOZ4uFX8PhuLBTHsPY9JI21s3fDUQ6kt1-6kV0wwTD1cvj54ISnXnGbe4UdNZoxfckKWmdTraKCVXBpyi4lYQbp_joBNouG2K7sDy319evAr-TFhslp_JacX5-Dan2ZtAWAlX9vBWsbdtvkmhEj9Y4Je-ld7tDxovag1g95SabFC8ar_WUP0CjTCAVS-UOs3f25qE09P_lG-Q2drzspoqr5kaGc3ZN6WDFjyf_Ikp5QuhzDKQatlphZ09DkEod9-6zeB1rT_2cUUBNM-dt50q9_nVs21MotyhsPV0PBQgD0m8ZhWlI9opfsJd4sVy8YiyQy89vuDVTjehRSysi9npzz1AaoPP-_z-pvlxjZD9oGNyVkBdSKeLGdihoGwLWCirzjTblzgCzN5pQ7xyTlLiSHg7hSPsmed0BdOAsPoa2o0IFU-3WcpmjOsPMrQkFPZYptCA2q-IcHs3yDKpAWw2wua_sQQdEmgLgF81K0RRQ"}
+Response Code: 429
+Response: {u'status': 429, u'type': u'urn:ietf:params:acme:error:rateLimited', u'detail': u'Error creating new order :: too many failed authorizations recently: see https://letsencrypt.org/docs/rate-limits/'}
+================================================================================
+Failed to sign sym-main-09.opening-line.jp.
+Make sure you DNS is configured correctly and is propagated to this host
+machine. Sometimes that takes a while.
+================================================================================
+Failed to obtain certs for sym-main-09.opening-line.jp
+[cont-init.d] 20-setup: exited 1.
+[cont-finish.d] executing container finish scripts...
+[cont-finish.d] done.
+[s6-finish] waiting for services.
+[s6-finish] sending all processes the TERM signal.
+[s6-finish] sending all processes the KILL signal and exiting.
+azureuser@symbol-main-09:/datadrive/symbol-bootstrap$
