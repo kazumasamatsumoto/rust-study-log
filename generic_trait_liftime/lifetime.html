@@ -1,0 +1,759 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>ライフタイムで参照を検証する - rust-study-log</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../generic_trait_liftime/june.html"><strong aria-hidden="true">1.</strong> ジェネリック型、トレイト、ライフタイム</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../generic_trait_liftime/trait.html"><strong aria-hidden="true">1.1.</strong> トレイト：共通の振る舞いを定義する</a></li><li class="chapter-item expanded "><a href="../generic_trait_liftime/lifetime.html" class="active"><strong aria-hidden="true">1.2.</strong> ライフタイムで参照を検証する</a></li></ol></li><li class="chapter-item expanded "><a href="../auto_tests/writing_automated_tests.html"><strong aria-hidden="true">2.</strong> 自動テストを書く</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../auto_tests/how_to_wirite_tests.html"><strong aria-hidden="true">2.1.</strong> テストの記述法</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">rust-study-log</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        
+
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="ライフタイムで参照を検証する"><a class="header" href="#ライフタイムで参照を検証する">ライフタイムで参照を検証する</a></h1>
+<p>第4章の「参照と借用」節で議論しなかった詳細の一つに、Rustにおいて参照は全てライフタイムを保持するということがあります。 ライフタイムとは、その参照が有効になるスコープのことです。多くの場合、型が推論されるように、 大体の場合、ライフタイムも暗黙的に推論されます。複数の型の可能性があるときには、型を注釈しなければなりません。 同様に、参照のライフタイムがいくつか異なる方法で関係することがある場合には注釈しなければなりません。 コンパイラは、ジェネリックライフタイム引数を使用して関係を注釈し、実行時に実際の参照が確かに有効であることを保証することを要求するのです。</p>
+<p>ライフタイムの概念は、他のプログラミング言語の道具とはどこか異なり、間違いなくRustで一番際立った機能になっています。 この章では、ライフタイムの全体を解説することはしませんが、 ライフタイム記法が必要となる最も一般的な場合について議論しますので、ライフタイムの概念について馴染むことができるでしょう。</p>
+<h2 id="ライフタイムでダングリング参照を回避する"><a class="header" href="#ライフタイムでダングリング参照を回避する">ライフタイムでダングリング参照を回避する</a></h2>
+<p>ライフタイムの主な目的は、ダングリング参照を回避することです。ダングリング参照によりプログラムは、 参照するつもりだったデータ以外のデータを参照してしまいます。リスト10-17のプログラムを考えてください。 これには、外側のスコープと内側のスコープが含まれています。</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    {
+        let r;
+
+        {
+            let x = 5;
+            r = &amp;x;
+        }
+
+        println!(&quot;r: {}&quot;, r);
+    }
+}
+</code></pre></pre>
+<p>リスト10-17: 値がスコープを抜けてしまった参照を使用しようとする</p>
+<blockquote>
+<p>注釈: リスト10-17や10-18、10-24では、変数に初期値を与えずに宣言しているので、変数名は外側のスコープに存在します。 初見では、これはRustにはnull値が存在しないということと衝突しているように見えるかもしれません。 しかしながら、値を与える前に変数を使用しようとすれば、コンパイルエラーになり、 確かにRustではnull値は許可されていないことがわかります。</p>
+</blockquote>
+<p>外側のスコープで初期値なしのrという変数を宣言し、内側のスコープで初期値5のxという変数を宣言しています。 内側のスコープ内で、rの値をxへの参照にセットしようとしています。それから内側のスコープが終わり、 rの値を出力しようとしています。rが参照している値が使おうとする前にスコープを抜けるので、 このコードはコンパイルできません。こちらがエラーメッセージです:</p>
+<pre><code>$ cargo run
+   Compiling chapter10 v0.1.0 (file:///projects/chapter10)
+error[E0597]: `x` does not live long enough
+（エラー[E0597]: `x`の生存期間が短すぎます）
+  --&gt; src/main.rs:7:17
+   |
+7  |             r = &amp;x;
+   |                 ^^ borrowed value does not live long enough
+   |                   (借用された値の生存期間が短すぎます)
+8  |         }
+   |         - `x` dropped here while still borrowed
+   |          (`x`は借用されている間にここでドロップされました)
+9  |
+10 |         println!(&quot;r: {}&quot;, r);
+   |                           - borrow later used here
+   |                            (その後、借用はここで使われています)
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0597`.
+error: could not compile `chapter10`.
+
+To learn more, run the command again with --verbose.
+</code></pre>
+<p>変数xの「生存期間が短すぎます」。原因は、内側のスコープが7行目で終わった時点でxがスコープを抜けるからです。 ですが、rはまだ、外側のスコープに対して有効です; スコープが大きいので、「長生きする」と言います。 Rustで、このコードが動くことを許可していたら、rはxがスコープを抜けた時に解放されるメモリを参照していることになり、 rで行おうとするいかなることもちゃんと動作しないでしょう。では、どうやってコンパイラはこのコードが無効であると決定しているのでしょうか？ それは、借用チェッカーを使用しているのです。</p>
+<h2 id="借用精査機"><a class="header" href="#借用精査機">借用精査機</a></h2>
+<p>Rustコンパイラには、スコープを比較して全ての借用が有効であるかを決定する借用チェッカーがあります。 リスト10-18は、リスト10-17と同じコードを示していますが、変数のライフタイムを表示する注釈が付いています。</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    {
+        let r;                // ---------+-- 'a
+                              //          |
+        {                     //          |
+            let x = 5;        // -+-- 'b  |
+            r = &amp;x;           //  |       |
+        }                     // -+       |
+                              //          |
+        println!(&quot;r: {}&quot;, r); //          |
+    }                         // ---------+
+}
+
+</code></pre></pre>
+<p>リスト10-18: それぞれ'aと'bと名付けられたrとxのライフタイムの注釈</p>
+<p>ここで、rのライフタイムは'a、xのライフタイムは'bで注釈しました。ご覧の通り、 内側の'bブロックの方が、外側の'aライフタイムブロックよりはるかに小さいです。 コンパイル時に、コンパイラは2つのライフタイムのサイズを比較し、rは'aのライフタイムだけれども、 'bのライフタイムのメモリを参照していると確認します。'bは'aよりも短いので、プログラムは拒否されます: 参照の対象が参照ほど長生きしないのです。</p>
+<p>リスト10-19でコードを修正したので、ダングリング参照はなくなり、エラーなくコンパイルできます。</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    {
+        let x = 5;            // ----------+-- 'b
+                              //           |
+        let r = &amp;x;           // --+-- 'a  |
+                              //   |       |
+        println!(&quot;r: {}&quot;, r); //   |       |
+                              // --+       |
+    }                         // ----------+
+}
+</code></pre></pre>
+<p>リスト10-19: データのライフタイムが参照より長いので、有効な参照</p>
+<p>ここでxのライフタイムは'bになり、今回の場合'aよりも大きいです。つまり、 コンパイラはxが有効な間、rの参照も常に有効になることを把握しているので、rはxを参照できます。</p>
+<p>今や、参照のライフタイムがどれだけであるかと、コンパイラがライフタイムを解析して参照が常に有効であることを保証する仕組みがわかったので、 関数における引数と戻り値のジェネリックなライフタイムを探究しましょう。</p>
+<h2 id="関数のジェネリックなライフタイム"><a class="header" href="#関数のジェネリックなライフタイム">関数のジェネリックなライフタイム</a></h2>
+<p>2つの文字列スライスのうち、長い方を返す関数を書きましょう。この関数は、 2つの文字列スライスを引数に取り、1つの文字列スライスを返します。longest関数の実装完了後、 リスト10-20のコードは、The longest string is abcdと出力するはずです。</p>
+<p>ファイル名: src/main.rs</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let string1 = String::from(&quot;abcd&quot;);
+    let string2 = &quot;xyz&quot;;
+
+    let result = longest(string1.as_str(), string2);
+    // 最長の文字列は、{}です
+    println!(&quot;The longest string is {}&quot;, result);
+}
+</code></pre></pre>
+<p>リスト10-20: longest関数を呼び出して2つの文字列スライスのうち長い方を探すmain関数</p>
+<p>関数に取ってほしい引数が文字列スライス、つまり参照であることに注意してください(&amp;変数名の形)。 何故なら、longest関数に引数の所有権を奪ってほしくないからです。 リスト10-20で使用している引数が、我々が必要としているものである理由についてもっと詳しい議論は、 第4章の「引数としての文字列スライス」節をご参照ください。</p>
+<p>リスト10-21に示すようにlongest関数を実装しようとしたら、コンパイルできないでしょう。</p>
+<p>ファイル名: src/main.rs</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let string1 = String::from(&quot;abcd&quot;);
+    let string2 = &quot;xyz&quot;;
+
+    let result = longest(string1.as_str(), string2);
+    println!(&quot;The longest string is {}&quot;, result);
+}
+
+fn longest(x: &amp;str, y: &amp;str) -&gt; &amp;str {
+    if x.len() &gt; y.len() {
+        x
+    } else {
+        y
+    }
+}
+</code></pre></pre>
+<p>リスト10-21: 2つの文字列スライスのうち長い方を返すけれども、コンパイルできないlongest関数の実装</p>
+<p>代わりに、以下のようなライフタイムに言及するエラーが出ます:</p>
+<pre><code>$ cargo run
+   Compiling chapter10 v0.1.0 (file:///projects/chapter10)
+error[E0106]: missing lifetime specifier
+(エラー[E0106]: ライフタイム指定子が不足しています)
+ --&gt; src/main.rs:9:33
+  |
+9 | fn longest(x: &amp;str, y: &amp;str) -&gt; &amp;str {
+  |                                 ^ expected lifetime parameter
+  |                                   (ライフタイム引数があるべきです)
+  |
+  = help: this function's return type contains a borrowed value, but the signature does not say whether it is borrowed from `x` or `y`
+  (助言: この関数の戻り値型は借用された値を含んでいますが、
+   シグニチャは、それが`x`と`y`どちらから借用されたものなのか宣言していません)
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0106`.
+error: could not compile `chapter10`.
+
+To learn more, run the command again with --verbose.
+</code></pre>
+<p>助言テキストが、戻り値の型はジェネリックなライフタイム引数である必要があると明かしています。 というのも、返している参照がxかyのどちらを参照しているか、コンパイラにはわからないからです。 実際のところ、この関数の本体のifブロックはxへの参照を返し、elseブロックはyへの参照を返すので、 どちらなのか私たちにもわかりません！</p>
+<p>この関数を定義する際、この関数に渡される具体的な値がわからないので、ifケースとelseケースのどちらが実行されるかわからないのです。 また、リスト10-18と10-19で、返す参照が常に有効であるかを決定したときのようにスコープを見ることも、渡される参照の具体的なライフタイムがわからないのでできないのです。 借用チェッカーもこれを決定することはできません。xとyのライフタイムがどう戻り値のライフタイムと関係するかわからないからです。 このエラーを修正するために、借用チェッカーが解析を実行できるように、参照間の関係を定義するジェネリックなライフタイム引数を追加しましょう。</p>
+<h2 id="ライフタイム注釈記法"><a class="header" href="#ライフタイム注釈記法">ライフタイム注釈記法</a></h2>
+<p>ライフタイム注釈は、いかなる参照の生存期間も変えることはありません。シグニチャにジェネリックな型引数を指定された 関数が、あらゆる型を受け取ることができるのと同様に、ジェネリックなライフタイム引数を指定された関数は、 あらゆるライフタイムの参照を受け取ることができます。ライフタイム注釈は、ライフタイムに影響することなく、 複数の参照のライフタイムのお互いの関係を記述します。</p>
+<p>ライフタイム注釈は、少し不自然な記法です: ライフタイム引数の名前はアポストロフィー(')で始まらなければならず、 通常全部小文字で、ジェネリック型のようにとても短いです。多くの人は、'aという名前を使います。 ライフタイム引数注釈は、参照の&amp;の後に配置し、注釈と参照の型を区別するために空白を1つ使用します。</p>
+<p>例を挙げましょう: ライフタイム引数なしのi32への参照、'aというライフタイム引数付きのi32への参照、 そして同じくライフタイム'aを持つi32への可変参照です。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>&amp;i32        // a reference
+            // (ただの)参照
+&amp;'a i32     // a reference with an explicit lifetime
+            // 明示的なライフタイム付きの参照
+&amp;'a mut i32 // a mutable reference with an explicit lifetime
+            // 明示的なライフタイム付きの可変参照
+<span class="boring">}
+</span></code></pre></pre>
+<p>1つのライフタイム注釈それだけでは、大して意味はありません。注釈は、複数の参照のジェネリックなライフタイム引数が、 お互いにどう関係するかをコンパイラに指示することを意図しているからです。例えば、 ライフタイム'a付きのi32への参照となる引数firstのある関数があるとしましょう。 この関数にはさらに、'aのライフタイム付きのi32への別の参照となるsecondという別の引数もあります。 ライフタイム注釈は、firstとsecondの参照がどちらもこのジェネリックなライフタイムと同じだけ生きることを示唆します。</p>
+<h2 id="関数シグニチャにおけるライフタイム注釈"><a class="header" href="#関数シグニチャにおけるライフタイム注釈">関数シグニチャにおけるライフタイム注釈</a></h2>
+<p>さて、longest関数を例にライフタイム注釈を詳しく見ていきましょう。ジェネリックな型引数同様、 関数名と引数リストの間の山カッコの中にジェネリックなライフタイム引数を宣言します。 このシグニチャで表現したい制約は、引数の全ての参照と戻り値が同じライフタイムを持つことです。 リスト10-22に示すように、ライフタイムを'aと名付け、それを各参照に付与します。</p>
+<p>ファイル名: src/main.rs</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let string1 = String::from(&quot;abcd&quot;);
+    let string2 = &quot;xyz&quot;;
+
+    let result = longest(string1.as_str(), string2);
+    println!(&quot;The longest string is {}&quot;, result);
+}
+
+fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -&gt; &amp;'a str {
+    if x.len() &gt; y.len() {
+        x
+    } else {
+        y
+    }
+}
+</code></pre></pre>
+<p>リスト10-22: シグニチャの全参照が同じライフタイム'aを持つと指定したlongest関数の定義</p>
+<p>このコードはコンパイルでき、リスト10-20のmain関数とともに使用したら、欲しい結果になるはずです。</p>
+<p>これで関数シグニチャは、何らかのライフタイム'aに対して、関数は2つの引数を取り、 どちらも少なくともライフタイム'aと同じだけ生きる文字列スライスであるとコンパイラに教えるようになりました。 また、この関数シグニチャは、関数から返る文字列スライスも少なくともライフタイム'aと同じだけ生きると、 コンパイラに教えています。 実際には、longest関数が返す参照のライフタイムは、渡された参照のうち、小さい方のライフタイムと同じであるという事です。 これらの制約は、まさに私たちがコンパイラに保証してほしかったものです。</p>
+<p>この関数シグニチャでライフタイム引数を指定する時、渡されたり、返したりした、いかなる値のライフタイムも変更していないことを思い出してください。 むしろ、借用チェッカーは、これらの制約を守らない値全てを拒否するべきと指定しています。 longest関数は、xとyの正確な生存期間を知っている必要はなく、 このシグニチャを満たすようなスコープを'aに代入できることを知っているだけであることに注意してください。</p>
+<p>関数にライフタイムを注釈するときは、注釈は関数の本体ではなくシグニチャに付与します。 コンパイラは注釈がなくとも関数内のコードを解析できます。しかしながら、 関数に関数外からの参照や関数外への参照がある場合、コンパイラが引数や戻り値のライフタイムを自力で解決することはほとんど不可能になります。 そのライフタイムは、関数が呼び出される度に異なる可能性があります。このために、手動でライフタイムを注釈する必要があるのです。</p>
+<p>具体的な参照をlongestに渡すと、'aに代入される具体的なライフタイムは、xのスコープの一部であってyのスコープと重なる部分となります。 言い換えると、ジェネリックなライフタイム'aは、xとyのライフタイムのうち、小さい方に等しい具体的なライフタイムになるのです。 返却される参照を同じライフタイム引数'aで注釈したので、返却される参照もxかyのライフタイムの小さい方と同じだけ有効になるでしょう。</p>
+<p>ライフタイム注釈が異なる具体的なライフタイムを持つ参照を渡すことでlongest関数を制限する方法を見ましょう。 リスト10-23はそのシンプルな例です。</p>
+<p>ファイル名: src/main.rs</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    // 長い文字列は長い
+    let string1 = String::from(&quot;long string is long&quot;);
+    // （訳注：この言葉自体に深い意味はない。下の&quot;xyz&quot;より長いということだけが重要）
+
+    {
+        let string2 = String::from(&quot;xyz&quot;);
+        let result = longest(string1.as_str(), string2.as_str());
+        // 一番長い文字列は{}
+        println!(&quot;The longest string is {}&quot;, result);
+    }
+}
+
+fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -&gt; &amp;'a str {
+    if x.len() &gt; y.len() {
+        x
+    } else {
+        y
+    }
+}
+</code></pre></pre>
+<p>リスト10-23: 異なる具体的なライフタイムを持つString値への参照でlongest関数を使用する</p>
+<p>この例において、string1は外側のスコープの終わりまで有効で、string2は内側のスコープの終わりまで有効、 そしてresultは内側のスコープの終わりまで有効な何かを参照しています。このコードを実行すると、 借用チェッカーがこのコードを良しとするのがわかるでしょう。要するに、コンパイルでき、 The longest string is long string is longと出力するのです。</p>
+<p>次に、resultの参照のライフタイムが2つの引数の小さい方のライフタイムになることを示す例を試しましょう。 result変数の宣言を内側のスコープの外に移すものの、result変数への代入はstring2のスコープ内に残したままにします。 それからresultを使用するprintln!を内側のスコープの外、内側のスコープが終わった後に移動します。 リスト10-24のコードはコンパイルできません。</p>
+<p>ファイル名: src/main.rs</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let string1 = String::from(&quot;long string is long&quot;);
+    let result;
+    {
+        let string2 = String::from(&quot;xyz&quot;);
+        result = longest(string1.as_str(), string2.as_str());
+    }
+    println!(&quot;The longest string is {}&quot;, result);
+}
+
+fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -&gt; &amp;'a str {
+    if x.len() &gt; y.len() {
+        x
+    } else {
+        y
+    }
+}
+</code></pre></pre>
+<p>リスト10-24: string2がスコープを抜けてからresultを使用しようとする</p>
+<p>このコードのコンパイルを試みると、こんなエラーになります:</p>
+<pre><code>$ cargo run
+   Compiling chapter10 v0.1.0 (file:///projects/chapter10)
+error[E0597]: `string2` does not live long enough
+ --&gt; src/main.rs:6:44
+  |
+6 |         result = longest(string1.as_str(), string2.as_str());
+  |                                            ^^^^^^^ borrowed value does not live long enough
+7 |     }
+  |     - `string2` dropped here while still borrowed
+8 |     println!(&quot;The longest string is {}&quot;, result);
+  |                                          ------ borrow later used here
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0597`.
+error: could not compile `chapter10`.
+
+To learn more, run the command again with --verbose.
+</code></pre>
+<p>このエラーは、resultがprintln!文に対して有効であるためには、string2が外側のスコープの終わりまで有効である必要があることを示しています。 関数引数と戻り値のライフタイムを同じライフタイム引数'aで注釈したので、コンパイラはこのことを知っています。</p>
+<p>人間からしたら、string1はstring2よりも長く、それ故にresultがstring1への参照を含んでいることは コードから明らかです。まだstring1はスコープを抜けていないので、 string1への参照はprintln!にとって有効でしょう。ですが、コンパイラはこの場合、 参照が有効であると見なせません。longest関数から返ってくる参照のライフタイムは、 渡した参照のうちの小さい方と同じだとコンパイラに指示しました。したがって、 借用チェッカーは、リスト10-24のコードを無効な参照がある可能性があるとして許可しないのです。</p>
+<p>試しに、値や、longest関数に渡される参照のライフタイムや、返される参照の使われかたが異なる実験をもっとしてみてください。 コンパイル前に、その実験が借用チェッカーを通るかどうか仮説を立ててください; そして、正しいか確かめてください！</p>
+<h2 id="ライフタイムの観点で思考する"><a class="header" href="#ライフタイムの観点で思考する">ライフタイムの観点で思考する</a></h2>
+<p>何にライフタイム引数を指定する必要があるかは、関数が行っていることに依存します。例えば、 longest関数の実装を最長の文字列スライスではなく、常に最初の引数を返すように変更したら、 y引数に対してライフタイムを指定する必要はなくなるでしょう。以下のコードはコンパイルできます:</p>
+<p>ファイル名: src/main.rs</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let string1 = String::from(&quot;abcd&quot;);
+    let string2 = &quot;efghijklmnopqrstuvwxyz&quot;;
+
+    let result = longest(string1.as_str(), string2);
+    println!(&quot;The longest string is {}&quot;, result);
+}
+
+fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;str) -&gt; &amp;'a str {
+    x
+}
+</code></pre></pre>
+<p>この例では、引数xと戻り値に対してライフタイム引数'aを指定しましたが、引数yには指定していません。 yのライフタイムはxや戻り値のライフタイムとは何の関係もないからです。</p>
+<p>関数から参照を返す際、戻り値型のライフタイム引数は、引数のうちどれかのライフタイム引数と一致する必要があります。 返される参照が引数のどれかを参照していないならば、この関数内で生成された値を参照しているはずです。 すると、その値は関数の末端でスコープを抜けるので、これはダングリング参照になるでしょう。 以下に示す、コンパイルできないlongest関数の未完成の実装を考えてください:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let string1 = String::from(&quot;abcd&quot;);
+    let string2 = &quot;xyz&quot;;
+
+    let result = longest(string1.as_str(), string2);
+    println!(&quot;The longest string is {}&quot;, result);
+}
+
+fn longest&lt;'a&gt;(x: &amp;str, y: &amp;str) -&gt; &amp;'a str {
+    // 本当に長い文字列
+    let result = String::from(&quot;really long string&quot;);
+    result.as_str()
+}
+</code></pre></pre>
+<blockquote>
+<p>ライフタイム引数が関係ないので、何の意味があるのか？となるます</p>
+</blockquote>
+<p>ここでは、たとえ、戻り値型にライフタイム引数'aを指定していても、戻り値のライフタイムは、 引数のライフタイムと全く関係がないので、この実装はコンパイルできないでしょう。 こちらが、得られるエラーメッセージです:</p>
+<pre><code>$ cargo run
+   Compiling chapter10 v0.1.0 (file:///projects/chapter10)
+error[E0515]: cannot return value referencing local variable `result`
+(エラー[E0515]: ローカル変数`result`を参照している値は返せません)
+  --&gt; src/main.rs:11:5
+   |
+11 |     result.as_str()
+   |     ------^^^^^^^^^
+   |     |
+   |     returns a value referencing data owned by the current function
+   |     `result` is borrowed here
+   |    (現在の関数に所有されているデータを参照する値を返しています
+   |     `result`はここで借用されています)
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0515`.
+error: could not compile `chapter10`.
+
+To learn more, run the command again with --verbose.
+</code></pre>
+<p>問題は、resultがlongest関数の末端でスコープを抜け、片付けられてしまうことです。 かつ、関数からresultへの参照を返そうともしています。ダングリング参照を変えてくれるようなライフタイム引数を指定する手段はなく、 コンパイラは、ダングリング参照を生成させてくれません。今回の場合、最善の修正案は、 （呼び出し先ではなく）呼び出し元の関数に値の片付けをさせるために、参照ではなく所有されたデータ型を返すことでしょう。</p>
+<p>究極的にライフタイム記法は、関数のいろんな引数と戻り値のライフタイムを接続することに関するものです。 一旦それらが繋がれば、メモリ安全な処理を許可し、ダングリングポインタを生成したりメモリ安全性を侵害したりする処理を禁止するのに十分な情報をコンパイラは得たことになります。</p>
+<h2 id="構造体定義のライフタイム注釈"><a class="header" href="#構造体定義のライフタイム注釈">構造体定義のライフタイム注釈</a></h2>
+<p>ここまで、所有された型を保持する構造体だけを定義してきました。構造体に参照を保持させることもできますが、 その場合、構造体定義の全参照にライフタイム注釈を付け加える必要があるでしょう。 リスト10-25には、文字列スライスを保持するImportantExcerpt(重要な一節)という構造体があります。</p>
+<p>ファイル名: src/main.rs</p>
+<pre><pre class="playground"><code class="language-rust">struct ImportantExcerpt&lt;'a&gt; {
+    part: &amp;'a str,
+}
+
+fn main() {
+    // 僕をイシュマエルとお呼び。何年か前・・・
+    let novel = String::from(&quot;Call me Ishmael. Some years ago...&quot;);
+    //                                                  &quot;'.'が見つかりませんでした&quot;
+    let first_sentence = novel.split('.').next().expect(&quot;Could not find a '.'&quot;);
+    let i = ImportantExcerpt {
+        part: first_sentence,
+    };
+}
+</code></pre></pre>
+<p>リスト10-25: 参照を含む構造体なので、定義にライフタイム注釈が必要</p>
+<p>この構造体には文字列スライスを保持する1つのフィールド、partがあり、これは参照です。 ジェネリックなデータ型同様、構造体名の後、山カッコの中にジェネリックなライフタイム引数の名前を宣言するので、 構造体定義の本体でライフタイム引数を使用できます。この注釈は、ImportantExcerptのインスタンスが、 partフィールドに保持している参照よりも長生きしないことを意味します。</p>
+<p>ここのmain関数は、変数novelに所有されるStringの、最初の文への参照を保持するImportantExcerptインスタンスを生成しています。 novelのデータは、ImportantExcerptインスタンスが作られる前に存在しています。 加えて、ImportantExcerptがスコープを抜けるまでnovelはスコープを抜けないので、 ImportantExcerptインスタンスの参照は有効なのです。</p>
+<h2 id="ライフタイム省略"><a class="header" href="#ライフタイム省略">ライフタイム省略</a></h2>
+<p>全参照にはライフタイムがあり、参照を使用する関数や構造体にはライフタイム引数を指定する必要があることを学びました。 しかし、リスト4-9にあった関数（リスト10-26に再度示しました）はライフタイム注釈なしでコンパイルできました。</p>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">fn first_word(s: &amp;str) -&gt; &amp;str {
+    let bytes = s.as_bytes();
+
+    for (i, &amp;item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &amp;s[0..i];
+        }
+    }
+
+    &amp;s[..]
+}
+
+fn main() {
+    let my_string = String::from(&quot;hello world&quot;);
+
+    // first_word works on slices of `String`s
+    let word = first_word(&amp;my_string[..]);
+
+    let my_string_literal = &quot;hello world&quot;;
+
+    // first_word works on slices of string literals
+    let word = first_word(&amp;my_string_literal[..]);
+
+    // Because string literals *are* string slices already,
+    // this works too, without the slice syntax!
+    let word = first_word(my_string_literal);
+}
+</code></pre></pre>
+<p>リスト10-26: リスト4-9で定義した、引数と戻り値型が参照であるにも関わらず、ライフタイム注釈なしでコンパイルできた関数</p>
+<p>この関数がライフタイム注釈なしでコンパイルできる理由には、Rustの歴史が関わっています: 昔のバージョンのRust(1.0以前)では、 全参照に明示的なライフタイムが必要だったので、このコードはコンパイルできませんでした。 その頃、関数シグニチャはこのように記述されていたのです:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn first_word&lt;'a&gt;(s: &amp;'a str) -&gt; &amp;'a str {
+<span class="boring">}
+</span></code></pre></pre>
+<p>多くのRustコードを書いた後、Rustチームは、Rustプログラマが、 特定の場面で何度も同じライフタイム注釈を入力していることを発見しました。これらの場面は予測可能で、 いくつかの決まりきったパターンに従っていました。開発者はこのパターンをコンパイラのコードに落とし込んだので、 このような場面には借用チェッカーがライフタイムを推論できるようになり、明示的な注釈を必要としなくなったのです。</p>
+<p>ここで、このRustの歴史話が関係しているのは、他にも決まりきったパターンが出現し、コンパイラに追加されることもあり得るからです。 将来的に、さらに少数のライフタイム注釈しか必要にならない可能性もあります。</p>
+<p>コンパイラの参照解析に落とし込まれたパターンは、ライフタイム省略規則と呼ばれます。 これらはプログラマが従う規則ではありません; コンパイラが考慮する一連の特定のケースであり、 自分のコードがこのケースに当てはまれば、ライフタイムを明示的に書く必要はなくなります。</p>
+<p>省略規則は、完全な推論を提供しません。コンパイラが決定的に規則を適用できるけれども、 参照が保持するライフタイムに関してそれでも曖昧性があるなら、コンパイラは、残りの参照がなるべきライフタイムを推測しません。 この場合コンパイラは、それらを推測するのではなくエラーを与えます。 これらは、参照がお互いにどう関係するかを指定するライフタイム注釈を追記することで解決できます。</p>
+<p>関数やメソッドの引数のライフタイムは、入力ライフタイムと呼ばれ、 戻り値のライフタイムは出力ライフタイムと称されます。</p>
+<p>コンパイラは3つの規則を活用し、明示的な注釈がない時に、参照がどんなライフタイムになるかを計算します。 最初の規則は入力ライフタイムに適用され、2番目と3番目の規則は出力ライフタイムに適用されます。 コンパイラが3つの規則の最後まで到達し、それでもライフタイムを割り出せない参照があったら、 コンパイラはエラーで停止します。 これらのルールはfnの定義にもimplブロックにも適用されます。</p>
+<p>最初の規則は、参照である各引数は、独自のライフタイム引数を得るというものです。換言すれば、 1引数の関数は、1つのライフタイム引数を得るということです: fn foo&lt;'a&gt;(x: &amp;'a i32); 2つ引数のある関数は、2つの個別のライフタイム引数を得ます: fn foo&lt;'a, 'b&gt;(x: &amp;'a i32, y: &amp;'b i32); 以下同様。</p>
+<p>2番目の規則は、1つだけ入力ライフタイム引数があるなら、そのライフタイムが全ての出力ライフタイム引数に代入されるというものです: fn foo&lt;'a&gt;(x: &amp;'a i32) -&gt; &amp;'a i32。</p>
+<p>3番目の規則は、複数の入力ライフタイム引数があるけれども、メソッドなのでそのうちの一つが&amp;selfや&amp;mut selfだったら、 selfのライフタイムが全出力ライフタイム引数に代入されるというものです。 この3番目の規則により、必要なシンボルの数が減るので、メソッドが遥かに読み書きしやすくなります。</p>
+<p>コンパイラの立場になってみましょう。これらの規則を適用して、リスト10-26のfirst_word関数のシグニチャの参照のライフタイムが何か計算します。 シグニチャは、参照に紐づけられるライフタイムがない状態から始まります:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn first_word(s: &amp;str) -&gt; &amp;str {
+<span class="boring">}
+</span></code></pre></pre>
+<p>そうして、コンパイラは最初の規則を適用し、各引数が独自のライフタイムを得ると指定します。 それを通常通り'aと呼ぶので、シグニチャはこうなります:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn first_word&lt;'a&gt;(s: &amp;'a str) -&gt; &amp;str {
+<span class="boring">}
+</span></code></pre></pre>
+<p>1つだけ入力ライフタイムがあるので、2番目の規則を適用します。2番目の規則は、1つの入力引数のライフタイムが、 出力引数に代入されると指定するので、シグニチャはこうなります:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn first_word&lt;'a&gt;(s: &amp;'a str) -&gt; &amp;'a str {
+<span class="boring">}
+</span></code></pre></pre>
+<p>もうこの関数シグニチャの全ての参照にライフタイムが付いたので、コンパイラは、 プログラマにこの関数シグニチャのライフタイムを注釈してもらう必要なく、解析を続行できます。</p>
+<p>別の例に目を向けましょう。今回は、リスト10-21で取り掛かったときにはライフタイム引数がなかったlongest関数です:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn longest(x: &amp;str, y: &amp;str) -&gt; &amp;str {
+<span class="boring">}
+</span></code></pre></pre>
+<p>最初の規則を適用しましょう: 各引数が独自のライフタイムを得るのです。今回は、 1つではなく2つ引数があるので、ライフタイムも2つです:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn longest&lt;'a, 'b&gt;(x: &amp;'a str, y: &amp;'b str) -&gt; &amp;str {
+<span class="boring">}
+</span></code></pre></pre>
+<p>2つ以上入力ライフタイムがあるので、2番目の規則は適用されないとわかります。また3番目の規則も適用されません。 longestはメソッドではなく関数なので、どの引数もselfではないのです。3つの規則全部を適用した後でも、 まだ戻り値型のライフタイムが判明していません。このために、リスト10-21でこのコードをコンパイルしようとしてエラーになったのです: コンパイラは、ライフタイム省略規則全てを適用したけれども、シグニチャの参照全部のライフタイムを計算できなかったのです。</p>
+<p>実際のところ、3番目の規則はメソッドのシグニチャにしか適用されません。ですので、次はその文脈においてライフタイムを観察し、 3番目の規則のおかげで、メソッドシグニチャであまり頻繁にライフタイムを注釈しなくても済む理由を確認します。</p>
+<h2 id="メソッド定義におけるライフタイム注釈"><a class="header" href="#メソッド定義におけるライフタイム注釈">メソッド定義におけるライフタイム注釈</a></h2>
+<p>構造体にライフタイムのあるメソッドを実装する際、リスト10-11で示したジェネリックな型引数と同じ記法を使用します。 ライフタイム引数を宣言し使用する場所は、構造体フィールドかメソッド引数と戻り値に関係するかによります。</p>
+<p>構造体のフィールド用のライフタイム名は、implキーワードの後に宣言する必要があり、 それから構造体名の後に使用されます。そのようなライフタイムは構造体の型の一部になるからです。</p>
+<p>implブロック内のメソッドシグニチャでは、参照は構造体のフィールドの参照のライフタイムに紐づいている可能性と、 独立している可能性があります。加えて、ライフタイム省略規則により、メソッドシグニチャでライフタイム注釈が必要なくなることがよくあります。 リスト10-25で定義したImportantExcerptという構造体を使用した例をいくつか見てみましょう。</p>
+<p>まず、唯一の引数がselfへの参照で戻り値がi32という何かへの参照ではないlevelというメソッドを使用します:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">struct ImportantExcerpt&lt;'a&gt; {
+</span><span class="boring">   part: &amp;'a str,
+</span><span class="boring">}
+</span><span class="boring">
+</span>impl&lt;'a&gt; ImportantExcerpt&lt;'a&gt; {
+    fn level(&amp;self) -&gt; i32 {
+        3
+    }
+}
+<span class="boring">
+</span><span class="boring">impl&lt;'a&gt; ImportantExcerpt&lt;'a&gt; {
+</span><span class="boring">   fn announce_and_return_part(&amp;self, announcement: &amp;str) -&gt; &amp;str {
+</span><span class="boring">       //       &quot;お知らせします: {}&quot;
+</span><span class="boring">       println!(&quot;Attention please: {}&quot;, announcement);
+</span><span class="boring">       self.part
+</span><span class="boring">   }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">   let novel = String::from(&quot;Call me Ishmael. Some years ago...&quot;);
+</span><span class="boring">   let first_sentence = novel.split('.').next().expect(&quot;Could not find a '.'&quot;);
+</span><span class="boring">   let i = ImportantExcerpt {
+</span><span class="boring">       part: first_sentence,
+</span><span class="boring">   };
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>impl後のライフタイム引数宣言と型名の後にそれを使用するのは必須ですが、最初の省略規則のため、 selfへの参照のライフタイムを注釈する必要はありません。</p>
+<p>3番目のライフタイム省略規則が適用される例はこちらです:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">struct ImportantExcerpt&lt;'a&gt; {
+</span><span class="boring">   part: &amp;'a str,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl&lt;'a&gt; ImportantExcerpt&lt;'a&gt; {
+</span><span class="boring">   fn level(&amp;self) -&gt; i32 {
+</span><span class="boring">       3
+</span><span class="boring">   }
+</span><span class="boring">}
+</span><span class="boring">
+</span>impl&lt;'a&gt; ImportantExcerpt&lt;'a&gt; {
+    fn announce_and_return_part(&amp;self, announcement: &amp;str) -&gt; &amp;str {
+        //       &quot;お知らせします: {}&quot;
+        println!(&quot;Attention please: {}&quot;, announcement);
+        self.part
+    }
+}
+<span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">   let novel = String::from(&quot;Call me Ishmael. Some years ago...&quot;);
+</span><span class="boring">   let first_sentence = novel.split('.').next().expect(&quot;Could not find a '.'&quot;);
+</span><span class="boring">   let i = ImportantExcerpt {
+</span><span class="boring">       part: first_sentence,
+</span><span class="boring">   };
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>2つ入力ライフタイムがあるので、コンパイラは最初のライフタイム省略規則を適用し、 &amp;selfとannouncementに独自のライフタイムを与えます。それから、 引数の1つが&amp;selfなので、戻り値型は&amp;selfのライフタイムを得て、 全てのライフタイムが説明されました。</p>
+<h2 id="静的ライフタイム"><a class="header" href="#静的ライフタイム">静的ライフタイム</a></h2>
+<p>議論する必要のある1種の特殊なライフタイムが、'staticであり、これは、この参照がプログラムの全期間生存できる事を意味します。 文字列リテラルは全て'staticライフタイムになり、次のように注釈できます:</p>
+<pre><pre class="playground"><code class="language-rust">
+#![allow(unused)]
+fn main() {
+// 僕は静的ライフタイムを持ってるよ
+let s: &amp;'static str = &quot;I have a static lifetime.&quot;;
+}
+</code></pre></pre>
+<p>この文字列のテキストは、プログラムのバイナリに直接格納され、常に利用可能です。故に、全文字列リテラルのライフタイムは、 'staticなのです。</p>
+<p>エラーメッセージで、'staticライフタイムを使用するよう勧める提言を見かける可能性があります。 ですが、参照に対してライフタイムとして'staticを指定する前に、今ある参照が本当にプログラムの全期間生きるかどうか考えてください。 それが可能であったとしても、参照がそれだけの期間生きてほしいのかどうか考慮するのも良いでしょう。 ほとんどの場合、問題は、ダングリング参照を生成しようとしているか、利用可能なライフタイムの不一致が原因です。 そのような場合、解決策はその問題を修正することであり、'staticライフタイムを指定することではありません。</p>
+<h1 id="ジェネリックな型引数トレイト境界ライフタイムを一度に"><a class="header" href="#ジェネリックな型引数トレイト境界ライフタイムを一度に">ジェネリックな型引数、トレイト境界、ライフタイムを一度に</a></h1>
+<p>ジェネリックな型引数、トレイト境界、ライフタイム指定の構文のすべてを1つの関数で簡単に見てみましょう！</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let string1 = String::from(&quot;abcd&quot;);
+    let string2 = &quot;xyz&quot;;
+
+    let result = longest_with_an_announcement(
+        string1.as_str(),
+        string2,
+        &quot;Today is someone's birthday!&quot;,
+    );
+    println!(&quot;The longest string is {}&quot;, result);
+}
+
+use std::fmt::Display;
+
+fn longest_with_an_announcement&lt;'a, T&gt;(
+    x: &amp;'a str,
+    y: &amp;'a str,
+    ann: T,
+) -&gt; &amp;'a str
+where
+    T: Display,
+{
+    //       &quot;アナウンス！ {}&quot;
+    println!(&quot;Announcement! {}&quot;, ann);
+    if x.len() &gt; y.len() {
+        x
+    } else {
+        y
+    }
+}
+</code></pre></pre>
+<p>これがリスト10-22からの2つの文字列のうち長い方を返すlongest関数ですが、 ジェネリックな型Tのannという追加の引数があり、これはwhere節で指定されているように、 Displayトレイトを実装するあらゆる型で埋めることができます。 この追加の引数は、関数が文字列スライスの長さを比較する前に出力されるので、 Displayトレイト境界が必要なのです。ライフタイムは一種のジェネリックなので、 ライフタイム引数'aとジェネリックな型引数Tが関数名の後、山カッコ内の同じリストに収まっています。</p>
+<h1 id="まとめ"><a class="header" href="#まとめ">まとめ</a></h1>
+<p>たくさんのことをこの章では講義しましたね！今やジェネリックな型引数、トレイトとトレイト境界、そしてジェネリックなライフタイム引数を知ったので、 多くの異なる場面で動くコードを繰り返すことなく書く準備ができました。ジェネリックな型引数により、 コードを異なる型に適用させてくれます。トレイトとトレイト境界は、型がジェネリックであっても、 コードが必要とする振る舞いを持つことを保証します。ライフタイム注釈を活用して、 この柔軟なコードにダングリング参照が存在しないことを保証する方法を学びました。 さらにこの解析は全てコンパイル時に起こり、実行時のパフォーマンスには影響しません！</p>
+<p>信じられないかもしれませんが、この章で議論した話題にはもっともっと学ぶべきことがあります: 第17章ではトレイトオブジェクトを議論します。これはトレイトを使用する別の手段です。 非常に高度な筋書きの場合でのみ必要になる、ライフタイム注釈が関わる、もっと複雑な筋書きもあります。 それらについては、Rust Referenceをお読みください。 ですが次は、コードがあるべき通りに動いていることを確かめられるように、Rustでテストを書く方法を学びます。</p>
+<blockquote>
+<p>ライフタイムはダングリング参照を防ぐため、そういったエラーを無くすためというところからスタートする。</p>
+</blockquote>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../generic_trait_liftime/trait.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../auto_tests/writing_automated_tests.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../generic_trait_liftime/trait.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../auto_tests/writing_automated_tests.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
