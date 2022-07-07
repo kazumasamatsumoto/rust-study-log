@@ -97,7 +97,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="generic_trait_liftime/june.html"><strong aria-hidden="true">1.</strong> ジェネリック型、トレイト、ライフタイム</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="generic_trait_liftime/generic.html"><strong aria-hidden="true">1.1.</strong> ジェネリックなデータ型</a></li><li class="chapter-item expanded "><a href="generic_trait_liftime/trait.html"><strong aria-hidden="true">1.2.</strong> トレイト：共通の振る舞いを定義する</a></li><li class="chapter-item expanded "><a href="generic_trait_liftime/lifetime.html"><strong aria-hidden="true">1.3.</strong> ライフタイムで参照を検証する</a></li></ol></li><li class="chapter-item expanded "><a href="auto_tests/writing_automated_tests.html"><strong aria-hidden="true">2.</strong> 自動テストを書く</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="auto_tests/how_to_wirite_tests.html"><strong aria-hidden="true">2.1.</strong> テストの記述法</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="generic_trait_liftime/june.html"><strong aria-hidden="true">1.</strong> ジェネリック型、トレイト、ライフタイム</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="generic_trait_liftime/generic.html"><strong aria-hidden="true">1.1.</strong> ジェネリックなデータ型</a></li><li class="chapter-item expanded "><a href="generic_trait_liftime/trait.html"><strong aria-hidden="true">1.2.</strong> トレイト：共通の振る舞いを定義する</a></li><li class="chapter-item expanded "><a href="generic_trait_liftime/lifetime.html"><strong aria-hidden="true">1.3.</strong> ライフタイムで参照を検証する</a></li></ol></li><li class="chapter-item expanded "><a href="auto_tests/writing_automated_tests.html"><strong aria-hidden="true">2.</strong> 自動テストを書く</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="auto_tests/how_to_wirite_tests.html"><strong aria-hidden="true">2.1.</strong> テストの記述法</a></li><li class="chapter-item expanded "><a href="auto_tests/control_how_test_are_executed.html"><strong aria-hidden="true">2.2.</strong> テストの実行のされ方を制御する</a></li><li class="chapter-item expanded "><a href="auto_tests/systematization_of_testing.html"><strong aria-hidden="true">2.3.</strong> テストの体系化</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -1967,6 +1967,1074 @@ error: test failed, to rerun pass '--lib'
 <p>okの代わりにtest test::anotherの行は、FAILEDを表示しています。個々の結果とまとめの間に、 2つ新たな区域ができました: 最初の区域は、失敗したテスト各々の具体的な理由を表示しています。 今回の場合、anotherは'Make this test fail'でパニックしたために失敗し、 これは、src/lib.rsファイルの10行で起きました。次の区域は失敗したテストの名前だけを列挙しています。 これは、テストがたくさんあり、失敗したテストの詳細がたくさん表示されるときに有用になります。 失敗したテストの名前を使用してそのテストだけを実行し、より簡単にデバッグすることができます。 テストの実行方法については、テストの実行され方を制御する節でもっと語りましょう。</p>
 <p>サマリー行が最後に出力されています: 総合的に言うと、テスト結果はFAILEDでした。 一つのテストが通り、一つが失敗したわけです。</p>
 <p>様々な状況でのテスト結果がどんな風になるか見てきたので、テストを行う際に有用になるpanic!以外のマクロに目を向けましょう。</p>
+<h2 id="assertマクロで結果を確認する"><a class="header" href="#assertマクロで結果を確認する">assert!マクロで結果を確認する</a></h2>
+<p>assert!マクロは、標準ライブラリで提供されていますが、テスト内の何らかの条件がtrueと評価されることを確かめたいときに有効です。
+assert!マクロには、論理値に評価される引数を与えます。その値がtrueなら、 assert!は何もせず、テストは通ります。
+その値がfalseなら、assert!マクロはpanic!マクロを呼び出し、 テストは失敗します。
+assert!マクロを使用することで、コードが意図した通りに機能していることを確認する助けになるわけです。</p>
+<p>第5章のリスト5-15で、Rectangle構造体とcan_holdメソッドを使用しました。
+リスト11-5でもそれを繰り返しています。
+このコードをsrc/lib.rsファイルに放り込み、assert!マクロでそれ用のテストを何か書いてみましょう。</p>
+<blockquote>
+<p>trueやfalseでテストを評価する</p>
+<p>なので論理値が返ってくるような関数の実行のテストに有用です。</p>
+</blockquote>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+impl Rectangle {
+    fn can_hold(&amp;self, other: &amp;Rectangle) -&gt; bool {
+        self.width &gt; other.width &amp;&amp; self.height &gt; other.height
+    }
+}
+
+fn main() {}
+</code></pre></pre>
+<p>リスト11-5: 第5章からRectangle構造体とそのcan_holdメソッドを使用する</p>
+<blockquote>
+<p>このメソッドは2つの長方形があり、横と縦の長さがどちらも大きいみたいな感じのイメージになります。</p>
+</blockquote>
+<p><img src="auto_tests/../imgs/auto_tests/rectangle.png" alt="メソッド" /></p>
+<p>can_holdメソッドは論理値を返すので、assert!マクロの完璧なユースケースになるわけです。 リスト11-6で、幅が8、高さが7のRectangleインスタンスを生成し、これが幅5、 高さ1の別のRectangleインスタンスを保持できるとアサーションすることでcan_holdを用いるテストを書きます。</p>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+impl Rectangle {
+    fn can_hold(&amp;self, other: &amp;Rectangle) -&gt; bool {
+        self.width &gt; other.width &amp;&amp; self.height &gt; other.height
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn larger_can_hold_smaller() {
+        let larger = Rectangle {
+            width: 8,
+            height: 7,
+        };
+        let smaller = Rectangle {
+            width: 5,
+            height: 1,
+        };
+
+        assert!(larger.can_hold(&amp;smaller));
+    }
+}
+
+fn main() {}
+</code></pre></pre>
+<p>リスト11-6: より大きな長方形がより小さな長方形を確かに保持できるかを確認するcan_hold用のテスト</p>
+<p>testsモジュール内に新しい行を加えたことに注目してください: use super::*です。 testsモジュールは、第7章のモジュールツリーの要素を示すためのパス節で講義した通常の公開ルールに従う普通のモジュールです。 testsモジュールは、内部モジュールなので、外部モジュール内のテスト配下にあるコードを内部モジュールのスコープに持っていく必要があります。 ここではglobを使用して、外部モジュールで定義したもの全てがこのtestsモジュールでも使用可能になるようにしています。</p>
+<p>テストはlarger_can_hold_smallerと名付け、必要なRectangleインスタンスを2つ生成しています。 そして、assert!マクロを呼び出し、larger.can_hold(&amp;smaller)の呼び出し結果を渡しました。 この式は、trueを返すと考えられるので、テストは通るはずです。確かめましょう！</p>
+<pre><code>$ cargo test
+   Compiling rectangle v0.1.0 (file:///projects/rectangle)
+    Finished test [unoptimized + debuginfo] target(s) in 0.66s
+     Running target/debug/deps/rectangle-6584c4561e48942e
+
+running 1 test
+test tests::larger_can_hold_smaller ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+   Doc-tests rectangle
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+</code></pre>
+<p>通ります！別のテストを追加しましょう。今回は、小さい長方形は、より大きな長方形を保持できないことをアサーションします。</p>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+impl Rectangle {
+    fn can_hold(&amp;self, other: &amp;Rectangle) -&gt; bool {
+        self.width &gt; other.width &amp;&amp; self.height &gt; other.height
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn larger_can_hold_smaller() {
+        // --snip--
+        let larger = Rectangle {
+            width: 8,
+            height: 7,
+        };
+        let smaller = Rectangle {
+            width: 5,
+            height: 1,
+        };
+
+        assert!(larger.can_hold(&amp;smaller));
+    }
+
+    #[test]
+    fn smaller_cannot_hold_larger() {
+        let larger = Rectangle {
+            width: 8,
+            height: 7,
+        };
+        let smaller = Rectangle {
+            width: 5,
+            height: 1,
+        };
+
+        assert!(!smaller.can_hold(&amp;larger));
+    }
+}
+
+fn main() {}
+</code></pre></pre>
+<p>今回の場合、can_hold関数の正しい結果はfalseなので、その結果をassert!マクロに渡す前に反転させる必要があります。 結果として、can_holdがfalseを返せば、テストは通ります。</p>
+<blockquote>
+<p>結果を反転させたい時は「!」を設定する必要があるassert(!smaller.can_hold(&amp;larger))みたいな感じです。</p>
+</blockquote>
+<pre><code>$ cargo test
+   Compiling rectangle v0.1.0 (file:///projects/rectangle)
+    Finished test [unoptimized + debuginfo] target(s) in 0.66s
+     Running target/debug/deps/rectangle-6584c4561e48942e
+
+running 2 tests
+test tests::larger_can_hold_smaller ... ok
+test tests::smaller_cannot_hold_larger ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+   Doc-tests rectangle
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+</code></pre>
+<p>通るテストが2つ！さて、コードにバグを導入したらテスト結果がどうなるか確認してみましょう。 幅を比較する大なり記号を小なり記号で置き換えてcan_holdメソッドの実装を変更しましょう:</p>
+<pre><pre class="playground"><code class="language-rust">#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+// ここの記号を変更させる
+impl Rectangle {
+    fn can_hold(&amp;self, other: &amp;Rectangle) -&gt; bool {
+        self.width &lt; other.width &amp;&amp; self.height &gt; other.height
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn larger_can_hold_smaller() {
+        let larger = Rectangle {
+            width: 8,
+            height: 7,
+        };
+        let smaller = Rectangle {
+            width: 5,
+            height: 1,
+        };
+
+        assert!(larger.can_hold(&amp;smaller));
+    }
+
+    #[test]
+    fn smaller_cannot_hold_larger() {
+        let larger = Rectangle {
+            width: 8,
+            height: 7,
+        };
+        let smaller = Rectangle {
+            width: 5,
+            height: 1,
+        };
+
+        assert!(!smaller.can_hold(&amp;larger));
+    }
+}
+
+fn main() {}
+</code></pre></pre>
+<p>テストを実行すると、以下のような出力をします</p>
+<pre><code>$ cargo test
+   Compiling rectangle v0.1.0 (file:///projects/rectangle)
+    Finished test [unoptimized + debuginfo] target(s) in 0.66s
+     Running target/debug/deps/rectangle-6584c4561e48942e
+
+running 2 tests
+test tests::larger_can_hold_smaller ... FAILED
+test tests::smaller_cannot_hold_larger ... ok
+
+failures:
+
+---- tests::larger_can_hold_smaller stdout ----
+thread 'main' panicked at 'assertion failed: larger.can_hold(&amp;smaller)', src/lib.rs:28:9
+(スレッド'main'はsrc/lib.rs:28:9の'assertion failed: larger.can_hold(&amp;smaller)'でパニックしました)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace.
+
+failures:
+    tests::larger_can_hold_smaller
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+
+error: test failed, to rerun pass '--lib'
+</code></pre>
+<p>テストによりバグが捕捉されました！larger.widthが8、smaller.widthが5なので、 can_hold内の幅の比較が今はfalseを返すようになったのです: 8は5より小さくないですからね。</p>
+<h2 id="assert_eqとassert_neマクロで等値性をテストする"><a class="header" href="#assert_eqとassert_neマクロで等値性をテストする">assert_eq!とassert_ne!マクロで等値性をテストする</a></h2>
+<p>機能をテストする一般的な方法は、テスト下にあるコードの結果をコードが返すと期待される値と比較して、 等しいと確かめることです。これをassertマクロを使用して==演算子を使用した式を渡すことで行うこともできます。 しかしながら、これはありふれたテストなので、標準ライブラリには1組のマクロ(assert_eq!とassert_ne!)が提供され、 このテストをより便利に行うことができます。これらのマクロはそれぞれ、二つの引数を比べ、等しいかと等しくないかを確かめます。 また、アサーションが失敗したら二つの値の出力もし、テストが失敗した原因を確認しやすくなります。 一方でassert!マクロは、==式の値がfalseになったことしか示さず、falseになった原因の値は出力しません。</p>
+<p>リスト11-7において、引数に2を加えて結果を返すadd_twoという名前の関数を書いています。 そして、assert_eq!マクロでこの関数をテストしています。</p>
+<blockquote>
+<p>返り値が数値や文字列スライスを返すような関数では等値性（値が一緒かどうか？）をテストする</p>
+</blockquote>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">pub fn add_two(a: i32) -&gt; i32 {
+    a + 2
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn it_adds_two() {
+        assert_eq!(4, add_two(2));
+    }
+}
+
+fn main() {}
+</code></pre></pre>
+<p>リスト11-7: assert_eq!マクロでadd_two関数をテストする</p>
+<blockquote>
+<p>これだと、左がテストの答えの結果、右が関数の結果です。これは左と右をどちらでも同じです。</p>
+</blockquote>
+<pre><code>$ cargo test
+   Compiling adder v0.1.0 (file:///projects/adder)
+    Finished test [unoptimized + debuginfo] target(s) in 0.58s
+     Running target/debug/deps/adder-92948b65e88960b4
+
+running 1 test
+test tests::it_adds_two ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+   Doc-tests adder
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+</code></pre>
+<p>assert_eq!マクロに与えた第1引数の4は、add_two(2)の呼び出し結果と等しいです。 このテストの行はtest tests::it_adds_two ... okであり、okというテキストはテストが通ったことを示しています！</p>
+<p>コードにバグを仕込んで、assert_eq!を使ったテストが失敗した時にどんな見た目になるのか確認してみましょう。 add_two関数の実装を代わりに3を足すように変えてください:</p>
+<p>This code does not produce the desired behavior.</p>
+<pre><pre class="playground"><code class="language-rust">pub fn add_two(a: i32) -&gt; i32 {
+    a + 3
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn it_adds_two() {
+        assert_eq!(4, add_two(2));
+    }
+}
+
+fn main() {}
+</code></pre></pre>
+<p>テストを再度実行します:</p>
+<pre><code>$ cargo test
+   Compiling adder v0.1.0 (file:///projects/adder)
+    Finished test [unoptimized + debuginfo] target(s) in 0.61s
+     Running target/debug/deps/adder-92948b65e88960b4
+
+running 1 test
+test tests::it_adds_two ... FAILED
+
+failures:
+
+---- tests::it_adds_two stdout ----
+thread 'main' panicked at 'assertion failed: `(left == right)`
+  left: `4`,
+ right: `5`', src/lib.rs:11:9
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace.
+
+
+failures:
+    tests::it_adds_two
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+
+error: test failed, to rerun pass '--lib'
+</code></pre>
+<p>テストがバグを捕捉しました！it_adds_twoのテストは失敗し、assertion failed: <code>(left == right)</code>というメッセージを表示し、 leftは4で、rightは5だったと示しています。このメッセージは有用で、デバッグを開始する助けになります: assert_eq!のleft引数は4だったが、add_two(2)があるright引数は5だったことを意味しています。</p>
+<p>二つの値が等しいとアサーションを行う関数の引数を expectedとactualと呼び、引数を指定する順序が問題になる言語やテストフレームワークもあることに注意してください。 ですがRustでは、leftとrightと呼ばれ、期待する値とテスト下のコードが生成する値を指定する順序は 問題になりません。今回のテストのアサーションをassert_eq!(add_two(2), 4)と書くこともでき、 そうすると失敗メッセージは、assertion failed: <code>(left == right)</code>となり、 leftが5でrightが4と表示されるでしょう。</p>
+<p>assert_ne!マクロは、与えた2つの値が等しくなければ通り、等しければ失敗します。 このマクロは、値が何になるだろうか確信が持てないけれども、コードが意図した通りに動いていれば、 確実にこの値にはならないだろうとわかっているような場合に最も有用になります。例えば、 入力を何らかの手段で変え（て出力す）ることが保証されているけれども、入力の変え方がテストを実行する曜日に依存する関数をテストしているなら、 アサーションすべき最善の事柄は、関数の出力が入力と等しくないことかもしれません。</p>
+<p>内部的には、assert_eq!とassert_ne!マクロは、それぞれ==と!=演算子を使用しています。 アサーションが失敗すると、これらのマクロは引数をデバッグフォーマットを使用してプリントするので、 比較対象の値はPartialEqとDebugトレイトを実装していなければなりません。 すべての組み込み型と、ほぼすべての標準ライブラリの型はこれらのトレイトを実装しています。 自分で定義した構造体やenumについては、 その型の値が等しいか等しくないかをアサーションするために、PartialEqを実装する必要があるでしょう。 それが失敗した時にその値をプリントできるように、Debugを実装する必要もあるでしょう。 第5章のリスト5-12で触れたように、どちらのトレイトも導出可能なトレイトなので、 これは通常、単純に構造体やenum定義に#[derive(PartialEq, Debug)]という注釈を追加するだけですみます。 これらやその他の導出可能なトレイトに関する詳細については、付録C、導出可能なトレイトをご覧ください。</p>
+<h2 id="カスタムの失敗メッセージを追加する"><a class="header" href="#カスタムの失敗メッセージを追加する">カスタムの失敗メッセージを追加する</a></h2>
+<p>さらに、assert!、assert_eq!、assert_ne!の追加引数として、失敗メッセージと共にカスタムのメッセージが表示されるよう、 追加することもできます。assert!の1つの必須引数の後に、 あるいはassert_eq!とassert_ne!の2つの必須引数の後に指定された引数はすべてformat!マクロに渡されるので、 （format!マクロについては第8章の+演算子、またはformat!マクロで連結節で議論しました）、 {}プレースホルダーを含むフォーマット文字列とこのプレースホルダーに置き換えられる値を渡すことができます。 カスタムメッセージは、アサーションがどんな意味を持つかドキュメント化するのに役に立ちます; もしテストが失敗した時、コードにどんな問題があるのかをよりしっかり把握できるはずです。</p>
+<blockquote>
+<p>エラーメッセージを追加できると「わかりにくさ」から「わかりやすさ」が表現されます</p>
+<p>例えば日本語のエラーメッセージは表現がしやすいです。</p>
+</blockquote>
+<p>例として、人々に名前で挨拶をする関数があり、関数に渡した名前が出力に出現することをテストしたいとしましょう:</p>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">pub fn greeting(name: &amp;str) -&gt; String {
+    format!(&quot;Hello {}!&quot;, name)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn greeting_contains_name() {
+        let result = greeting(&quot;Carol&quot;);
+        assert!(result.contains(&quot;Carol&quot;));
+    }
+}
+
+fn main() {}
+</code></pre></pre>
+<p>このプログラムの要件はまだ取り決められておらず、挨拶の先頭のHelloというテキストはおそらく変わります。 要件が変わった時にテストを更新しなくてもよいようにしたいと考え、 greeting関数から返る値と正確な等値性を確認するのではなく、出力が入力引数のテキストを含むことをアサーションするだけにします。</p>
+<p>greetingがnameを含まないように変更してこのコードにバグを仕込み、このテストの失敗がどんな風になるのか確かめましょう:</p>
+<pre><pre class="playground"><code class="language-rust">pub fn greeting(name: &amp;str) -&gt; String {
+    String::from(&quot;Hello!&quot;)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn greeting_contains_name() {
+        let result = greeting(&quot;Carol&quot;);
+        assert!(result.contains(&quot;Carol&quot;));
+    }
+}
+
+fn main() {}
+</code></pre></pre>
+<p>このテストを実行すると、以下のように出力されます:</p>
+<pre><code>$ cargo test
+   Compiling greeter v0.1.0 (file:///projects/greeter)
+    Finished test [unoptimized + debuginfo] target(s) in 0.91s
+     Running target/debug/deps/greeter-170b942eb5bf5e3a
+
+running 1 test
+test tests::greeting_contains_name ... FAILED
+
+failures:
+
+---- tests::greeting_contains_name stdout ----
+thread 'main' panicked at 'assertion failed: result.contains(&quot;Carol&quot;)', src/lib.rs:12:9
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace.
+
+
+failures:
+    tests::greeting_contains_name
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+
+error: test failed, to rerun pass '--lib'
+</code></pre>
+<p>この結果は、アサーションが失敗し、どの行にアサーションがあるかを示しているだけです。 今回の場合、失敗メッセージがgreeting関数から得た値を出力していればより有用でしょう。 テスト関数を変更し、 greeting関数から得た実際の値で埋められるプレースホルダーを含むフォーマット文字列からなるカスタムの失敗メッセージを与えてみましょう。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn greeting(name: &amp;str) -&gt; String {
+    String::from(&quot;Hello!&quot;)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn greeting_contains_name() {
+        let result = greeting(&quot;Carol&quot;);
+        assert!(
+            result.contains(&quot;Carol&quot;),
+            //挨拶(greeting)は名前を含んでいません。その値は`{}`でした
+            &quot;Greeting did not contain name, value was `{}`&quot;,
+            result
+        );
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>これでテストを実行したら、より有益なエラーメッセージが得られるでしょう:</p>
+<pre><code>$ cargo test
+   Compiling greeter v0.1.0 (file:///projects/greeter)
+    Finished test [unoptimized + debuginfo] target(s) in 0.93s
+     Running target/debug/deps/greeter-170b942eb5bf5e3a
+
+running 1 test
+test tests::greeting_contains_name ... FAILED
+
+failures:
+
+---- tests::greeting_contains_name stdout ----
+thread 'main' panicked at 'Greeting did not contain name, value was `Hello!`', src/lib.rs:12:9
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace.
+
+
+failures:
+    tests::greeting_contains_name
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+
+error: test failed, to rerun pass '--lib'
+</code></pre>
+<p>実際に得られた値がテスト出力に表示されているので、起こると想定していたものではなく、 起こったものをデバッグするのに役に立ちます。</p>
+<h2 id="should_panicでパニックを確認する"><a class="header" href="#should_panicでパニックを確認する">should_panicでパニックを確認する</a></h2>
+<p>期待する正しい値をコードが返すことを確認することに加えて、想定通りにコードがエラー状態を扱っていることを確認するのも重要です。 例えば、第9章のリスト9-10で生成したGuess型を考えてください。Guessを使用する他のコードは、 Guessのインスタンスは1から100の範囲の値しか含まないという保証に依存しています。 その範囲外の値でGuessインスタンスを生成しようとするとパニックすることを確認するテストを書くことができます。</p>
+<p>これは、テスト関数にshould_panicという別の属性を追加することで達成できます。 この属性は、関数内のコードがパニックしたら、テストを通過させます。つまり、 関数内のコードがパニックしなかったら、テストは失敗するわけです。</p>
+<p>リスト11-8は、予想どおりにGuess::newのエラー条件が発生していることを確認するテストを示しています。</p>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">pub struct Guess {
+    value: i32,
+}
+
+impl Guess {
+    pub fn new(value: i32) -&gt; Guess {
+        if value &lt; 1 || value &gt; 100 {
+            //予想値は1から100の間でなければなりませんが、{}でした。
+            panic!(&quot;Guess value must be between 1 and 100, got {}.&quot;, value);
+        }
+
+        Guess { value }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    #[should_panic]
+    fn greater_than_100() {
+        Guess::new(200);
+    }
+}
+
+fn main() {}
+</code></pre></pre>
+<p>リスト11-8: 状況がpanic!を引き起こすとテストする</p>
+<p>#[test]属性の後、適用するテスト関数の前に#[should_panic]属性を配置しています。 このテストが通るときの結果を見ましょう:</p>
+<pre><code>$ cargo test
+   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+    Finished test [unoptimized + debuginfo] target(s) in 0.58s
+     Running target/debug/deps/guessing_game-57d70c3acb738f4d
+
+running 1 test
+test tests::greater_than_100 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+   Doc-tests guessing_game
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+</code></pre>
+<p>よさそうですね！では、値が100より大きいときにnew関数がパニックするという条件を除去することでコードにバグを導入しましょう:</p>
+<blockquote>
+<p>関数の実行結果がパニックになる可能性のある関数を実行した時にパニックすればテスト成功というテストを実施する</p>
+</blockquote>
+<pre><pre class="playground"><code class="language-rust">pub struct Guess {
+    value: i32,
+}
+
+// --snip--
+impl Guess {
+    pub fn new(value: i32) -&gt; Guess {
+        if value &lt; 1 {
+            //予想値は1から100の間でなければなりませんが、{}でした。
+            panic!(&quot;Guess value must be between 1 and 100, got {}.&quot;, value);
+        }
+
+        Guess { value }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    #[should_panic]
+    fn greater_than_100() {
+        Guess::new(200);
+    }
+}
+
+fn main() {}
+</code></pre></pre>
+<p>リスト11-8のテストを実行すると、失敗するでしょう:</p>
+<pre><code>$ cargo test
+   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+    Finished test [unoptimized + debuginfo] target(s) in 0.62s
+     Running target/debug/deps/guessing_game-57d70c3acb738f4d
+
+running 1 test
+test tests::greater_than_100 ... FAILED
+
+failures:
+
+---- tests::greater_than_100 stdout ----
+note: test did not panic as expected
+
+failures:
+    tests::greater_than_100
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+
+error: test failed, to rerun pass '--lib'
+</code></pre>
+<p>この場合、それほど役に立つメッセージは得られませんが、テスト関数に目を向ければ、 #[should_panic]で注釈されていることがわかります。得られた失敗は、 テスト関数のコードがパニックを引き起こさなかったことを意味するのです。</p>
+<p>should_panicを使用するテストは不正確なこともあります。なぜなら、コードが何らかのパニックを起こしたことしか示さないからです。 should_panicのテストは、起きると想定していたもの以外の理由でテストがパニックしても通ってしまうのです。 should_panicのテストの正確を期すために、should_panic属性にexpected引数を追加することもできます。 このテストハーネスは、失敗メッセージに与えられたテキストが含まれていることを確かめてくれます。 例えば、リスト11-9の修正されたGuessのコードを考えてください。ここでは、 new関数は、値が大きすぎるか小さすぎるかによって異なるメッセージでパニックします。</p>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">pub struct Guess {
+    value: i32,
+}
+
+// --snip--
+impl Guess {
+    pub fn new(value: i32) -&gt; Guess {
+        if value &lt; 1 {
+            panic!(
+                //予想値は1以上でなければなりませんが、{}でした。
+                &quot;Guess value must be greater than or equal to 1, got {}.&quot;,
+                value
+            );
+        } else if value &gt; 100 {
+            panic!(
+                //予想値は100以下でなければなりませんが、{}でした。
+                &quot;Guess value must be less than or equal to 100, got {}.&quot;,
+                value
+            );
+        }
+
+        Guess { value }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    //予想値は100以下でなければなりません
+    #[should_panic(expected = &quot;Guess value must be less than or equal to 100&quot;)]
+    fn greater_than_100() {
+        Guess::new(200);
+    }
+}
+
+fn main() {}
+</code></pre></pre>
+<blockquote>
+<p>パニックが発生したことしかわからないのが欠点でもある</p>
+</blockquote>
+<p>リスト11-9: 状況が特定のパニックメッセージでpanic!を引き起こすことをテストする</p>
+<p>should_panic属性のexpected引数に置いた値がGuess::new関数がパニックしたメッセージの一部になっているので、 このテストは通ります。予想されるパニックメッセージ全体を指定することもでき、今回の場合、 Guess value must be less than or equal to 100, got 200.となります。 should_panicの予想される引数に何を指定するかは、パニックメッセージのどこが固有でどこが動的か、 またテストをどの程度正確に行いたいかによります。今回の場合、パニックメッセージの一部でも、テスト関数内のコードが、 else if value &gt; 100の場合を実行していると確認するのに事足りるのです。</p>
+<p>expectedメッセージありのshould_panicテストが失敗すると何が起きるのが確かめるために、 if value &lt; 1とelse if value &gt; 100ブロックの本体を入れ替えることで再度コードにバグを仕込みましょう:</p>
+<blockquote>
+<p>should_panicでパニック時のメッセージでどのようなパニックが発生するかをテストで確認できる。</p>
+</blockquote>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub struct Guess {
+    value: i32,
+}
+
+impl Guess {
+    pub fn new(value: i32) -&gt; Guess {
+        if value &lt; 1 {
+            panic!(
+                //予想値は100以下でなければなりませんが、{}でした。
+                &quot;Guess value must be less than or equal to 100, got {}.&quot;,
+                value
+            );
+        } else if value &gt; 100 {
+            panic!(
+                //予想値は1以上でなければなりませんが、{}でした。
+                &quot;Guess value must be greater than or equal to 1, got {}.&quot;,
+                value
+            );
+        }
+
+        Guess { value }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    #[should_panic(expected = &quot;Guess value must be less than or equal to 100&quot;)]
+    fn greater_than_100() {
+        Guess::new(200);
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>should_panicテストを実行すると、今回は失敗するでしょう:</p>
+<pre><code>$ cargo test
+   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+    Finished test [unoptimized + debuginfo] target(s) in 0.66s
+     Running target/debug/deps/guessing_game-57d70c3acb738f4d
+
+running 1 test
+test tests::greater_than_100 ... FAILED
+
+failures:
+
+---- tests::greater_than_100 stdout ----
+thread 'main' panicked at 'Guess value must be greater than or equal to 1, got 200.', src/lib.rs:13:13
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace.
+note: panic did not contain expected string
+      panic message: `&quot;Guess value must be greater than or equal to 1, got 200.&quot;`,
+ expected substring: `&quot;Guess value must be less than or equal to 100&quot;`
+
+failures:
+    tests::greater_than_100
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+
+error: test failed, to rerun pass '--lib'
+</code></pre>
+<p>この失敗メッセージは、このテストが確かに予想通りパニックしたことを示していますが、 パニックメッセージは、予想される文字列の'Guess value must be less than or equal to 100'を含んでいませんでした。 実際に得られたパニックメッセージは今回の場合、Guess value must be greater than or equal to 1, got 200でした。 そうしてバグの所在地を割り出し始めることができるわけです！</p>
+<h2 id="resultt-eをテストで使う"><a class="header" href="#resultt-eをテストで使う">Result&lt;T, E&gt;をテストで使う</a></h2>
+<p>これまでは、失敗するとパニックするようなテストを書いてきましたが、 Result&lt;T, E&gt;を使うようなテストを書くこともできます！ 以下は、Listing 11-1のテストを、Result&lt;T, E&gt;を使い、パニックする代わりにErrを返すように書き直したものです：</p>
+<pre><pre class="playground"><code class="language-rust">#![allow(unused)]
+fn main() {
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn it_works() -&gt; Result&lt;(), String&gt; {
+        if 2 + 2 == 4 {
+            Ok(())
+        } else {
+            Err(String::from(&quot;two plus two does not equal four&quot;))
+        }
+    }
+}
+}
+</code></pre></pre>
+<p>it_works関数の戻り値の型はResult&lt;(), String&gt;になりました。 関数内でassert_eq!マクロを呼び出す代わりに、テストが成功すればOk(())を、失敗すればErrにStringを入れて返すようにします。</p>
+<p>Result&lt;T, E&gt; を返すようなテストを書くと、?演算子をテストの中で使えるようになります。 これは、テスト内で何らかの工程がErrヴァリアントを返したときに失敗するべきテストを書くのに便利です。</p>
+<p>Result&lt;T, E&gt;を使うテストに#[should_panic]注釈を使うことはできません。 テストが失敗しなければならないときは、直接Err値を返してください。</p>
+<p>今やテスト記法を複数知ったので、テストを走らせる際に起きていることに目を向け、 cargo testで使用できるいろんなオプションを探究しましょう。</p>
+<blockquote>
+<p>resultのOK、Errを使用してテストをすることも可能です。</p>
+</blockquote>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="テストの実行のされ方を制御する"><a class="header" href="#テストの実行のされ方を制御する">テストの実行のされ方を制御する</a></h1>
+<p>cargo runがコードをコンパイルし、出来上がったバイナリを走らせるのと全く同様に、 cargo testはコードをテストモードでコンパイルし、出来上がったテストバイナリを実行します。 コマンドラインオプションを指定してcargo testの既定動作を変更することができます。 例えば、cargo testで生成されるバイナリの既定動作は、テストを全て並行に実行し、 テスト実行中に生成された出力をキャプチャして出力が表示されるのを防ぎ、 テスト結果に関係する出力を読みやすくすることです。</p>
+<p>コマンドラインオプションの中にはcargo testにかかるものや、出来上がったテストバイナリにかかるものがあります。 この2種の引数を区別するために、cargo testにかかる引数を--という区分記号の後に列挙し、 それからテストバイナリにかかる引数を列挙します。cargo test --helpを走らせると、cargo testで使用できるオプションが表示され、 cargo test -- --helpを走らせると、--という区分記号の後に使えるオプションが表示されます。</p>
+<h2 id="テストを並行または連続して実行する"><a class="header" href="#テストを並行または連続して実行する">テストを並行または連続して実行する</a></h2>
+<p>複数のテストを実行するとき、標準では、スレッドを使用して並行に走ります。これはつまり、 テストが早く実行し終わり、コードが機能しているいかんにかかわらず、反応をより早く得られることを意味します。 テストは同時に実行されているので、テストが相互や共有された環境を含む他の共通の状態に依存してないことを確かめてください。 現在の作業対象ディレクトリや環境変数などですね。</p>
+<p>例えば、各テストがディスクにtest_output.txtというファイルを作成し、何らかのデータを書き込むコードを走らせるとしてください。 そして、各テストはそのファイルのデータを読み取り、ファイルが特定の値を含んでいるとアサーションし、 その値は各テストで異なります。テストが同時に走るので、あるテストが、 他のテストが書き込んだり読み込んだりする間隙にファイルを上書きするかもしれません。 それから2番目のテストが失敗します。コードが不正だからではなく、 並行に実行されている間にテストがお互いに邪魔をしてしまったせいです。 各テストが異なるファイルに書き込むことを確かめるのが一つの解決策です; 別の解決策では、 一度に一つのテストを実行します。</p>
+<p>並行にテストを実行したくなかったり、使用されるスレッド数をよりきめ細かく制御したい場合、 --test-threadsフラグと使用したいスレッド数をテストバイナリに送ることができます。 以下の例に目を向けてください:</p>
+<pre><code>$ cargo test -- --test-threads=1
+</code></pre>
+<p>テストスレッドの数を1にセットし、並行性を使用しないようにプログラムに指示しています。 1スレッドのみを使用してテストを実行すると、並行に実行するより時間がかかりますが、 状態を共有していても、お互いに邪魔をすることはありません。</p>
+<blockquote>
+<p>テストをするときにスレッドの数を制御することによって依存関係のあるコードもテストができるが、時間はかかりますよという形です。</p>
+<p>これは色々やってみないとわからないですね。</p>
+</blockquote>
+<h2 id="関数の出力を表示する"><a class="header" href="#関数の出力を表示する">関数の出力を表示する</a></h2>
+<p>標準では、テストが通ると、Rustのテストライブラリは標準出力に出力されたものを全てキャプチャします。例えば、 テストでprintln!を呼び出してテストが通ると、println!の出力は、端末に表示されません; テストが通ったことを示す行しか見られないでしょう。テストが失敗すれば、 残りの失敗メッセージと共に、標準出力に出力されたものが全て見えるでしょう。</p>
+<p>例として、リスト11-10は引数の値を出力し、10を返す馬鹿げた関数と通過するテスト1つ、失敗するテスト1つです。</p>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">#![allow(unused)]
+fn main() {
+fn prints_and_returns_10(a: i32) -&gt; i32 {
+    //{}という値を得た
+    println!(&quot;I got the value {}&quot;, a);
+    10
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn this_test_will_pass() {
+        let value = prints_and_returns_10(4);
+        assert_eq!(10, value);
+    }
+
+    #[test]
+    fn this_test_will_fail() {
+        let value = prints_and_returns_10(8);
+        assert_eq!(5, value);
+    }
+}
+}
+</code></pre></pre>
+<p>リスト11-10: println!を呼び出す関数用のテスト</p>
+<p>これらのテストをcargo testで実行すると、以下のような出力を目の当たりにするでしょう:</p>
+<pre><code>running 2 tests
+test tests::this_test_will_pass ... ok
+test tests::this_test_will_fail ... FAILED
+
+failures:
+
+---- tests::this_test_will_fail stdout ----
+        I got the value 8
+thread 'tests::this_test_will_fail' panicked at 'assertion failed: `(left == right)`
+  left: `5`,
+ right: `10`', src/lib.rs:19:8
+note: Run with `RUST_BACKTRACE=1` for a backtrace.
+
+failures:
+    tests::this_test_will_fail
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+</code></pre>
+<p>この出力のどこにも I got the value 4 と表示されていないことに注意してください。 これは、テストに合格した場合に出力されるものです。 その出力はキャプチャされてしまいました。 失敗したテストのからの出力 I got the value 8 がテストサマリー出力のセクションに表示され、テストが失敗した原因も示されます。</p>
+<p>通過するテストについても出力される値が見たかったら、出力キャプチャ機能を--nocaptureフラグで無効化することができます:</p>
+<pre><code>$ cargo test -- --nocapture
+</code></pre>
+<p>リスト11-10のテストを--nocaptureフラグと共に再度実行したら、以下のような出力を目の当たりにします:</p>
+<pre><code>running 2 tests
+I got the value 4
+I got the value 8
+test tests::this_test_will_pass ... ok
+thread 'tests::this_test_will_fail' panicked at 'assertion failed: `(left == right)`
+  left: `5`,
+ right: `10`', src/lib.rs:19:8
+note: Run with `RUST_BACKTRACE=1` for a backtrace.
+test tests::this_test_will_fail ... FAILED
+
+failures:
+
+failures:
+    tests::this_test_will_fail
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+</code></pre>
+<p>テスト用の出力とテスト結果の出力がまぜこぜになっていることに注意してください; その理由は、前節で語ったようにテストが並行に実行されているからです。 -test-threads=1オプションと--nocaptureフラグを使ってみて、 その時、出力がどうなるか確かめてください！</p>
+<h2 id="名前でテストの一部を実行する"><a class="header" href="#名前でテストの一部を実行する">名前でテストの一部を実行する</a></h2>
+<p>時々、全テストを実行すると時間がかかってしまうことがあります。特定の部分のコードしか対象にしていない場合、 そのコードに関わるテストのみを走らせたいかもしれません。cargo testに走らせたいテストの名前を引数として渡すことで、 実行するテストを選ぶことができます。</p>
+<p>テストの一部を走らせる方法を模擬するために、リスト11-11に示したように、 add_two関数用に3つテストを作成し、走らせるテストを選択します。</p>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">#![allow(unused)]
+fn main() {
+pub fn add_two(a: i32) -&gt; i32 {
+    a + 2
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn add_two_and_two() {
+        assert_eq!(4, add_two(2));
+    }
+
+    #[test]
+    fn add_three_and_two() {
+        assert_eq!(5, add_two(3));
+    }
+
+    #[test]
+    fn one_hundred() {
+        assert_eq!(102, add_two(100));
+    }
+}
+}
+</code></pre></pre>
+<p>リスト11-11: 異なる名前の3つのテスト</p>
+<p>以前見かけたように、引数なしでテストを走らせたら、全テストが並行に走ります:</p>
+<pre><code>running 3 tests
+test tests::add_two_and_two ... ok
+test tests::add_three_and_two ... ok
+test tests::one_hundred ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+</code></pre>
+<h2 id="単独のテストを走らせる"><a class="header" href="#単独のテストを走らせる">単独のテストを走らせる</a></h2>
+<p>あらゆるテスト関数の名前をcargo testに渡して、そのテストのみを実行することができます:</p>
+<blockquote>
+<p>一つのテストコードだけ走らせたい場合もできます。</p>
+</blockquote>
+<pre><code>$ cargo test one_hundred
+    Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
+     Running target/debug/deps/adder-06a75b4a1f2515e9
+
+running 1 test
+test tests::one_hundred ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out
+</code></pre>
+<p>one_hundredという名前のテストだけが走りました; 他の2つのテストはその名前に合致しなかったのです。 まとめ行の最後に2 filtered outと表示することでテスト出力は、このコマンドが走らせた以上のテストがあることを知らせてくれています。</p>
+<p>この方法では、複数のテストの名前を指定することはできません; cargo testに与えられた最初の値のみが使われるのです。 ですが、複数のテストを走らせる方法もあります。</p>
+<h2 id="複数のテストを実行するようフィルターをかける"><a class="header" href="#複数のテストを実行するようフィルターをかける">複数のテストを実行するようフィルターをかける</a></h2>
+<p>テスト名の一部を指定でき、その値に合致するあらゆるテストが走ります。例えば、 我々のテストの2つがaddという名前を含むので、cargo test addを実行することで、その二つを走らせることができます:</p>
+<pre><code>$ cargo test add
+    Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
+     Running target/debug/deps/adder-06a75b4a1f2515e9
+
+running 2 tests
+test tests::add_two_and_two ... ok
+test tests::add_three_and_two ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out
+</code></pre>
+<p>このコマンドは名前にaddを含むテストを全て実行し、one_hundredという名前のテストを除外しました。 また、テストが出現するモジュールがテスト名の一部になっていて、 モジュール名でフィルターをかけることで、あるモジュール内のテスト全てを実行できることに注目してください。</p>
+<h2 id="特に要望のない限りテストを無視する"><a class="header" href="#特に要望のない限りテストを無視する">特に要望のない限りテストを無視する</a></h2>
+<p>時として、いくつかの特定のテストが実行するのに非常に時間がかかることがあり、 cargo testの実行のほとんどで除外したくなるかもしれません。引数として確かに実行したいテストを全て列挙するのではなく、 ここに示したように代わりに時間のかかるテストをignore属性で除外すると注釈することができます。</p>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">#![allow(unused)]
+fn main() {
+#[test]
+fn it_works() {
+    assert_eq!(2 + 2, 4);
+}
+
+#[test]
+#[ignore]
+fn expensive_test() {
+    // 実行に1時間かかるコード
+    // code that takes an hour to run
+}
+}
+</code></pre></pre>
+<p>#[test]の後の除外したいテストに#[ignore]行を追加しています。これで、 テストを実行したら、it_worksは実行されるものの、expensive_testは実行されません:</p>
+<blockquote>
+<p>テスト全体で無視することもできます。</p>
+</blockquote>
+<pre><code>$ cargo test
+   Compiling adder v0.1.0 (file:///projects/adder)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.24 secs
+     Running target/debug/deps/adder-ce99bcc2479f4607
+
+running 2 tests
+test expensive_test ... ignored
+test it_works ... ok
+
+test result: ok. 1 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out
+</code></pre>
+<p>expensive_test関数は、ignoredと列挙されています。無視されるテストのみを実行したかったら、 cargo test -- --ignoredを使うことができます:</p>
+<pre><code>$ cargo test -- --ignored
+    Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
+     Running target/debug/deps/adder-ce99bcc2479f4607
+
+running 1 test
+test expensive_test ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out
+</code></pre>
+<p>どのテストを走らせるか制御することで、結果が早く出ることを確かめることができるのです。 ignoredテストの結果を確認することが道理に合い、結果を待つだけの時間ができたときに、 代わりにcargo test -- --ignoredを走らせることができます。</p>
+<blockquote>
+<p>testコードに関しては色々なテストができます。戦略的に考えて色々やっていきましょう！</p>
+</blockquote>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="テストの体系化"><a class="header" href="#テストの体系化">テストの体系化</a></h1>
+<p>章の初めで触れたように、テストは複雑な鍛錬であり、人によって専門用語や体系化が異なります。 Rustのコミュニティでは、テストを2つの大きなカテゴリで捉えています: 単体テストと結合テストです。 単体テストは小規模でより集中していて、個別に1回に1モジュールをテストし、非公開のインターフェイスもテストすることがあります。 結合テストは、完全にライブラリ外になり、他の外部コード同様に自分のコードを使用し、公開インターフェイスのみ使用し、 1テストにつき複数のモジュールを用いることもあります。</p>
+<p>どちらのテストを書くのも、ライブラリの一部が個別かつ共同でしてほしいことをしていることを確認するのに重要なのです。</p>
+<h2 id="単体テスト"><a class="header" href="#単体テスト">単体テスト</a></h2>
+<p>単体テストの目的は、残りのコードから切り離して各単位のコードをテストし、 コードが想定通り、動いたり動いていなかったりする箇所を迅速に特定することです。 単体テストは、テスト対象となるコードと共に、srcディレクトリの各ファイルに置きます。 慣習は、各ファイルにtestsという名前のモジュールを作り、テスト関数を含ませ、 そのモジュールをcfg(test)で注釈することです。</p>
+<h2 id="テストモジュールとcfgtest"><a class="header" href="#テストモジュールとcfgtest">テストモジュールと#[cfg(test)]</a></h2>
+<p>testsモジュールの#[cfg(test)]という注釈は、コンパイラにcargo buildを走らせた時ではなく、cargo testを走らせた時にだけ、 テストコードをコンパイルし走らせるよう指示します。これにより、ライブラリをビルドしたいだけの時にはコンパイルタイムを節約し、 テストが含まれないので、コンパイル後の成果物のサイズも節約します。結合テストは別のディレクトリに存在することになるので、 #[cfg(test)]注釈は必要ないとわかるでしょう。しかしながら、単体テストはコードと同じファイルに存在するので、 #[cfg(test)]を使用してコンパイル結果に含まれないよう指定するのです。</p>
+<p>この章の最初の節で新しいadderプロジェクトを生成した時に、Cargoがこのコードも生成してくれたことを思い出してください:</p>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">#![allow(unused)]
+fn main() {
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn it_works() {
+        assert_eq!(2 + 2, 4);
+    }
+}
+}
+</code></pre></pre>
+<p>このコードが自動生成されたテストモジュールです。cfgという属性は、configurationを表していて、 コンパイラに続く要素が、ある特定の設定オプションを与えられたら、含まれるように指示します。 今回の場合、設定オプションは、testであり、言語によって提供されているテストをコンパイルし、 走らせるためのものです。cfg属性を使用することで、cargo testで積極的にテストを実行した場合のみ、 Cargoがテストコードをコンパイルします。これには、このモジュールに含まれるかもしれないヘルパー関数全ても含まれ、 #[test]で注釈された関数だけにはなりません。</p>
+<h2 id="非公開関数をテストする"><a class="header" href="#非公開関数をテストする">非公開関数をテストする</a></h2>
+<p>テストコミュニティ内で非公開関数を直接テストするべきかについては議論があり、 他の言語では非公開関数をテストするのは困難だったり、不可能だったりします。 あなたがどちらのテストイデオロギーを支持しているかに関わらず、Rustの公開性規則により、 非公開関数をテストすることが確かに可能です。リスト11-12の非公開関数internal_adderを含むコードを考えてください。</p>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">#![allow(unused)]
+fn main() {
+pub fn add_two(a: i32) -&gt; i32 {
+    internal_adder(a, 2)
+}
+
+fn internal_adder(a: i32, b: i32) -&gt; i32 {
+    a + b
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn internal() {
+        assert_eq!(4, internal_adder(2, 2));
+    }
+}
+}
+</code></pre></pre>
+<blockquote>
+<p>ここではinternal_adderの関数が非公開です。他の言語ではこの非公開な関数についてテストしなくてもいいんじゃない？という動きがあると主張しているのでしょう。</p>
+</blockquote>
+<p>リスト11-12: 非公開関数をテストする</p>
+<p>internal_adder関数はpubとマークされていないものの、テストも単なるRustのコードであり、 testsモジュールもただのモジュールでしかないので、テスト内でinternal_adderを普通にインポートし呼び出すことができます。 非公開関数はテストするべきではないとお考えなら、Rustにはそれを強制するものは何もありません。</p>
+<blockquote>
+<p>これは考えによります。まずはテストがどういうものなのか把握する必要があるので、どんどんテストは書いていきましょう！</p>
+</blockquote>
+<h2 id="結合テスト"><a class="header" href="#結合テスト">結合テスト</a></h2>
+<p>Rustにおいて、結合テストは完全にライブラリ外のものです。他のコードと全く同様にあなたのライブラリを使用するので、 ライブラリの公開APIの一部である関数しか呼び出すことはできません。その目的は、 ライブラリのいろんな部分が共同で正常に動作しているかをテストすることです。 単体では正常に動くコードも、結合した状態だと問題を孕む可能性もあるので、 結合したコードのテストの範囲も同様に重要になるのです。結合テストを作成するには、 まずtestsディレクトリが必要になります。</p>
+<blockquote>
+<p>「結合テストを作成するには、まずtestsディレクトリが必要になります</p>
+</blockquote>
+<h2 id="testsディレクトリ"><a class="header" href="#testsディレクトリ">testsディレクトリ</a></h2>
+<p>プロジェクトディレクトリのトップ階層、srcの隣にtestsディレクトリを作成します。 Cargoは、このディレクトリに結合テストのファイルを探すことを把握しています。 そして、このディレクトリ内にいくらでもテストファイルを作成することができ、 Cargoはそれぞれのファイルを個別のクレートとしてコンパイルします。</p>
+<p>結合テストを作成しましょう。リスト11-12のコードがsrc/lib.rsファイルにあるまま、 testsディレクトリを作成し、tests/integration_test.rsという名前の新しいファイルを生成し、 リスト11-13のコードを入力してください。</p>
+<p>ファイル名: tests/integration_test.rs</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>extern crate adder;
+
+#[test]
+fn it_adds_two() {
+    assert_eq!(4, adder::add_two(2));
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>リスト11-13: adderクレートの関数の結合テスト</p>
+<p>コードの頂点にextern crate adderを追記しましたが、これは単体テストでは必要なかったものです。 理由は、testsディレクトリのテストはそれぞれ個別のクレートであるため、 各々ライブラリをインポートする必要があるためです。</p>
+<p>tests/integration_test.rsのどんなコードも#[cfg(test)]で注釈する必要はありません。 Cargoはtestsディレクトリを特別に扱い、cargo testを走らせた時にのみこのディレクトリのファイルをコンパイルするのです。 さあ、cargo testを実行してください:</p>
+<pre><code>$ cargo test
+   Compiling adder v0.1.0 (file:///projects/adder)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.31 secs
+     Running target/debug/deps/adder-abcabcabc
+
+running 1 test
+test tests::internal ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/integration_test-ce99bcc2479f4607
+
+running 1 test
+test it_adds_two ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+   Doc-tests adder
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+</code></pre>
+<p>3つの区域の出力が単体テスト、結合テスト、ドックテストを含んでいます。単体テスト用の最初の区域は、 今まで見てきたものと同じです: 各単体テストに1行(リスト11-12で追加したinternalという名前のもの)と、 単体テストのサマリー行です。</p>
+<p>結合テストの区域は、 Running target/debug/deps/integration-test-ce99bcc2479f4607という行で始まっています(最後のハッシュはあなたの出力とは違うでしょう)。 次に、この結合テストの各テスト関数用の行があり、Doc-tests adder区域が始まる直前に、 結合テストの結果用のサマリー行があります。</p>
+<p>単体テスト関数を追加することで単体テスト区域のテスト結果の行が増えたように、 作成した結合テストファイルにテスト関数を追加することでそのファイルの区域に結果の行が増えることになります。 結合テストファイルはそれぞれ独自の区域があるため、testsディレクトリにさらにファイルを追加すれば、 結合テストの区域が増えることになるでしょう。</p>
+<p>それでも、テスト関数の名前を引数としてcargo testに指定することで、特定の結合テスト関数を走らせることができます。 特定の結合テストファイルにあるテストを全て走らせるには、cargo testに--test引数、 その後にファイル名を続けて使用してください:</p>
+<blockquote>
+<p>1つの結合テストは1つのファイルで実施する</p>
+</blockquote>
+<pre><code>$ cargo test --test integration_test
+    Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
+     Running target/debug/integration_test-952a27e0126bb565
+
+running 1 test
+test it_adds_two ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+</code></pre>
+<p>このコマンドは、tests/integration_test.rsファイルにあるテストのみを実行します。</p>
+<h2 id="結合テスト内のサブモジュール"><a class="header" href="#結合テスト内のサブモジュール">結合テスト内のサブモジュール</a></h2>
+<p>結合テストを追加するにつれて、testsディレクトリに2つ以上のファイルを作成して体系化したくなるかもしれません; 例えば、テスト対象となる機能でテスト関数をグループ化することができます。前述したように、 testsディレクトリの各ファイルは、個別のクレートとしてコンパイルされます。</p>
+<p>各結合テストファイルをそれ自身のクレートとして扱うと、 エンドユーザがあなたのクレートを使用するかのように個別のスコープを生成するのに役立ちます。 ですが、これはtestsディレクトリのファイルが、コードをモジュールとファイルに分ける方法に関して第7章で学んだように、 srcのファイルとは同じ振る舞いを共有しないことを意味します。</p>
+<p>testsディレクトリのファイルの異なる振る舞いは、複数の結合テストファイルで役に立ちそうなヘルパー関数ができ、 第7章の「モジュールを別のファイルに移動する」節の手順に従って共通モジュールに抽出しようとした時に最も気付きやすくなります。 例えば、tests/common.rsを作成し、そこにsetupという名前の関数を配置したら、 複数のテストファイルの複数のテスト関数から呼び出したいsetupに何らかのコードを追加することができます:</p>
+<p>ファイル名: tests/common.rs</p>
+<pre><pre class="playground"><code class="language-rust">#![allow(unused)]
+fn main() {
+pub fn setup() {
+    // ここにライブラリテスト固有のコードが来る
+    // setup code specific to your library's tests would go here
+}
+}
+</code></pre></pre>
+<p>再度テストを実行すると、common.rsファイルは何もテスト関数を含んだり、setup関数をどこかから呼んだりしてないのに、 テスト出力にcommon.rs用の区域が見えるでしょう。</p>
+<pre><code>running 1 test
+test tests::internal ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/common-b8b07b6f1be2db70 // これは望んだ結果ではない。
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/integration_test-d993c68b431d39df
+
+running 1 test
+test it_adds_two ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+   Doc-tests adder
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+</code></pre>
+<p>commonがrunning 0 testsとテスト結果に表示されるのは、望んだ結果ではありません。 ただ単に他の結合テストファイルと何らかのコードを共有したかっただけです。</p>
+<p>commonがテスト出力に出現するのを防ぐには、tests/common.rsを作成する代わりに、 tests/common/mod.rsを作成します。第7章の「モジュールファイルシステムの規則」節において、 module_name/mod.rsという命名規則をサブモジュールのあるモジュールのファイルに使用しました。 ここではcommonにサブモジュールはありませんが、 このように命名することでコンパイラにcommonモジュールを結合テストファイルとして扱わないように指示します。 setup関数のコードをtests/common/mod.rsに移動し、tests/common.rsファイルを削除すると、 テスト出力に区域はもう表示されなくなります。testsディレクトリのサブディレクトリ内のファイルは個別クレートとしてコンパイルされたり、 テスト出力に区域が表示されることがないのです。</p>
+<p>tests/common/mod.rsを作成した後、それをどの結合テストファイルからもモジュールとして使用することができます。 こちらは、tests/integration_test.rs内のit_adds_twoテストからsetup関数を呼び出す例です:</p>
+<p>ファイル名: tests/integration_test.rs</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>extern crate adder;
+
+mod common;
+
+#[test]
+fn it_adds_two() {
+    common::setup();
+    assert_eq!(4, adder::add_two(2));
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>mod common;という宣言は、リスト7-21で模擬したモジュール宣言と同じであることに注意してください。それから、テスト関数内でcommon::setup()関数を呼び出すことができます。</p>
+<blockquote>
+<p>testsの配下だと結合テストファイルとして認識されているのかな？またサブディレクトリ以下のファイルは結合テストファイルとして認識されるのかな？</p>
+</blockquote>
+<h2 id="バイナリクレート用の結合テスト"><a class="header" href="#バイナリクレート用の結合テスト">バイナリクレート用の結合テスト</a></h2>
+<p>もしもプロジェクトがsrc/main.rsファイルのみを含み、src/lib.rsファイルを持たないバイナリクレートだったら、 testsディレクトリに結合テストを作成し、 extern crateを使用してsrc/main.rsファイルに定義された関数をインポートすることはできません。 ライブラリクレートのみが、他のクレートが呼び出して使用できる関数を晒せるのです; バイナリクレートはそれ単体で実行することを意味しています。</p>
+<p>これは、バイナリを提供するRustのプロジェクトに、 src/lib.rsファイルに存在するロジックを呼び出す単純なsrc/main.rsファイルがある一因になっています。 この構造を使用して結合テストは、extern crateを使用して重要な機能を用いることでライブラリクレートをテストすることができます。 この重要な機能が動作すれば、src/main.rsファイルの少量のコードも動作し、その少量のコードはテストする必要がないわけです。</p>
+<h1 id="まとめ-1"><a class="header" href="#まとめ-1">まとめ</a></h1>
+<p>Rustのテスト機能は、変更を加えた後でさえ想定通りにコードが機能し続けることを保証して、 コードが機能すべき方法を指定する手段を提供します。単体テストはライブラリの異なる部分を個別に用い、 非公開の実装詳細をテストすることができます。結合テストは、ライブラリのいろんな部分が共同で正常に動作することを確認し、 ライブラリの公開APIを使用して外部コードが使用するのと同じ方法でコードをテストします。 Rustの型システムと所有権ルールにより防がれるバグの種類もあるものの、それでもテストは、 コードが振る舞うと予想される方法に関するロジックのバグを減らすのに重要なのです。</p>
+<p>この章と以前の章で学んだ知識を結集して、とあるプロジェクトに取り掛かりましょう！</p>
 
                     </main>
 

@@ -1,0 +1,410 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>テストの体系化 - rust-study-log</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../generic_trait_liftime/june.html"><strong aria-hidden="true">1.</strong> ジェネリック型、トレイト、ライフタイム</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../generic_trait_liftime/generic.html"><strong aria-hidden="true">1.1.</strong> ジェネリックなデータ型</a></li><li class="chapter-item expanded "><a href="../generic_trait_liftime/trait.html"><strong aria-hidden="true">1.2.</strong> トレイト：共通の振る舞いを定義する</a></li><li class="chapter-item expanded "><a href="../generic_trait_liftime/lifetime.html"><strong aria-hidden="true">1.3.</strong> ライフタイムで参照を検証する</a></li></ol></li><li class="chapter-item expanded "><a href="../auto_tests/writing_automated_tests.html"><strong aria-hidden="true">2.</strong> 自動テストを書く</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../auto_tests/how_to_wirite_tests.html"><strong aria-hidden="true">2.1.</strong> テストの記述法</a></li><li class="chapter-item expanded "><a href="../auto_tests/control_how_test_are_executed.html"><strong aria-hidden="true">2.2.</strong> テストの実行のされ方を制御する</a></li><li class="chapter-item expanded "><a href="../auto_tests/systematization_of_testing.html" class="active"><strong aria-hidden="true">2.3.</strong> テストの体系化</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">rust-study-log</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        
+
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="テストの体系化"><a class="header" href="#テストの体系化">テストの体系化</a></h1>
+<p>章の初めで触れたように、テストは複雑な鍛錬であり、人によって専門用語や体系化が異なります。 Rustのコミュニティでは、テストを2つの大きなカテゴリで捉えています: 単体テストと結合テストです。 単体テストは小規模でより集中していて、個別に1回に1モジュールをテストし、非公開のインターフェイスもテストすることがあります。 結合テストは、完全にライブラリ外になり、他の外部コード同様に自分のコードを使用し、公開インターフェイスのみ使用し、 1テストにつき複数のモジュールを用いることもあります。</p>
+<p>どちらのテストを書くのも、ライブラリの一部が個別かつ共同でしてほしいことをしていることを確認するのに重要なのです。</p>
+<h2 id="単体テスト"><a class="header" href="#単体テスト">単体テスト</a></h2>
+<p>単体テストの目的は、残りのコードから切り離して各単位のコードをテストし、 コードが想定通り、動いたり動いていなかったりする箇所を迅速に特定することです。 単体テストは、テスト対象となるコードと共に、srcディレクトリの各ファイルに置きます。 慣習は、各ファイルにtestsという名前のモジュールを作り、テスト関数を含ませ、 そのモジュールをcfg(test)で注釈することです。</p>
+<h2 id="テストモジュールとcfgtest"><a class="header" href="#テストモジュールとcfgtest">テストモジュールと#[cfg(test)]</a></h2>
+<p>testsモジュールの#[cfg(test)]という注釈は、コンパイラにcargo buildを走らせた時ではなく、cargo testを走らせた時にだけ、 テストコードをコンパイルし走らせるよう指示します。これにより、ライブラリをビルドしたいだけの時にはコンパイルタイムを節約し、 テストが含まれないので、コンパイル後の成果物のサイズも節約します。結合テストは別のディレクトリに存在することになるので、 #[cfg(test)]注釈は必要ないとわかるでしょう。しかしながら、単体テストはコードと同じファイルに存在するので、 #[cfg(test)]を使用してコンパイル結果に含まれないよう指定するのです。</p>
+<p>この章の最初の節で新しいadderプロジェクトを生成した時に、Cargoがこのコードも生成してくれたことを思い出してください:</p>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">#![allow(unused)]
+fn main() {
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn it_works() {
+        assert_eq!(2 + 2, 4);
+    }
+}
+}
+</code></pre></pre>
+<p>このコードが自動生成されたテストモジュールです。cfgという属性は、configurationを表していて、 コンパイラに続く要素が、ある特定の設定オプションを与えられたら、含まれるように指示します。 今回の場合、設定オプションは、testであり、言語によって提供されているテストをコンパイルし、 走らせるためのものです。cfg属性を使用することで、cargo testで積極的にテストを実行した場合のみ、 Cargoがテストコードをコンパイルします。これには、このモジュールに含まれるかもしれないヘルパー関数全ても含まれ、 #[test]で注釈された関数だけにはなりません。</p>
+<h2 id="非公開関数をテストする"><a class="header" href="#非公開関数をテストする">非公開関数をテストする</a></h2>
+<p>テストコミュニティ内で非公開関数を直接テストするべきかについては議論があり、 他の言語では非公開関数をテストするのは困難だったり、不可能だったりします。 あなたがどちらのテストイデオロギーを支持しているかに関わらず、Rustの公開性規則により、 非公開関数をテストすることが確かに可能です。リスト11-12の非公開関数internal_adderを含むコードを考えてください。</p>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">#![allow(unused)]
+fn main() {
+pub fn add_two(a: i32) -&gt; i32 {
+    internal_adder(a, 2)
+}
+
+fn internal_adder(a: i32, b: i32) -&gt; i32 {
+    a + b
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn internal() {
+        assert_eq!(4, internal_adder(2, 2));
+    }
+}
+}
+</code></pre></pre>
+<blockquote>
+<p>ここではinternal_adderの関数が非公開です。他の言語ではこの非公開な関数についてテストしなくてもいいんじゃない？という動きがあると主張しているのでしょう。</p>
+</blockquote>
+<p>リスト11-12: 非公開関数をテストする</p>
+<p>internal_adder関数はpubとマークされていないものの、テストも単なるRustのコードであり、 testsモジュールもただのモジュールでしかないので、テスト内でinternal_adderを普通にインポートし呼び出すことができます。 非公開関数はテストするべきではないとお考えなら、Rustにはそれを強制するものは何もありません。</p>
+<blockquote>
+<p>これは考えによります。まずはテストがどういうものなのか把握する必要があるので、どんどんテストは書いていきましょう！</p>
+</blockquote>
+<h2 id="結合テスト"><a class="header" href="#結合テスト">結合テスト</a></h2>
+<p>Rustにおいて、結合テストは完全にライブラリ外のものです。他のコードと全く同様にあなたのライブラリを使用するので、 ライブラリの公開APIの一部である関数しか呼び出すことはできません。その目的は、 ライブラリのいろんな部分が共同で正常に動作しているかをテストすることです。 単体では正常に動くコードも、結合した状態だと問題を孕む可能性もあるので、 結合したコードのテストの範囲も同様に重要になるのです。結合テストを作成するには、 まずtestsディレクトリが必要になります。</p>
+<blockquote>
+<p>「結合テストを作成するには、まずtestsディレクトリが必要になります</p>
+</blockquote>
+<h2 id="testsディレクトリ"><a class="header" href="#testsディレクトリ">testsディレクトリ</a></h2>
+<p>プロジェクトディレクトリのトップ階層、srcの隣にtestsディレクトリを作成します。 Cargoは、このディレクトリに結合テストのファイルを探すことを把握しています。 そして、このディレクトリ内にいくらでもテストファイルを作成することができ、 Cargoはそれぞれのファイルを個別のクレートとしてコンパイルします。</p>
+<p>結合テストを作成しましょう。リスト11-12のコードがsrc/lib.rsファイルにあるまま、 testsディレクトリを作成し、tests/integration_test.rsという名前の新しいファイルを生成し、 リスト11-13のコードを入力してください。</p>
+<p>ファイル名: tests/integration_test.rs</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>extern crate adder;
+
+#[test]
+fn it_adds_two() {
+    assert_eq!(4, adder::add_two(2));
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>リスト11-13: adderクレートの関数の結合テスト</p>
+<p>コードの頂点にextern crate adderを追記しましたが、これは単体テストでは必要なかったものです。 理由は、testsディレクトリのテストはそれぞれ個別のクレートであるため、 各々ライブラリをインポートする必要があるためです。</p>
+<p>tests/integration_test.rsのどんなコードも#[cfg(test)]で注釈する必要はありません。 Cargoはtestsディレクトリを特別に扱い、cargo testを走らせた時にのみこのディレクトリのファイルをコンパイルするのです。 さあ、cargo testを実行してください:</p>
+<pre><code>$ cargo test
+   Compiling adder v0.1.0 (file:///projects/adder)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.31 secs
+     Running target/debug/deps/adder-abcabcabc
+
+running 1 test
+test tests::internal ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/integration_test-ce99bcc2479f4607
+
+running 1 test
+test it_adds_two ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+   Doc-tests adder
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+</code></pre>
+<p>3つの区域の出力が単体テスト、結合テスト、ドックテストを含んでいます。単体テスト用の最初の区域は、 今まで見てきたものと同じです: 各単体テストに1行(リスト11-12で追加したinternalという名前のもの)と、 単体テストのサマリー行です。</p>
+<p>結合テストの区域は、 Running target/debug/deps/integration-test-ce99bcc2479f4607という行で始まっています(最後のハッシュはあなたの出力とは違うでしょう)。 次に、この結合テストの各テスト関数用の行があり、Doc-tests adder区域が始まる直前に、 結合テストの結果用のサマリー行があります。</p>
+<p>単体テスト関数を追加することで単体テスト区域のテスト結果の行が増えたように、 作成した結合テストファイルにテスト関数を追加することでそのファイルの区域に結果の行が増えることになります。 結合テストファイルはそれぞれ独自の区域があるため、testsディレクトリにさらにファイルを追加すれば、 結合テストの区域が増えることになるでしょう。</p>
+<p>それでも、テスト関数の名前を引数としてcargo testに指定することで、特定の結合テスト関数を走らせることができます。 特定の結合テストファイルにあるテストを全て走らせるには、cargo testに--test引数、 その後にファイル名を続けて使用してください:</p>
+<blockquote>
+<p>1つの結合テストは1つのファイルで実施する</p>
+</blockquote>
+<pre><code>$ cargo test --test integration_test
+    Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
+     Running target/debug/integration_test-952a27e0126bb565
+
+running 1 test
+test it_adds_two ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+</code></pre>
+<p>このコマンドは、tests/integration_test.rsファイルにあるテストのみを実行します。</p>
+<h2 id="結合テスト内のサブモジュール"><a class="header" href="#結合テスト内のサブモジュール">結合テスト内のサブモジュール</a></h2>
+<p>結合テストを追加するにつれて、testsディレクトリに2つ以上のファイルを作成して体系化したくなるかもしれません; 例えば、テスト対象となる機能でテスト関数をグループ化することができます。前述したように、 testsディレクトリの各ファイルは、個別のクレートとしてコンパイルされます。</p>
+<p>各結合テストファイルをそれ自身のクレートとして扱うと、 エンドユーザがあなたのクレートを使用するかのように個別のスコープを生成するのに役立ちます。 ですが、これはtestsディレクトリのファイルが、コードをモジュールとファイルに分ける方法に関して第7章で学んだように、 srcのファイルとは同じ振る舞いを共有しないことを意味します。</p>
+<p>testsディレクトリのファイルの異なる振る舞いは、複数の結合テストファイルで役に立ちそうなヘルパー関数ができ、 第7章の「モジュールを別のファイルに移動する」節の手順に従って共通モジュールに抽出しようとした時に最も気付きやすくなります。 例えば、tests/common.rsを作成し、そこにsetupという名前の関数を配置したら、 複数のテストファイルの複数のテスト関数から呼び出したいsetupに何らかのコードを追加することができます:</p>
+<p>ファイル名: tests/common.rs</p>
+<pre><pre class="playground"><code class="language-rust">#![allow(unused)]
+fn main() {
+pub fn setup() {
+    // ここにライブラリテスト固有のコードが来る
+    // setup code specific to your library's tests would go here
+}
+}
+</code></pre></pre>
+<p>再度テストを実行すると、common.rsファイルは何もテスト関数を含んだり、setup関数をどこかから呼んだりしてないのに、 テスト出力にcommon.rs用の区域が見えるでしょう。</p>
+<pre><code>running 1 test
+test tests::internal ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/common-b8b07b6f1be2db70 // これは望んだ結果ではない。
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target/debug/deps/integration_test-d993c68b431d39df
+
+running 1 test
+test it_adds_two ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+   Doc-tests adder
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+</code></pre>
+<p>commonがrunning 0 testsとテスト結果に表示されるのは、望んだ結果ではありません。 ただ単に他の結合テストファイルと何らかのコードを共有したかっただけです。</p>
+<p>commonがテスト出力に出現するのを防ぐには、tests/common.rsを作成する代わりに、 tests/common/mod.rsを作成します。第7章の「モジュールファイルシステムの規則」節において、 module_name/mod.rsという命名規則をサブモジュールのあるモジュールのファイルに使用しました。 ここではcommonにサブモジュールはありませんが、 このように命名することでコンパイラにcommonモジュールを結合テストファイルとして扱わないように指示します。 setup関数のコードをtests/common/mod.rsに移動し、tests/common.rsファイルを削除すると、 テスト出力に区域はもう表示されなくなります。testsディレクトリのサブディレクトリ内のファイルは個別クレートとしてコンパイルされたり、 テスト出力に区域が表示されることがないのです。</p>
+<p>tests/common/mod.rsを作成した後、それをどの結合テストファイルからもモジュールとして使用することができます。 こちらは、tests/integration_test.rs内のit_adds_twoテストからsetup関数を呼び出す例です:</p>
+<p>ファイル名: tests/integration_test.rs</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>extern crate adder;
+
+mod common;
+
+#[test]
+fn it_adds_two() {
+    common::setup();
+    assert_eq!(4, adder::add_two(2));
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>mod common;という宣言は、リスト7-21で模擬したモジュール宣言と同じであることに注意してください。それから、テスト関数内でcommon::setup()関数を呼び出すことができます。</p>
+<blockquote>
+<p>testsの配下だと結合テストファイルとして認識されているのかな？またサブディレクトリ以下のファイルは結合テストファイルとして認識されるのかな？</p>
+</blockquote>
+<h2 id="バイナリクレート用の結合テスト"><a class="header" href="#バイナリクレート用の結合テスト">バイナリクレート用の結合テスト</a></h2>
+<p>もしもプロジェクトがsrc/main.rsファイルのみを含み、src/lib.rsファイルを持たないバイナリクレートだったら、 testsディレクトリに結合テストを作成し、 extern crateを使用してsrc/main.rsファイルに定義された関数をインポートすることはできません。 ライブラリクレートのみが、他のクレートが呼び出して使用できる関数を晒せるのです; バイナリクレートはそれ単体で実行することを意味しています。</p>
+<p>これは、バイナリを提供するRustのプロジェクトに、 src/lib.rsファイルに存在するロジックを呼び出す単純なsrc/main.rsファイルがある一因になっています。 この構造を使用して結合テストは、extern crateを使用して重要な機能を用いることでライブラリクレートをテストすることができます。 この重要な機能が動作すれば、src/main.rsファイルの少量のコードも動作し、その少量のコードはテストする必要がないわけです。</p>
+<h1 id="まとめ"><a class="header" href="#まとめ">まとめ</a></h1>
+<p>Rustのテスト機能は、変更を加えた後でさえ想定通りにコードが機能し続けることを保証して、 コードが機能すべき方法を指定する手段を提供します。単体テストはライブラリの異なる部分を個別に用い、 非公開の実装詳細をテストすることができます。結合テストは、ライブラリのいろんな部分が共同で正常に動作することを確認し、 ライブラリの公開APIを使用して外部コードが使用するのと同じ方法でコードをテストします。 Rustの型システムと所有権ルールにより防がれるバグの種類もあるものの、それでもテストは、 コードが振る舞うと予想される方法に関するロジックのバグを減らすのに重要なのです。</p>
+<p>この章と以前の章で学んだ知識を結集して、とあるプロジェクトに取り掛かりましょう！</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../auto_tests/control_how_test_are_executed.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../auto_tests/control_how_test_are_executed.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

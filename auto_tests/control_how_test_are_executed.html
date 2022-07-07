@@ -1,0 +1,439 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>テストの実行のされ方を制御する - rust-study-log</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../generic_trait_liftime/june.html"><strong aria-hidden="true">1.</strong> ジェネリック型、トレイト、ライフタイム</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../generic_trait_liftime/generic.html"><strong aria-hidden="true">1.1.</strong> ジェネリックなデータ型</a></li><li class="chapter-item expanded "><a href="../generic_trait_liftime/trait.html"><strong aria-hidden="true">1.2.</strong> トレイト：共通の振る舞いを定義する</a></li><li class="chapter-item expanded "><a href="../generic_trait_liftime/lifetime.html"><strong aria-hidden="true">1.3.</strong> ライフタイムで参照を検証する</a></li></ol></li><li class="chapter-item expanded "><a href="../auto_tests/writing_automated_tests.html"><strong aria-hidden="true">2.</strong> 自動テストを書く</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../auto_tests/how_to_wirite_tests.html"><strong aria-hidden="true">2.1.</strong> テストの記述法</a></li><li class="chapter-item expanded "><a href="../auto_tests/control_how_test_are_executed.html" class="active"><strong aria-hidden="true">2.2.</strong> テストの実行のされ方を制御する</a></li><li class="chapter-item expanded "><a href="../auto_tests/systematization_of_testing.html"><strong aria-hidden="true">2.3.</strong> テストの体系化</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">rust-study-log</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        
+
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="テストの実行のされ方を制御する"><a class="header" href="#テストの実行のされ方を制御する">テストの実行のされ方を制御する</a></h1>
+<p>cargo runがコードをコンパイルし、出来上がったバイナリを走らせるのと全く同様に、 cargo testはコードをテストモードでコンパイルし、出来上がったテストバイナリを実行します。 コマンドラインオプションを指定してcargo testの既定動作を変更することができます。 例えば、cargo testで生成されるバイナリの既定動作は、テストを全て並行に実行し、 テスト実行中に生成された出力をキャプチャして出力が表示されるのを防ぎ、 テスト結果に関係する出力を読みやすくすることです。</p>
+<p>コマンドラインオプションの中にはcargo testにかかるものや、出来上がったテストバイナリにかかるものがあります。 この2種の引数を区別するために、cargo testにかかる引数を--という区分記号の後に列挙し、 それからテストバイナリにかかる引数を列挙します。cargo test --helpを走らせると、cargo testで使用できるオプションが表示され、 cargo test -- --helpを走らせると、--という区分記号の後に使えるオプションが表示されます。</p>
+<h2 id="テストを並行または連続して実行する"><a class="header" href="#テストを並行または連続して実行する">テストを並行または連続して実行する</a></h2>
+<p>複数のテストを実行するとき、標準では、スレッドを使用して並行に走ります。これはつまり、 テストが早く実行し終わり、コードが機能しているいかんにかかわらず、反応をより早く得られることを意味します。 テストは同時に実行されているので、テストが相互や共有された環境を含む他の共通の状態に依存してないことを確かめてください。 現在の作業対象ディレクトリや環境変数などですね。</p>
+<p>例えば、各テストがディスクにtest_output.txtというファイルを作成し、何らかのデータを書き込むコードを走らせるとしてください。 そして、各テストはそのファイルのデータを読み取り、ファイルが特定の値を含んでいるとアサーションし、 その値は各テストで異なります。テストが同時に走るので、あるテストが、 他のテストが書き込んだり読み込んだりする間隙にファイルを上書きするかもしれません。 それから2番目のテストが失敗します。コードが不正だからではなく、 並行に実行されている間にテストがお互いに邪魔をしてしまったせいです。 各テストが異なるファイルに書き込むことを確かめるのが一つの解決策です; 別の解決策では、 一度に一つのテストを実行します。</p>
+<p>並行にテストを実行したくなかったり、使用されるスレッド数をよりきめ細かく制御したい場合、 --test-threadsフラグと使用したいスレッド数をテストバイナリに送ることができます。 以下の例に目を向けてください:</p>
+<pre><code>$ cargo test -- --test-threads=1
+</code></pre>
+<p>テストスレッドの数を1にセットし、並行性を使用しないようにプログラムに指示しています。 1スレッドのみを使用してテストを実行すると、並行に実行するより時間がかかりますが、 状態を共有していても、お互いに邪魔をすることはありません。</p>
+<blockquote>
+<p>テストをするときにスレッドの数を制御することによって依存関係のあるコードもテストができるが、時間はかかりますよという形です。</p>
+<p>これは色々やってみないとわからないですね。</p>
+</blockquote>
+<h2 id="関数の出力を表示する"><a class="header" href="#関数の出力を表示する">関数の出力を表示する</a></h2>
+<p>標準では、テストが通ると、Rustのテストライブラリは標準出力に出力されたものを全てキャプチャします。例えば、 テストでprintln!を呼び出してテストが通ると、println!の出力は、端末に表示されません; テストが通ったことを示す行しか見られないでしょう。テストが失敗すれば、 残りの失敗メッセージと共に、標準出力に出力されたものが全て見えるでしょう。</p>
+<p>例として、リスト11-10は引数の値を出力し、10を返す馬鹿げた関数と通過するテスト1つ、失敗するテスト1つです。</p>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">#![allow(unused)]
+fn main() {
+fn prints_and_returns_10(a: i32) -&gt; i32 {
+    //{}という値を得た
+    println!(&quot;I got the value {}&quot;, a);
+    10
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn this_test_will_pass() {
+        let value = prints_and_returns_10(4);
+        assert_eq!(10, value);
+    }
+
+    #[test]
+    fn this_test_will_fail() {
+        let value = prints_and_returns_10(8);
+        assert_eq!(5, value);
+    }
+}
+}
+</code></pre></pre>
+<p>リスト11-10: println!を呼び出す関数用のテスト</p>
+<p>これらのテストをcargo testで実行すると、以下のような出力を目の当たりにするでしょう:</p>
+<pre><code>running 2 tests
+test tests::this_test_will_pass ... ok
+test tests::this_test_will_fail ... FAILED
+
+failures:
+
+---- tests::this_test_will_fail stdout ----
+        I got the value 8
+thread 'tests::this_test_will_fail' panicked at 'assertion failed: `(left == right)`
+  left: `5`,
+ right: `10`', src/lib.rs:19:8
+note: Run with `RUST_BACKTRACE=1` for a backtrace.
+
+failures:
+    tests::this_test_will_fail
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+</code></pre>
+<p>この出力のどこにも I got the value 4 と表示されていないことに注意してください。 これは、テストに合格した場合に出力されるものです。 その出力はキャプチャされてしまいました。 失敗したテストのからの出力 I got the value 8 がテストサマリー出力のセクションに表示され、テストが失敗した原因も示されます。</p>
+<p>通過するテストについても出力される値が見たかったら、出力キャプチャ機能を--nocaptureフラグで無効化することができます:</p>
+<pre><code>$ cargo test -- --nocapture
+</code></pre>
+<p>リスト11-10のテストを--nocaptureフラグと共に再度実行したら、以下のような出力を目の当たりにします:</p>
+<pre><code>running 2 tests
+I got the value 4
+I got the value 8
+test tests::this_test_will_pass ... ok
+thread 'tests::this_test_will_fail' panicked at 'assertion failed: `(left == right)`
+  left: `5`,
+ right: `10`', src/lib.rs:19:8
+note: Run with `RUST_BACKTRACE=1` for a backtrace.
+test tests::this_test_will_fail ... FAILED
+
+failures:
+
+failures:
+    tests::this_test_will_fail
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+</code></pre>
+<p>テスト用の出力とテスト結果の出力がまぜこぜになっていることに注意してください; その理由は、前節で語ったようにテストが並行に実行されているからです。 -test-threads=1オプションと--nocaptureフラグを使ってみて、 その時、出力がどうなるか確かめてください！</p>
+<h2 id="名前でテストの一部を実行する"><a class="header" href="#名前でテストの一部を実行する">名前でテストの一部を実行する</a></h2>
+<p>時々、全テストを実行すると時間がかかってしまうことがあります。特定の部分のコードしか対象にしていない場合、 そのコードに関わるテストのみを走らせたいかもしれません。cargo testに走らせたいテストの名前を引数として渡すことで、 実行するテストを選ぶことができます。</p>
+<p>テストの一部を走らせる方法を模擬するために、リスト11-11に示したように、 add_two関数用に3つテストを作成し、走らせるテストを選択します。</p>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">#![allow(unused)]
+fn main() {
+pub fn add_two(a: i32) -&gt; i32 {
+    a + 2
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn add_two_and_two() {
+        assert_eq!(4, add_two(2));
+    }
+
+    #[test]
+    fn add_three_and_two() {
+        assert_eq!(5, add_two(3));
+    }
+
+    #[test]
+    fn one_hundred() {
+        assert_eq!(102, add_two(100));
+    }
+}
+}
+</code></pre></pre>
+<p>リスト11-11: 異なる名前の3つのテスト</p>
+<p>以前見かけたように、引数なしでテストを走らせたら、全テストが並行に走ります:</p>
+<pre><code>running 3 tests
+test tests::add_two_and_two ... ok
+test tests::add_three_and_two ... ok
+test tests::one_hundred ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+</code></pre>
+<h2 id="単独のテストを走らせる"><a class="header" href="#単独のテストを走らせる">単独のテストを走らせる</a></h2>
+<p>あらゆるテスト関数の名前をcargo testに渡して、そのテストのみを実行することができます:</p>
+<blockquote>
+<p>一つのテストコードだけ走らせたい場合もできます。</p>
+</blockquote>
+<pre><code>$ cargo test one_hundred
+    Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
+     Running target/debug/deps/adder-06a75b4a1f2515e9
+
+running 1 test
+test tests::one_hundred ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out
+</code></pre>
+<p>one_hundredという名前のテストだけが走りました; 他の2つのテストはその名前に合致しなかったのです。 まとめ行の最後に2 filtered outと表示することでテスト出力は、このコマンドが走らせた以上のテストがあることを知らせてくれています。</p>
+<p>この方法では、複数のテストの名前を指定することはできません; cargo testに与えられた最初の値のみが使われるのです。 ですが、複数のテストを走らせる方法もあります。</p>
+<h2 id="複数のテストを実行するようフィルターをかける"><a class="header" href="#複数のテストを実行するようフィルターをかける">複数のテストを実行するようフィルターをかける</a></h2>
+<p>テスト名の一部を指定でき、その値に合致するあらゆるテストが走ります。例えば、 我々のテストの2つがaddという名前を含むので、cargo test addを実行することで、その二つを走らせることができます:</p>
+<pre><code>$ cargo test add
+    Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
+     Running target/debug/deps/adder-06a75b4a1f2515e9
+
+running 2 tests
+test tests::add_two_and_two ... ok
+test tests::add_three_and_two ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out
+</code></pre>
+<p>このコマンドは名前にaddを含むテストを全て実行し、one_hundredという名前のテストを除外しました。 また、テストが出現するモジュールがテスト名の一部になっていて、 モジュール名でフィルターをかけることで、あるモジュール内のテスト全てを実行できることに注目してください。</p>
+<h2 id="特に要望のない限りテストを無視する"><a class="header" href="#特に要望のない限りテストを無視する">特に要望のない限りテストを無視する</a></h2>
+<p>時として、いくつかの特定のテストが実行するのに非常に時間がかかることがあり、 cargo testの実行のほとんどで除外したくなるかもしれません。引数として確かに実行したいテストを全て列挙するのではなく、 ここに示したように代わりに時間のかかるテストをignore属性で除外すると注釈することができます。</p>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">#![allow(unused)]
+fn main() {
+#[test]
+fn it_works() {
+    assert_eq!(2 + 2, 4);
+}
+
+#[test]
+#[ignore]
+fn expensive_test() {
+    // 実行に1時間かかるコード
+    // code that takes an hour to run
+}
+}
+</code></pre></pre>
+<p>#[test]の後の除外したいテストに#[ignore]行を追加しています。これで、 テストを実行したら、it_worksは実行されるものの、expensive_testは実行されません:</p>
+<blockquote>
+<p>テスト全体で無視することもできます。</p>
+</blockquote>
+<pre><code>$ cargo test
+   Compiling adder v0.1.0 (file:///projects/adder)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.24 secs
+     Running target/debug/deps/adder-ce99bcc2479f4607
+
+running 2 tests
+test expensive_test ... ignored
+test it_works ... ok
+
+test result: ok. 1 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out
+</code></pre>
+<p>expensive_test関数は、ignoredと列挙されています。無視されるテストのみを実行したかったら、 cargo test -- --ignoredを使うことができます:</p>
+<pre><code>$ cargo test -- --ignored
+    Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
+     Running target/debug/deps/adder-ce99bcc2479f4607
+
+running 1 test
+test expensive_test ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out
+</code></pre>
+<p>どのテストを走らせるか制御することで、結果が早く出ることを確かめることができるのです。 ignoredテストの結果を確認することが道理に合い、結果を待つだけの時間ができたときに、 代わりにcargo test -- --ignoredを走らせることができます。</p>
+<blockquote>
+<p>testコードに関しては色々なテストができます。戦略的に考えて色々やっていきましょう！</p>
+</blockquote>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../auto_tests/how_to_wirite_tests.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../auto_tests/systematization_of_testing.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../auto_tests/how_to_wirite_tests.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../auto_tests/systematization_of_testing.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
