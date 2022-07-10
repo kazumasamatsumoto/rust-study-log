@@ -97,7 +97,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="generic_trait_liftime/june.html"><strong aria-hidden="true">1.</strong> ジェネリック型、トレイト、ライフタイム</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="generic_trait_liftime/generic.html"><strong aria-hidden="true">1.1.</strong> ジェネリックなデータ型</a></li><li class="chapter-item expanded "><a href="generic_trait_liftime/trait.html"><strong aria-hidden="true">1.2.</strong> トレイト：共通の振る舞いを定義する</a></li><li class="chapter-item expanded "><a href="generic_trait_liftime/lifetime.html"><strong aria-hidden="true">1.3.</strong> ライフタイムで参照を検証する</a></li></ol></li><li class="chapter-item expanded "><a href="auto_tests/writing_automated_tests.html"><strong aria-hidden="true">2.</strong> 自動テストを書く</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="auto_tests/how_to_wirite_tests.html"><strong aria-hidden="true">2.1.</strong> テストの記述法</a></li><li class="chapter-item expanded "><a href="auto_tests/control_how_test_are_executed.html"><strong aria-hidden="true">2.2.</strong> テストの実行のされ方を制御する</a></li><li class="chapter-item expanded "><a href="auto_tests/systematization_of_testing.html"><strong aria-hidden="true">2.3.</strong> テストの体系化</a></li></ol></li><li class="chapter-item expanded "><a href="input_output_project/command_line_program.html"><strong aria-hidden="true">3.</strong> 入出力プロジェクト: コマンドラインプログラムを構築する</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="generic_trait_liftime/june.html"><strong aria-hidden="true">1.</strong> ジェネリック型、トレイト、ライフタイム</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="generic_trait_liftime/generic.html"><strong aria-hidden="true">1.1.</strong> ジェネリックなデータ型</a></li><li class="chapter-item expanded "><a href="generic_trait_liftime/trait.html"><strong aria-hidden="true">1.2.</strong> トレイト：共通の振る舞いを定義する</a></li><li class="chapter-item expanded "><a href="generic_trait_liftime/lifetime.html"><strong aria-hidden="true">1.3.</strong> ライフタイムで参照を検証する</a></li></ol></li><li class="chapter-item expanded "><a href="auto_tests/writing_automated_tests.html"><strong aria-hidden="true">2.</strong> 自動テストを書く</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="auto_tests/how_to_wirite_tests.html"><strong aria-hidden="true">2.1.</strong> テストの記述法</a></li><li class="chapter-item expanded "><a href="auto_tests/control_how_test_are_executed.html"><strong aria-hidden="true">2.2.</strong> テストの実行のされ方を制御する</a></li><li class="chapter-item expanded "><a href="auto_tests/systematization_of_testing.html"><strong aria-hidden="true">2.3.</strong> テストの体系化</a></li></ol></li><li class="chapter-item expanded "><a href="input_output_project/command_line_program.html"><strong aria-hidden="true">3.</strong> 入出力プロジェクト: コマンドラインプログラムを構築する</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="input_output_project/accepts_command_line_arguments.html"><strong aria-hidden="true">3.1.</strong> コマンドライン引数を受け付ける</a></li><li class="chapter-item expanded "><a href="input_output_project/read_file.html"><strong aria-hidden="true">3.2.</strong> ファイルを読み込む</a></li><li class="chapter-item expanded "><a href="input_output_project/refactoring_to_improve_modularity_and_error_handling.html"><strong aria-hidden="true">3.3.</strong> リファクタリングしてモジュール性とエラー処理を向上させる</a></li><li class="chapter-item expanded "><a href="input_output_project/develop_library_functionality_with_test-driven_development.html"><strong aria-hidden="true">3.4.</strong> テスト駆動開発でライブラリの機能を開発する</a></li><li class="chapter-item expanded "><a href="input_output_project/handling_environment_variables.html"><strong aria-hidden="true">3.5.</strong> 環境変数を取り扱う</a></li><li class="chapter-item expanded "><a href="input_output_project/write_error_messages_to_stderr_instead_of_stdout.html"><strong aria-hidden="true">3.6.</strong> 標準出力ではなく標準エラーにエラーメッセージを書き込む</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -3043,12 +3043,1054 @@ fn it_adds_two() {
 <p>その過程で、多くのコマンドラインツールが使用している端末の機能を使用させる方法を示します。 環境変数の値を読み取ってユーザがこのツールの振る舞いを設定できるようにします。また、 標準出力(stdout)の代わりに、標準エラーに出力(stderr)するので、例えば、 ユーザはエラーメッセージは画面上で確認しつつ、成功した出力はファイルにリダイレクトできます。</p>
 <p>Rustコミュニティのあるメンバであるアンドリュー・ガラント(Andrew Gallant)が既に全機能装備の非常に高速なgrep、 ripgrepと呼ばれるものを作成しました。比較対象として、我々のgrepはとても単純ですが、 この章により、ripgrepのような現実世界のプロジェクトを理解するのに必要な背景知識の一部を身に付けられるでしょう。</p>
 <p>このgrepプロジェクトは、ここまでに学んできた多くの概念を集結させます:</p>
-<p>コードを体系化する(モジュール、第7章で学んだことを使用)
-ベクタと文字列を使用する(コレクション、第8章)
-エラーを処理する(第9章)
-適切な箇所でトレイトとライフタイムを使用する(第10章)
-テストを記述する(第11章)
-さらに、クロージャ、イテレータ、トレイトオブジェクトなど、第13章、17章で詳しく講義するものもちょっとだけ紹介します。</p>
+<ul>
+<li>コードを体系化する(モジュール、第7章で学んだことを使用)</li>
+<li>ベクタと文字列を使用する(コレクション、第8章)</li>
+<li>エラーを処理する(第9章)</li>
+<li>適切な箇所でトレイトとライフタイムを使用する(第10章)</li>
+<li>テストを記述する(第11章)</li>
+</ul>
+<p>さらに、クロージャ、イテレータ、トレイトオブジェクトなど、第13章、17章で詳しく講義するものもちょっとだけ紹介します。</p>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="コマンドライン引数を受け付ける"><a class="header" href="#コマンドライン引数を受け付ける">コマンドライン引数を受け付ける</a></h1>
+<p>いつものように、cargo newで新しいプロジェクトを作りましょう。プロジェクトをminigrepと名付けて、 既に自分のシステムに存在するかもしれないgrepツールと区別しましょう。</p>
+<p>最初の仕事は、minigrepを二つの引数を受け付けるようにすることです: ファイル名と検索する文字列ですね。 つまり、cargo runで検索文字列と検索を行うファイルへのパスと共にプログラムを実行できるようになりたいということです。 こんな感じにね:</p>
+<pre><code>$ cargo run searchstring example-filename.txt
+</code></pre>
+<blockquote>
+<p>実行するコマンドはマジでこんな感じです。
+第一引数に検索をかける単語、第二引数に検索をかける対象ファイルが存在します。</p>
+</blockquote>
+<p>今現在は、cargo newで生成されたプログラムは、与えた引数を処理できません。 Crates.ioに存在する既存のライブラリには、 コマンドライン引数を受け付けるプログラムを書く手助けをしてくれるものもありますが、ちょうどこの概念を学んでいる最中なので、 この能力を自分で実装しましょう。</p>
+<h2 id="引数の値を読み取る"><a class="header" href="#引数の値を読み取る">引数の値を読み取る</a></h2>
+<p>minigrepが渡したコマンドライン引数の値を読み取れるようにするために、Rustの標準ライブラリで提供されている関数が必要になり、 それは、std::env::argsです。この関数は、minigrepに与えられたコマンドライン引数のイテレータを返します。 イテレータについてはまだ議論していません(完全には第13章で講義します)が、とりあえずイテレータに関しては、 2つの詳細のみ知っていればいいです: イテレータは一連の値を生成することと、イテレータに対してcollect関数を呼び出し、 イテレータが生成する要素全部を含むベクタなどのコレクションに変えられることです。</p>
+<p>リスト12-1のコードを使用してminigrepプログラムに渡されたあらゆるコマンドライン引数を読み取れるようにし、 それからその値をベクタとして集結させてください。</p>
+<p>ファイル名: src/main.rs</p>
+<pre><pre class="playground"><code class="language-rust">use std::env;
+
+fn main() {
+    let args: Vec&lt;String&gt; = env::args().collect();
+    println!(&quot;{:?}&quot;, args);
+}
+</code></pre></pre>
+<blockquote>
+<p>env::args().collect();を使用するとコマンドで入力した引数を受け取ることができます。</p>
+</blockquote>
+<p>まず、std::envモジュールをuse文でスコープに導入したので、args関数が使用できます。 std::env::args関数は、2レベルモジュールがネストされていることに注目してください。 第7章で議論したように、希望の関数が2モジュール以上ネストされている場合、 関数ではなく親モジュールをスコープに導入するのが因習的です。そうすることで、 std::envから別の関数も容易に使用することができます。また、 use std::env::argsを追記し、関数をargsとするだけで呼び出すのに比べて曖昧でもありません。 というのも、argsは現在のモジュールに定義されている関数と容易に見間違えられるかもしれないからです。</p>
+<blockquote>
+<p>args関数と不正なユニコード</p>
+<p>引数のどれかが不正なユニコードを含んでいたら、std::env::argsはパニックすることに注意してください。 プログラムが不正なユニコードを含む引数を受け付ける必要があるなら、代わりにstd::env::args_osを使用してください。 この関数は、String値ではなく、OsString値を生成するイテレータを返します。ここでは、 簡潔性のためにstd::env::argsを使うことを選択しました。 なぜなら、OsString値はプラットフォームごとに異なり、String値に比べて取り扱いが煩雑だからです。</p>
+</blockquote>
+<p>mainの最初の行でenv::argsを呼び出し、そして即座にcollectを使用して、 イテレータをイテレータが生成する値全てを含むベクタに変換しています。 collect関数を使用して多くの種類のコレクションを生成することができるので、 argsの型を明示的に注釈して文字列のベクタが欲しいのだと指定しています。Rustにおいて、 型を注釈しなければならない頻度は非常に少ないのですが、collectはよく確かに注釈が必要になる一つの関数なのです。 コンパイラには、あなたが欲しているコレクションの種類が推論できないからです。</p>
+<p>最後に、デバッグ整形機の:?を使用してベクタを出力しています。引数なしでコードを走らせてみて、 それから引数二つで試してみましょう:</p>
+<pre><code>$ cargo run
+--snip--
+[&quot;target/debug/minigrep&quot;]
+
+$ cargo run needle haystack
+--snip--
+[&quot;target/debug/minigrep&quot;, &quot;needle&quot;, &quot;haystack&quot;]
+</code></pre>
+<p>ベクタの最初の値は&quot;target/debug/minigrep&quot;であることに注目してください。これはバイナリの名前です。 これはCの引数リストの振る舞いと合致し、実行時に呼び出された名前をプログラムに使わせてくれるわけです。 メッセージで出力したり、プログラムを起動するのに使用されたコマンドラインエイリアスによってプログラムの振る舞いを変えたい場合に、 プログラム名にアクセスするのにしばしば便利です。ですが、この章の目的には、これを無視し、必要な二つの引数のみを保存します。</p>
+<h2 id="引数の値を変数に保存する"><a class="header" href="#引数の値を変数に保存する">引数の値を変数に保存する</a></h2>
+<p>引数のベクタの値を出力すると、プログラムはコマンドライン引数として指定された値にアクセスできることが説明されました。 さて、プログラムの残りを通して使用できるように、二つの引数の値を変数に保存する必要があります。 それをしているのがリスト12-2です。</p>
+<p>ファイル名: src/main.rs</p>
+<pre><pre class="playground"><code class="language-rust">use std::env;
+
+fn main() {
+    let args: Vec&lt;String&gt; = env::args().collect();
+
+    let query = &amp;args[1];
+    let filename = &amp;args[2];
+
+    // {}を探しています
+    println!(&quot;Searching for {}&quot;, query);
+    // {}というファイルの中
+    println!(&quot;In file {}&quot;, filename);
+}
+</code></pre></pre>
+<blockquote>
+<p>ここで&amp;が出てきました。所有権の関係上、引数を参照する方がいいかと思うわけです。（なぜいいのかはそこまで深く理解していない）</p>
+</blockquote>
+<p>リスト12-2: クエリ引数とファイル名引数を保持する変数を生成</p>
+<p>ベクタを出力した時に確認したように、プログラム名がベクタの最初の値、args[0]を占めているので、 添え字1から始めます。minigrepが取る最初の引数は、検索する文字列なので、 最初の引数への参照を変数queryに置きました。2番目の引数はファイル名でしょうから、 2番目の引数への参照は変数filenameに置きました。</p>
+<p>一時的にこれらの変数の値を出力して、コードが意図通りに動いていることを証明しています。 再度このプログラムをtestとsample.txtという引数で実行しましょう:</p>
+<pre><code>$ cargo run test sample.txt
+   Compiling minigrep v0.1.0 (file:///projects/minigrep)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
+     Running `target/debug/minigrep test sample.txt`
+Searching for test
+In file sample.txt
+</code></pre>
+<p>素晴らしい、プログラムは動作しています！必要な引数の値が、正しい変数に保存されています。後ほど、 何らかのエラー処理を加えて、ユーザが引数を提供しなかった場合など、可能性のある特定のエラー状況に対処します; 今は、そのような状況はないものとし、代わりにファイル読み取り能力を追加することに取り組みます。</p>
+<blockquote>
+<p>ここまででできたのは引数を二つとってコードないで処理できるようにすることです。</p>
+</blockquote>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="ファイルを読み込む"><a class="header" href="#ファイルを読み込む">ファイルを読み込む</a></h1>
+<p>では、filenameコマンドライン引数で指定されたファイルを読み込む機能を追加しましょう。 まず、テスト実行するためのサンプルファイルが必要ですね: minigrepが動作していることを確かめるために使用するのに最適なファイルは、 複数行にわたって同じ単語の繰り返しのある少量のテキストです。リスト12-3は、 うまくいくであろうエミリー・ディキンソン(Emily Dickinson)の詩です！ プロジェクトのルート階層にpoem.txtというファイルを作成し、この詩「私は誰でもない！あなたは誰？」を入力してください。</p>
+<p>ファイル名: poem.txt</p>
+<pre><code>I'm nobody! Who are you?
+Are you nobody, too?
+Then there's a pair of us - don't tell!
+They'd banish us, you know.
+
+How dreary to be somebody!
+How public, like a frog
+To tell your name the livelong day
+To an admiring bog!
+</code></pre>
+<blockquote>
+<p>このポエムをpoem.txtに貼り付けて保存してください。</p>
+</blockquote>
+<p>リスト12-3: エミリー・ディキンソンの詩は、いいテストケースになる</p>
+<p>テキストを適当な場所に置いて、src/main.rsを編集し、ファイルを開くコードを追加してください。 リスト12-4に示したようにですね。</p>
+<p>ファイル名: src/main.rs</p>
+<pre><pre class="playground"><code class="language-rust">use std::env;
+use std::fs;
+
+fn main() {
+    let args: Vec&lt;String&gt; = env::args().collect();
+
+    let query = &amp;args[1];
+    let filename = &amp;args[2];
+
+    println!(&quot;Searching for {}&quot;, query);
+    println!(&quot;In file {}&quot;, filename);
+
+    let contents = fs::read_to_string(filename).expect(&quot;something went wrong reading the file&quot;);
+    // テキストは\n{}です
+    println!(&quot;With text:\n{}&quot;, contents);
+}
+</code></pre></pre>
+<blockquote>
+<p>rust bookとは全く違うコードです。</p>
+<p>この辺りは以下の動画を参考にしています。</p>
+</blockquote>
+<p><a href="https://www.youtube.com/watch?v=XYkiwsplDTg&amp;list=PLai5B987bZ9CoVR-QEIN9foz4QCJ0H2Y8&amp;index=15">参考動画</a></p>
+<p>リスト12-4: 第2引数で指定されたファイルの中身を読み込む</p>
+<p>最初に、もう何個かuse文を追記して、標準ライブラリの関係のある箇所を持ってきています: ファイルを扱うのにstd::fs::Fileが必要ですし、 std::io::prelude::*はファイル入出力を含む入出力処理をするのに有用なトレイトを色々含んでいます。 言語が一般的な初期化処理で特定の型や関数を自動的にスコープに導入するように、 std::ioモジュールにはそれ独自の共通の型や関数の初期化処理があり、入出力を行う際に必要になるわけです。 標準の初期化処理とは異なり、std::ioの初期化処理には明示的にuse文を加えなければなりません。</p>
+<p>mainに3文を追記しました: 一つ目が、File::open関数を呼んでfilename変数の値に渡して、 ファイルへの可変なハンドルを得る処理です。二つ目が、contentsという名の変数を生成して、 可変で空のStringを割り当てる処理です。この変数が、ファイル読み込み後に中身を保持します。 三つ目が、ファイルハンドルに対してread_to_stringを呼び出し、引数としてcontentsへの可変参照を渡す処理です。</p>
+<p>それらの行の後に、今回もファイル読み込み後にcontentsの値を出力する一時的なprintln!文を追記したので、 ここまでプログラムがきちんと動作していることを確認できます。</p>
+<p>第1コマンドライン引数には適当な文字列(まだ検索する箇所は実装してませんからね)を、第2引数にpoem.txtファイルを入れて、 このコードを実行しましょう:</p>
+<pre><code>$ cargo run the poem.txt
+   Compiling minigrep v0.1.0 (file:///projects/minigrep)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
+     Running `target/debug/minigrep the poem.txt`
+Searching for the
+In file poem.txt
+With text:
+I'm nobody! Who are you?
+Are you nobody, too?
+Then there's a pair of us - don't tell!
+They'd banish us, you know.
+
+How dreary to be somebody!
+How public, like a frog
+To tell your name the livelong day
+To an admiring bog!
+</code></pre>
+<p>素晴らしい！コードがファイルの中身を読み込み、出力するようになりました。しかし、このコードにはいくつか欠陥があります。 main関数が複数の責任を受け持っています: 一般に、各関数がただ一つの責任だけを持つようになれば、 関数は明確かつ、管理しやすくなります。もう一つの問題点は、できうる限りのエラー処理を怠っていることです。 まだプログラムが小規模なので、これらの欠陥は大きな問題にはなりませんが、プログラムが大規模になるにつれ、 それを綺麗に解消するのは困難になっていきます。プログラムを開発する際に早い段階でリファクタリングを行うのは、 良い戦術です。リファクタリングするコードの量が少なければ、はるかに簡単になりますからね。次は、それを行いましょう。</p>
+<blockquote>
+<p>次はリファクタリングです。</p>
+<p>この辺りは結構難しいですが、3回ぐらいやっていくとすごくわかりやすいです。</p>
+</blockquote>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="リファクタリングしてモジュール性とエラー処理を向上させる"><a class="header" href="#リファクタリングしてモジュール性とエラー処理を向上させる">リファクタリングしてモジュール性とエラー処理を向上させる</a></h1>
+<p>プログラムを改善するために、プログラムの構造と起こりうるエラーに対処する方法に関連する4つの問題を修正していきましょう。</p>
+<p>1番目は、main関数が2つの仕事を受け持っていることです: 引数を解析し、ファイルを開いています。 このような小さな関数なら、これは、大した問題ではありませんが、main内でプログラムを巨大化させ続けたら、 main関数が扱う個別の仕事の数も増えていきます。関数が責任を受け持つごとに、 正しいことを確認しにくくなり、テストも行いづらくなり、機能を壊さずに変更するのも困難になっていきます。 機能を小分けして、各関数が1つの仕事のみに責任を持つようにするのが最善です。</p>
+<p>この問題は、2番目の問題にも結びついています: queryとfilenameはプログラムの設定用変数ですが、 fやcontentsといった変数は、プログラムのロジックを担っています。mainが長くなるほど、 スコープに入れるべき変数も増えます。そして、スコープにある変数が増えれば、各々の目的を追うのも大変になるわけです。 設定用変数を一つの構造に押し込め、目的を明瞭化するのが最善です。</p>
+<p>3番目の問題は、ファイルを開き損ねた時にexpectを使ってエラーメッセージを出力しているのに、 エラーメッセージがファイルが見つかりませんでしたとしか表示しないことです。 ファイルを開く行為は、ファイルが存在しない以外にもいろんな方法で失敗することがあります: 例えば、ファイルは存在するかもしれないけれど、開く権限がないかもしれないなどです。 現時点では、そのような状況になった時、「ファイルが見つかりませんでした」というエラーメッセージを出力し、 これはユーザに間違った情報を与えるのです。</p>
+<p>4番目は、異なるエラーを処理するのにexpectを繰り返し使用しているので、ユーザが十分な数の引数を渡さずにプログラムを起動した時に、 問題を明確に説明しない「範囲外アクセス(index out of bounds)」というエラーがRustから得られることです。 エラー処理のコードが全て1箇所に存在し、将来エラー処理ロジックが変更になった時に、 メンテナンス者が1箇所のコードのみを考慮すればいいようにするのが最善でしょう。 エラー処理コードが1箇所にあれば、エンドユーザにとって意味のあるメッセージを出力していることを確認することにもつながります。</p>
+<p>プロジェクトをリファクタリングして、これら4つの問題を扱いましょう。</p>
+<h2 id="バイナリプロジェクトの責任の分離"><a class="header" href="#バイナリプロジェクトの責任の分離">バイナリプロジェクトの責任の分離</a></h2>
+<p>main関数に複数の仕事の責任を割り当てるという構造上の問題は、多くのバイナリプロジェクトでありふれています。 結果として、mainが肥大化し始めた際にバイナリプログラムの個別の責任を分割するためにガイドラインとして活用できる工程をRustコミュニティは、 開発しました。この工程は、以下のような手順になっています:</p>
+<ul>
+<li>プログラムをmain.rsとlib.rsに分け、ロジックをlib.rsに移動する。</li>
+<li>コマンドライン引数の解析ロジックが小規模な限り、main.rsに置いても良い。</li>
+<li>コマンドライン引数の解析ロジックが複雑化の様相を呈し始めたら、main.rsから抽出してlib.rsに移動する。</li>
+</ul>
+<p>この工程の後にmain関数に残る責任は以下に限定される:</p>
+<ul>
+<li>引数の値でコマンドライン引数の解析ロジックを呼び出す</li>
+<li>他のあらゆる設定を行う</li>
+<li>lib.rsのrun関数を呼び出す</li>
+<li>runがエラーを返した時に処理する</li>
+</ul>
+<p>このパターンは、責任の分離についてです: main.rsはプログラムの実行を行い、 そして、lib.rsが手にある仕事のロジック全てを扱います。main関数を直接テストすることはできないので、 この構造により、プログラムのロジック全てをlib.rsの関数に移すことでテストできるようになります。 main.rsに残る唯一のコードは、読めばその正当性が評価できるだけ小規模になるでしょう。 この工程に従って、プログラムのやり直しをしましょう。</p>
+<h2 id="引数解析器を抽出する"><a class="header" href="#引数解析器を抽出する">引数解析器を抽出する</a></h2>
+<p>引数解析の機能をmainが呼び出す関数に抽出して、コマンドライン引数解析ロジックをsrc/lib.rsに移動する準備をします。 リスト12-5に新しい関数parse_configを呼び出すmainの冒頭部を示し、 この新しい関数は今だけsrc/main.rsに定義します。</p>
+<p>ファイル名: src/main.rs</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let args: Vec&lt;String&gt; = env::args().collect();
+
+    let (query, filename) = parse_config(&amp;args);
+
+    // --snip--
+}
+
+fn parse_config(args: &amp;[String]) -&gt; (&amp;str, &amp;str) {
+    let query = &amp;args[1];
+    let filename = &amp;args[2];
+
+    (query, filename)
+}
+</code></pre></pre>
+<p>リスト12-5: mainからparse_config関数を抽出する</p>
+<p>それでもまだ、コマンドライン引数をベクタに集結させていますが、main関数内で引数の値の添え字1を変数queryに、 添え字2を変数filenameに代入する代わりに、ベクタ全体をparse_config関数に渡しています。 そして、parse_config関数にはどの引数がどの変数に入り、それらの値をmainに返すというロジックが存在します。 まだmain内にqueryとfilenameという変数を生成していますが、もうmainは、 コマンドライン引数と変数がどう対応するかを決定する責任は持ちません。</p>
+<p>このやり直しは、私たちの小規模なプログラムにはやりすぎに思えるかもしれませんが、 少しずつ段階的にリファクタリングしているのです。この変更後、プログラムを再度実行して、 引数解析がまだ動作していることを実証してください。問題が発生した時に原因を特定する助けにするために頻繁に進捗を確認するのはいいことです。</p>
+<h2 id="設定値をまとめる"><a class="header" href="#設定値をまとめる">設定値をまとめる</a></h2>
+<p>もう少しparse_config関数を改善することができます。現時点では、タプルを返していますが、 即座にタプルを分解して再度個別の値にしています。これは、正しい抽象化をまだできていないかもしれない兆候です。</p>
+<p>まだ改善の余地があると示してくれる他の徴候は、parse_configのconfigの部分であり、 返却している二つの値は関係があり、一つの設定値の一部にどちらもなることを暗示しています。 現状では、一つのタプルにまとめていること以外、この意味をデータの構造に載せていません; この二つの値を1構造体に置き換え、構造体のフィールドそれぞれに意味のある名前をつけることもできるでしょう。 そうすることで将来このコードのメンテナンス者が、異なる値が相互に関係する仕方や、目的を理解しやすくできるでしょう。</p>
+<blockquote>
+<p>注釈: この複雑型(complex type)がより適切な時に組み込みの値を使うアンチパターンを、 primitive obsession(訳注: 初めて聞いた表現。組み込み型強迫観念といったところだろうか)と呼ぶ人もいます。</p>
+</blockquote>
+<blockquote>
+<p>要するに構造体定義をします。</p>
+</blockquote>
+<pre><pre class="playground"><code class="language-rust">use std::env;
+use std::fs::File;
+
+fn main() {
+    let args: Vec&lt;String&gt; = env::args().collect();
+
+    let config = parse_config(&amp;args);
+
+    println!(&quot;Searching for {}&quot;, config.query);
+    println!(&quot;In file {}&quot;, config.filename);
+
+    let mut f = File::open(config.filename).expect(&quot;file not found&quot;);
+
+    // --snip--
+}
+
+struct Config {
+    query: String,
+    filename: String,
+}
+
+fn parse_config(args: &amp;[String]) -&gt; Config {
+    let query = args[1].clone();
+    let filename = args[2].clone();
+
+    Config { query, filename }
+}
+</code></pre></pre>
+<p>リスト12-6: parse_configをリファクタリングしてConfig構造体のインスタンスを返す</p>
+<p>queryとfilenameというフィールドを持つよう定義されたConfigという構造体を追加しました。 parse_configのシグニチャは、これでConfig値を返すと示すようになりました。parse_configの本体では、 以前はargsのString値を参照する文字列スライスを返していましたが、 今では所有するString値を含むようにConfigを定義しています。mainのargs変数は引数値の所有者であり、 parse_config関数だけに借用させていますが、これはConfigがargsの値の所有権を奪おうとしたら、 Rustの借用規則に違反してしまうことを意味します。</p>
+<p>Stringのデータは、多くの異なる手法で管理できますが、最も単純だけれどもどこか非効率的な手段は、 値に対してcloneメソッドを呼び出すことです。これにより、Configインスタンスが所有するデータの総コピーが生成されるので、 文字列データへの参照を保持するよりも時間とメモリを消費します。ですが、データをクローンすることで、 コードがとても素直にもなります。というのも、参照のライフタイムを管理する必要がないからです。 つまり、この場面において、少々のパフォーマンスを犠牲にして単純性を得るのは、価値のある代償です。</p>
+<blockquote>
+<p>cloneを使用する代償</p>
+<p>実行時コストのためにcloneを使用して所有権問題を解消するのを避ける傾向が多くのRustaceanにあります。 第13章で、この種の状況においてより効率的なメソッドの使用法を学ぶでしょう。ですがとりあえずは、 これらのコピーをするのは1回だけですし、ファイル名とクエリ文字列は非常に小さなものなので、 いくつかの文字列をコピーして進捗するのは良しとしましょう。最初の通り道でコードを究極的に効率化しようとするよりも、 ちょっと非効率的でも動くプログラムを用意する方がいいでしょう。もっとRustの経験を積めば、 最も効率的な解決法から開始することも簡単になるでしょうが、今は、cloneを呼び出すことは完璧に受け入れられることです。</p>
+</blockquote>
+<p>mainを更新したので、parse_configから返されたConfigのインスタンスをconfigという変数に置くようになり、 以前は個別のqueryとfilename変数を使用していたコードを更新したので、代わりにConfig構造体のフィールドを使用するようになりました。</p>
+<p>これでコードはqueryとfilenameが関連していることと、その目的がプログラムの振る舞い方を設定するということをより明確に伝えます。 これらの値を使用するあらゆるコードは、configインスタンスの目的の名前を冠したフィールドにそれらを発見することを把握しています。</p>
+<h2 id="configのコンストラクタを作成する"><a class="header" href="#configのコンストラクタを作成する">Configのコンストラクタを作成する</a></h2>
+<p>ここまでで、コマンドライン引数を解析する責任を負ったロジックをmainから抽出し、parse_config関数に配置しました。 そうすることでqueryとfilenameの値が関連し、その関係性がコードに載っていることを確認する助けになりました。 それからConfig構造体を追加してqueryとfilenameの関係する目的を名前付けし、 構造体のフィールド名としてparse_config関数からその値の名前を返すことができています。</p>
+<p>したがって、今やparse_config関数の目的はConfigインスタンスを生成することになったので、 parse_configをただの関数からConfig構造体に紐づくnewという関数に変えることができます。 この変更を行うことで、コードがより慣用的になります。Stringなどの標準ライブラリの型のインスタンスを、 String::newを呼び出すことで生成できます。同様に、parse_configをConfigに紐づくnew関数に変えれば、 Config::newを呼び出すことでConfigのインスタンスを生成できるようになります。リスト12-7が、 行う必要のある変更を示しています。</p>
+<p>ファイル名: src/main.rs</p>
+<blockquote>
+<p>structに対してimplを実装します。</p>
+</blockquote>
+<pre><pre class="playground"><code class="language-rust">use std::env;
+
+fn main() {
+    let args: Vec&lt;String&gt; = env::args().collect();
+
+    let config = Config::new(&amp;args);
+
+    // --snip--
+}
+
+struct Config {
+    query: String,
+    filename: String,
+}
+
+// --snip--
+
+impl Config {
+    fn new(args: &amp;[String]) -&gt; Config {
+        let query = args[1].clone();
+        let filename = args[2].clone();
+
+        Config { query, filename }
+    }
+}
+</code></pre></pre>
+<p>リスト12-7: parse_configをConfig::newに変える</p>
+<p>parse_configを呼び出していたmainを代わりにConfig::newを呼び出すように更新しました。 parse_configの名前をnewに変え、implブロックに入れ込んだので、new関数とConfigが紐づくようになりました。 再度このコードをコンパイルしてみて、動作することを確かめてください。</p>
+<h2 id="エラー処理を修正する"><a class="header" href="#エラー処理を修正する">エラー処理を修正する</a></h2>
+<p>さて、エラー処理の修正に取り掛かりましょう。ベクタが2個以下の要素しか含んでいないときにargsベクタの添え字1か2にアクセスしようとすると、 プログラムがパニックすることを思い出してください。試しに引数なしでプログラムを実行してください。すると、こんな感じになります:</p>
+<pre><code>$ cargo run
+   Compiling minigrep v0.1.0 (file:///projects/minigrep)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
+     Running `target/debug/minigrep`
+thread 'main' panicked at 'index out of bounds: the len is 1
+but the index is 1', src/main.rs:29:21
+(スレッド'main'は、「境界外アクセス: 長さは1なのに添え字も1です」でパニックしました)
+note: Run with `RUST_BACKTRACE=1` for a backtrace.
+</code></pre>
+<p>境界外アクセス: 長さは1なのに添え字も1ですという行は、プログラマ向けのエラーメッセージです。 エンドユーザが起きたことと代わりにすべきことを理解する手助けにはならないでしょう。これを今修正しましょう。</p>
+<h2 id="エラーメッセージを改善する"><a class="header" href="#エラーメッセージを改善する">エラーメッセージを改善する</a></h2>
+<p>リスト12-8で、new関数に、添え字1と2にアクセスする前にスライスが十分長いことを実証するチェックを追加しています。 スライスの長さが十分でなければ、プログラムはパニックし、境界外インデックスよりもいいエラーメッセージを表示します。</p>
+<p>ファイル名: src/main.rs</p>
+<pre><code>// --snip--
+fn new(args: &amp;[String]) -&gt; Config {
+    if args.len() &lt; 3 {
+        // 引数の数が足りません
+        panic!(&quot;not enough arguments&quot;);
+    }
+    // --snip--
+</code></pre>
+<p>リスト12-8: 引数の数のチェックを追加する</p>
+<p>このコードは、リスト9-9で記述したvalue引数が正常な値の範囲外だった時にpanic!を呼び出したGuess::new関数と似ています。 ここでは、値の範囲を確かめる代わりに、argsの長さが少なくとも3であることを確かめていて、 関数の残りの部分は、この条件が満たされているという前提のもとで処理を行うことができます。 argsに2要素以下しかなければ、この条件は真になり、panic!マクロを呼び出して、即座にプログラムを終了させます。</p>
+<p>では、newのこの追加の数行がある状態で、再度引数なしでプログラムを走らせ、エラーがどんな見た目か確かめましょう:</p>
+<pre><code>$ cargo run
+   Compiling minigrep v0.1.0 (file:///projects/minigrep)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
+     Running `target/debug/minigrep`
+thread 'main' panicked at 'not enough arguments', src/main.rs:30:12
+(スレッド'main'は「引数が足りません」でパニックしました)
+note: Run with `RUST_BACKTRACE=1` for a backtrace.
+</code></pre>
+<blockquote>
+<p>これでエラー文が変わりました</p>
+</blockquote>
+<p>この出力の方がマシです: これでエラーメッセージが合理的になりました。ですが、 ユーザに与えたくない追加の情報も含まれてしまっています。おそらく、 ここではリスト9-9で使用したテクニックを使用するのは最善ではありません: panic!の呼び出しは、第9章で議論したように、使用の問題よりもプログラミング上の問題により適しています。 代わりに、第9章で学んだもう一つのテクニックを使用することができます。成功か失敗かを示唆するResultを返すことです。</p>
+<h2 id="panicを呼び出す代わりにnewからresultを返す"><a class="header" href="#panicを呼び出す代わりにnewからresultを返す">panic!を呼び出す代わりにnewからResultを返す</a></h2>
+<p>代わりに、成功時にはConfigインスタンスを含み、エラー時には問題に言及するResult値を返すことができます。 Config::newがmainと対話する時、Result型を使用して問題があったと信号を送ることができます。 それからmainを変更して、panic!呼び出しが引き起こしていたthread 'main'とRUST_BACKTRACEに関する周囲のテキストがない、 ユーザ向けのより実用的なエラーにErr列挙子を変換することができます。</p>
+<p>リスト12-9は、Config::newの戻り値に必要な変更とResultを返すのに必要な関数の本体を示しています。 mainも更新するまで、これはコンパイルできないことに注意してください。その更新は次のリストで行います。</p>
+<p>ファイル名: src/main.rs</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl Config {
+    fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+        if args.len() &lt; 3 {
+            return Err(&quot;not enough arguments&quot;);
+        }
+
+        let query = args[1].clone();
+        let filename = args[2].clone();
+
+        Ok(Config { query, filename })
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<blockquote>
+<p>panicをreturn Errにしました。</p>
+<p>これでユーザーに対してエラーを表示することができます。</p>
+</blockquote>
+<p>リスト12-9: Config::newからResultを返却する</p>
+<p>new関数は、これで、成功時にはConfigインスタンスを、エラー時には&amp;'static strを伴うResultを返すようになりました。 第10章の「静的ライフタイム」節から&amp;'static strは文字列リテラルの型であることを思い出してください。 これは、今はエラーメッセージの型になっています。</p>
+<p>new関数の本体で2つ変更を行いました: 十分な数の引数をユーザが渡さなかった場合にpanic!を呼び出す代わりに、 今はErr値を返し、Config戻り値をOkに包んでいます。これらの変更により、関数が新しい型シグニチャに適合するわけです。</p>
+<p>Config::newからErr値を返すことにより、main関数は、new関数から返ってくるResult値を処理し、 エラー時により綺麗にプロセスから抜け出すことができます。</p>
+<h2 id="confignewを呼び出しエラーを処理する"><a class="header" href="#confignewを呼び出しエラーを処理する">Config::newを呼び出し、エラーを処理する</a></h2>
+<p>エラーケースを処理し、ユーザフレンドリーなメッセージを出力するために、mainを更新して、 リスト12-10に示したようにConfig::newから返されているResultを処理する必要があります。 また、panic!からコマンドラインツールを0以外のエラーコードで抜け出す責任も奪い取り、 手作業でそれも実装します。0以外の終了コードは、 我々のプログラムを呼び出したプロセスにプログラムがエラー状態で終了したことを通知する慣習です。</p>
+<p>ファイル名: src/main.rs</p>
+<pre><pre class="playground"><code class="language-rust">use std::process;
+
+fn main() {
+    let args: Vec&lt;String&gt; = env::args().collect();
+
+    let config = Config::new(&amp;args).unwrap_or_else(|err| {
+        // 引数解析時に問題
+        println!(&quot;Problem parsing arguments: {}&quot;, err);
+        process::exit(1);
+    });
+
+    // --snip--
+</code></pre></pre>
+<blockquote>
+<p>この実行失敗時の処理は結構覚えておいてもいいかと。</p>
+</blockquote>
+<p>リスト12-10: 新しいConfig作成に失敗したら、エラーコードで終了する</p>
+<p>このリストにおいて、以前には講義していないメソッドを使用しました: unwrap_or_elseです。 これは標準ライブラリでResult&lt;T, E&gt;に定義されています。unwrap_or_elseを使うことで、 panic!ではない何らか独自のエラー処理を定義できるのです。このResultがOk値だったら、 このメソッドの振る舞いはunwrapに似ています: Okが包んでいる中身の値を返すのです。 しかし、値がErr値なら、このメソッドは、クロージャ内でコードを呼び出し、 クロージャは私たちが定義し、引数としてunwrap_or_elseに渡す匿名関数です。クロージャについては第13章で詳しく講義します。 とりあえず、unwrap_or_elseは、今回リスト12-9で追加したnot enough argumentsという静的文字列のErrの中身を、 縦棒の間に出現するerr引数のクロージャに渡していることだけ知っておく必要があります。 クロージャのコードはそれから、実行された時にerr値を使用できます。</p>
+<p>新規use行を追加して標準ライブラリからprocessをインポートしました。クロージャ内のエラー時に走るコードは、 たった2行です: errの値を出力し、それからprocess::exitを呼び出します。process::exit関数は、 即座にプログラムを停止させ、渡された数字を終了コードとして返します。これは、リスト12-8で使用したpanic!ベースの処理と似ていますが、 もう余計な出力はされません。試しましょう:</p>
+<pre><code>$ cargo run
+   Compiling minigrep v0.1.0 (file:///projects/minigrep)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.48 secs
+     Running `target/debug/minigrep`
+Problem parsing arguments: not enough arguments
+</code></pre>
+<p>素晴らしい！この出力の方が遥かにユーザに優しいです。</p>
+<h2 id="mainからロジックを抽出する"><a class="header" href="#mainからロジックを抽出する">mainからロジックを抽出する</a></h2>
+<p>これで設定解析のリファクタリングが終了したので、プログラムのロジックに目を向けましょう。 「バイナリプロジェクトの責任の分離」で述べたように、 現在main関数に存在する設定のセットアップやエラー処理に関わらない全てのロジックを保持することになるrunという関数を抽出します。 やり終わったら、mainは簡潔かつ視察で確かめやすくなり、他のロジック全部に対してテストを書くことができるでしょう。</p>
+<p>リスト12-11は、抜き出したrun関数を示しています。今は少しずつ段階的に関数を抽出する改善を行っています。 それでも、src/main.rsに関数を定義していきます。</p>
+<p>ファイル名: src/main.rs</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    // --snip--
+
+    println!(&quot;Searching for {}&quot;, config.query);
+    println!(&quot;In file {}&quot;, config.filename);
+
+    run(config);
+}
+
+fn run(config: Config) {
+    let mut f = File::open(config.filename).expect(&quot;file not found&quot;);
+
+    let mut contents = String::new();
+    f.read_to_string(&amp;mut contents)
+        .expect(&quot;something went wrong reading the file&quot;);
+
+    println!(&quot;With text:\n{}&quot;, contents);
+}
+
+// --snip--
+</code></pre></pre>
+<p>リスト12-11: 残りのプログラムロジックを含むrun関数を抽出する</p>
+<p>これでrun関数は、ファイル読み込みから始まるmain関数の残りのロジック全てを含むようになりました。 このrun関数は、引数にConfigインスタンスを取ります。</p>
+<h2 id="run関数からエラーを返す"><a class="header" href="#run関数からエラーを返す">run関数からエラーを返す</a></h2>
+<p>残りのプログラムロジックがrun関数に隔離されたので、リスト12-9のConfig::newのように、 エラー処理を改善することができます。expectを呼び出してプログラムにパニックさせる代わりに、 run関数は、何か問題が起きた時にResult&lt;T, E&gt;を返します。これにより、 さらにエラー処理周りのロジックをユーザに優しい形でmainに統合することができます。 リスト12-12にシグニチャとrun本体に必要な変更を示しています。</p>
+<p>ファイル名: src/main.rs</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::error::Error;
+
+// --snip--
+
+fn run(config: Config) -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+    let contents = fs::read_to_string(config.filename)?;
+    println!(&quot;With text:\n{}&quot;, contents);
+
+    Ok(())
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>リスト12-12: run関数を変更してResultを返す</p>
+<p>ここでは、3つの大きな変更を行いました。まず、run関数の戻り値をResult&lt;(), Box<Error>&gt;に変えました。 この関数は、以前はユニット型、()を返していて、それをOkの場合に返される値として残しました。</p>
+<p>エラー型については、トレイトオブジェクトのBox<Error>を使用しました(同時に冒頭でuse文により、 std::error::Errorをスコープに導入しています)。トレイトオブジェクトについては、第17章で講義します。 とりあえず、Box<Error>は、関数がErrorトレイトを実装する型を返すことを意味しますが、 戻り値の型を具体的に指定しなくても良いことを知っておいてください。これにより、 エラーケースによって異なる型のエラー値を返す柔軟性を得ます。</p>
+<p>2番目に、expectの呼び出しよりも?演算子を選択して取り除きました。第9章で語りましたね。 エラーでパニックするのではなく、?演算子は呼び出し元が処理できるように、現在の関数からエラー値を返します。</p>
+<p>3番目に、run関数は今、成功時にOk値を返すようになりました。run関数の成功型は、 シグニチャで()と定義したので、ユニット型の値をOk値に包む必要があります。 最初は、このOk(())という記法は奇妙に見えるかもしれませんが、このように()を使うことは、 runを副作用のためだけに呼び出していると示唆する慣習的な方法です; 必要な値は返しません。</p>
+<p>このコードを実行すると、コンパイルは通るものの、警告が表示されるでしょう:</p>
+<pre><code>warning: unused `std::result::Result` which must be used
+(警告: 使用されなければならない`std::result::Result`が未使用です)
+  --&gt; src/main.rs:18:5
+   |
+18 |     run(config);
+   |     ^^^^^^^^^^^^
+= note: #[warn(unused_must_use)] on by default
+</code></pre>
+<p>コンパイラは、コードがResult値を無視していると教えてくれて、このResult値は、 エラーが発生したと示唆しているかもしれません。しかし、エラーがあったか確認するつもりはありませんが、 コンパイラは、ここにエラー処理コードを書くつもりだったんじゃないかと思い出させてくれています！ 今、その問題を改修しましょう。</p>
+<h2 id="mainでrunから返ってきたエラーを処理する"><a class="header" href="#mainでrunから返ってきたエラーを処理する">mainでrunから返ってきたエラーを処理する</a></h2>
+<p>リスト12-10のConfig::newに対して行った方法に似たテクニックを使用してエラーを確認し、扱いますが、 少し違いがあります:</p>
+<p>ファイル名: src/main.rs</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    // --snip--
+
+    println!(&quot;Searching for {}&quot;, config.query);
+    println!(&quot;In file {}&quot;, config.filename);
+
+    if let Err(e) = run(config) {
+        println!(&quot;Application error: {}&quot;, e);
+
+        process::exit(1);
+    }
+}
+</code></pre></pre>
+<p>unwrap_or_elseではなく、if letでrunがErr値を返したかどうかを確認し、そうならprocess::exit(1)を呼び出しています。 run関数は、Config::newがConfigインスタンスを返すのと同じようにunwrapしたい値を返すことはありません。 runは成功時に()を返すので、エラーを検知することにのみ興味があり、()でしかないので、 unwrap_or_elseに包まれた値を返してもらう必要はないのです。</p>
+<p>if letとunwrap_or_else関数の中身はどちらも同じです: エラーを出力して終了します。</p>
+<h2 id="コードをライブラリクレートに分割する"><a class="header" href="#コードをライブラリクレートに分割する">コードをライブラリクレートに分割する</a></h2>
+<p>ここまでminigrepは良さそうですね！では、テストを行え、src/main.rsファイルの責任が減らせるように、 src/main.rsファイルを分割し、一部のコードをsrc/lib.rsファイルに置きましょう。</p>
+<p>main関数以外のコード全部をsrc/main.rsからsrc/lib.rsに移動しましょう:</p>
+<ul>
+<li>run関数定義</li>
+<li>関係するuse文</li>
+<li>Configの定義</li>
+<li>Config::new関数定義</li>
+</ul>
+<p>src/lib.rsの中身にはリスト12-13に示したようなシグニチャがあるはずです(関数の本体は簡潔性のために省略しました)。 リスト12-14でsrc/main.rsに変更を加えるまで、このコードはコンパイルできないことに注意してください。</p>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::error::Error;
+use std::fs::File;
+use std::io::prelude::*;
+
+pub struct Config {
+    pub query: String,
+    pub filename: String,
+}
+
+impl Config {
+    pub fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+        // --snip--
+    }
+}
+
+pub fn run(config: Config) -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+    // --snip--
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>リスト12-13: Configとrunをsrc/lib.rsに移動する</p>
+<p>ここでは、寛大にpubを使用しています: Configのフィールドとnewメソッドとrun関数です。 これでテスト可能な公開APIのあるライブラリクレートができました！</p>
+<p>さて、src/lib.rsに移動したコードをsrc/main.rsのバイナリクレートのスコープに持っていく必要があります。 リスト12-14に示したようにですね。</p>
+<p>ファイル名: src/main.rs</p>
+<pre><pre class="playground"><code class="language-rust">use std::env;
+use std::process;
+
+mod lib;
+use lib::{Config, run};
+
+
+fn main() {
+    // --snip--
+    if let Err(e) = minigrep::run(config) {
+        // --snip--
+    }
+}
+</code></pre></pre>
+<p>リスト12-14: minigrepクレートをsrc/main.rsのスコープに持っていく</p>
+<p>ライブラリクレートをバイナリクレートに持っていくのに、extern crate minigrepを使用しています。 それからuse minigrep::Config行を追加してConfig型をスコープに持ってきて、 run関数にクレート名を接頭辞として付けます。これで全機能が連結され、動くはずです。 cargo runでプログラムを走らせて、すべてがうまくいっていることを確かめてください。</p>
+<p>ふう！作業量が多かったですね。ですが、将来成功する準備はできています。 もう、エラー処理は遥かに楽になり、コードのモジュール化もできました。 ここから先の作業は、ほぼsrc/lib.rsで完結するでしょう。</p>
+<p>古いコードでは大変だけれども、新しいコードでは楽なことをして新発見のモジュール性を活用しましょう: テストを書くのです！</p>
+<blockquote>
+<p>extern crateという表現はせずに他のファイルの場合はmod宣言で使用できます。</p>
+</blockquote>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="テスト駆動開発でライブラリの機能を開発する"><a class="header" href="#テスト駆動開発でライブラリの機能を開発する">テスト駆動開発でライブラリの機能を開発する</a></h1>
+<p>今や、ロジックをsrc/lib.rsに抜き出し、引数集めとエラー処理をsrc/main.rsに残したので、 コードの核となる機能のテストを書くのが非常に容易になりました。いろんな引数で関数を直接呼び出し、 コマンドラインからバイナリを呼び出す必要なく戻り値を確認できます。ご自由にConfig::newやrun関数の機能のテストは、 ご自身でお書きください。</p>
+<p>この節では、テスト駆動開発(TDD)過程を活用してminigrepプログラムに検索ロジックを追加します。 このソフトウェア開発テクニックは、以下の手順に従います:</p>
+<ol>
+<li>失敗するテストを書き、走らせて想定通りの理由で失敗することを確かめる。</li>
+<li>十分な量のコードを書くか変更して新しいテストを通過するようにする。</li>
+<li>追加または変更したばかりのコードをリファクタリングし、テストが通り続けることを確認する。</li>
+<li>手順1から繰り返す！</li>
+</ol>
+<p>この過程は、ソフトウェアを書く多くの方法のうちの一つに過ぎませんが、TDDによりコードデザインも駆動することができます。 テストを通過させるコードを書く前にテストを書くことで、過程を通して高いテストカバー率を保つ助けになります。</p>
+<p>実際にクエリ文字列の検索を行う機能の実装をテスト駆動し、クエリに合致する行のリストを生成します。 この機能をsearchという関数に追加しましょう。</p>
+<h2 id="失敗するテストを記述する"><a class="header" href="#失敗するテストを記述する">失敗するテストを記述する</a></h2>
+<p>もう必要ないので、プログラムの振る舞いを確認していたprintln!文をsrc/lib.rsとsrc/main.rsから削除しましょう。 それからsrc/lib.rsで、テスト関数のあるtestモジュールを追加します。第11章のようにですね。 このテスト関数がsearch関数に欲しい振る舞いを指定します: クエリとそれを検索するテキストを受け取り、 クエリを含む行だけをテキストから返します。リスト12-15にこのテストを示していますが、まだコンパイルは通りません。</p>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">#![allow(unused)]
+fn main() {
+fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+     vec![]
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn one_result() {
+        let query = &quot;duct&quot;;
+        // Rustは
+        // 安全で速く生産性も高い。
+        // 3つ選んで。
+        let contents = &quot;\
+Rust:
+safe, fast, productive.
+Pick three.&quot;;
+
+        assert_eq!(
+            vec![&quot;safe, fast, productive.&quot;],
+            search(query, contents)
+        );
+    }
+}
+}
+</code></pre></pre>
+<p>リスト12-15: こうだったらいいなというsearch関数の失敗するテストを作成する</p>
+<p>このテストは、&quot;duct&quot;という文字列を検索します。検索対象の文字列は3行で、うち1行だけが&quot;duct&quot;を含みます。 search関数から返る値が想定している行だけを含むことをアサーションします。</p>
+<p>このテストを走らせ、失敗するところを観察することはできません。このテストはコンパイルもできないからです: まだsearch関数が存在していません！ゆえに今度は、空のベクタを常に返すsearch関数の定義を追加することで、 テストをコンパイルし走らせるだけのコードを追記します。リスト12-16に示したようにですね。そうすれば、 テストはコンパイルでき、失敗するはずです。なぜなら、空のベクタは、 &quot;safe, fast, productive.&quot;という行を含むベクタとは合致しないからです。</p>
+<blockquote>
+<p>こうだったらいいなというsearch関数の失敗するテストを作成する</p>
+<p>マジでこの表現</p>
+</blockquote>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">#![allow(unused)]
+fn main() {
+pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+    vec![]
+}
+}
+</code></pre></pre>
+<p>これライフタイムとかやvecの返り値はしっかり定義する必要があるよ。</p>
+<p>リスト12-16: テストがコンパイルできるのに十分なだけsearch関数を定義する</p>
+<p>明示的なライフタイムの'aがsearchのシグニチャで定義され、contents引数と戻り値で使用されていることに注目してください。 第10章からライフタイム仮引数は、どの実引数のライフタイムが戻り値のライフタイムに関連づけられているかを指定することを思い出してください。 この場合、返却されるベクタは、 (query引数ではなく)contents引数のスライスを参照する文字列スライスを含むべきと示唆しています。</p>
+<p>言い換えると、コンパイラにsearch関数に返されるデータは、 search関数にcontents引数で渡されているデータと同期間生きることを教えています。 これは重要なことです！スライスに参照されるデータは、参照が有効になるために有効である必要があるのです; コンパイラがcontentsではなくqueryの文字列スライスを生成すると想定してしまったら、 安全性チェックを間違って行うことになってしまいます。</p>
+<p>ライフタイム注釈を忘れてこの関数をコンパイルしようとすると、こんなエラーが出ます:</p>
+<pre><code>error[E0106]: missing lifetime specifier
+(エラー: ライフタイム指定子が欠けています)
+ --&gt; src/lib.rs:5:51
+  |
+5 | pub fn search(query: &amp;str, contents: &amp;str) -&gt; Vec&lt;&amp;str&gt; {
+  |                                                   ^ expected lifetime
+parameter
+  |
+  = help: this function's return type contains a borrowed value, but the
+  signature does not say whether it is borrowed from `query` or `contents`
+  (助言: この関数の戻り値は、借用された値を含んでいますが、シグニチャにはそれが、
+  `query`か`contents`から借用されたものであるかが示されていません)
+</code></pre>
+<p>これはqueryもcontentsも同じ型情報やからどっちを返すの？とわからないためにライフタイムの宣言をすることによって返り値の中に含まれるものがなんなのか？明確にできます。</p>
+<p>コンパイラには、二つの引数のどちらが必要なのか知る由がないので、教えてあげる必要があるのです。 contentsがテキストを全て含む引数で、合致するそのテキストの一部を返したいので、 contentsがライフタイム記法で戻り値に関連づくはずの引数であることをプログラマは知っています。</p>
+<p>他のプログラミング言語では、シグニチャで引数と戻り値を関連づける必要はありません。これは奇妙に思えるかもしれませんが、 時間とともに楽になっていきます。この例を第10章、「ライフタイムで参照を有効化する」節と比較したくなるかもしれません。</p>
+<p>さあ、テストを実行しましょう:</p>
+<pre><code>$ cargo test
+   Compiling minigrep v0.1.0 (file:///projects/minigrep)
+--warnings--
+    Finished dev [unoptimized + debuginfo] target(s) in 0.43 secs
+     Running target/debug/deps/minigrep-abcabcabc
+
+running 1 test
+test test::one_result ... FAILED
+
+failures:
+
+---- test::one_result stdout ----
+        thread 'test::one_result' panicked at 'assertion failed: `(left ==
+right)`
+left: `[&quot;safe, fast, productive.&quot;]`,
+right: `[]`)', src/lib.rs:48:8
+note: Run with `RUST_BACKTRACE=1` for a backtrace.
+
+
+failures:
+    test::one_result
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+
+error: test failed, to rerun pass '--lib'
+</code></pre>
+<p>素晴らしい。テストは全く想定通りに失敗しています。テストが通るようにしましょう！</p>
+<h2 id="テストを通過させるコードを書く"><a class="header" href="#テストを通過させるコードを書く">テストを通過させるコードを書く</a></h2>
+<p>空のベクタを常に返しているために、現状テストは失敗しています。それを修正し、searchを実装するには、 プログラムは以下の手順に従う必要があります:</p>
+<ul>
+<li>中身を各行ごとに繰り返す。</li>
+<li>行にクエリ文字列が含まれるか確認する。</li>
+<li>するなら、それを返却する値のリストに追加する。</li>
+<li>しないなら、何もしない。</li>
+<li>一致する結果のリストを返す。</li>
+<li>各行を繰り返す作業から、この手順に順に取り掛かりましょう。</li>
+</ul>
+<h3 id="linesメソッドで各行を繰り返す"><a class="header" href="#linesメソッドで各行を繰り返す">linesメソッドで各行を繰り返す</a></h3>
+<p>Rustには、文字列を行ごとに繰り返す役立つメソッドがあり、利便性のためにlinesと名付けられ、 リスト12-17のように動作します。まだ、これはコンパイルできないことに注意してください。</p>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+    for line in contents.lines() {
+        // 行に対して何かする
+        // do something with line
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>リスト12-17: contentsの各行を繰り返す</p>
+<p>linesメソッドはイテレータを返します。イテレータについて詳しくは、第13章で話しますが、 リスト3-5でこのようなイテレータの使用法は見かけたことを思い出してください。 そこでは、イテレータにforループを使用してコレクションの各要素に対して何らかのコードを走らせていました。</p>
+<h3 id="クエリを求めて各行を検索する"><a class="header" href="#クエリを求めて各行を検索する">クエリを求めて各行を検索する</a></h3>
+<p>次に現在の行がクエリ文字列を含むか確認します。幸運なことに、 文字列にはこれを行ってくれるcontainsという役に立つメソッドがあります！search関数に、 containsメソッドの呼び出しを追加してください。リスト12-18のようにですね。 それでもまだコンパイルできないことに注意してください。</p>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+    for line in contents.lines() {
+        if line.contains(query) {
+            // do something with line
+        }
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>リスト12-18: 行がqueryの文字列を含むか確認する機能を追加する</p>
+<h3 id="合致した行を保存する"><a class="header" href="#合致した行を保存する">合致した行を保存する</a></h3>
+<p>また、クエリ文字列を含む行を保存する方法が必要です。そのために、forループの前に可変なベクタを生成し、 pushメソッドを呼び出してlineをベクタに保存することができます。forループの後でベクタを返却します。 リスト12-19のようにですね。</p>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+    let mut results = Vec::new();
+
+    for line in contents.lines() {
+        if line.contains(query) {
+            results.push(line);
+        }
+    }
+
+    results
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>リスト12-19: 合致する行を保存したので、返すことができる</p>
+<p>これでsearch関数は、queryを含む行だけを返すはずであり、テストも通るはずです。 テストを実行しましょう:</p>
+<pre><code>$ cargo test
+--snip--
+running 1 test
+test test::one_result ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+</code></pre>
+<p>テストが通り、動いていることがわかりました！</p>
+<p>ここで、テストが通過するよう保ったまま、同じ機能を保持しながら、検索関数の実装をリファクタリングする機会を考えることもできます。 検索関数のコードは悪すぎるわけではありませんが、イテレータの有用な機能の一部を活用していません。 この例には第13章で再度触れ、そこでは、イテレータをより深く探究し、さらに改善する方法に目を向けます。</p>
+<h3 id="run関数内でsearch関数を使用する"><a class="header" href="#run関数内でsearch関数を使用する">run関数内でsearch関数を使用する</a></h3>
+<p>search関数が動きテストできたので、run関数からsearchを呼び出す必要があります。config.queryの値と、 ファイルからrunが読み込むcontentsの値をsearch関数に渡す必要があります。 それからrunは、searchから返ってきた各行を出力するでしょう:</p>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn run(config: Config) -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+    let mut f = File::open(config.filename)?;
+
+    let mut contents = String::new();
+    f.read_to_string(&amp;mut contents)?;
+
+    for line in search(&amp;config.query, &amp;contents) {
+        println!(&quot;{}&quot;, line);
+    }
+
+    Ok(())
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>それでもforループでsearchから各行を返し、出力しています。</p>
+<p>さて、プログラム全体が動くはずです！試してみましょう。まずはエミリー・ディキンソンの詩から、 ちょうど1行だけを返すはずの言葉から。&quot;frog&quot;です:</p>
+<pre><code>$ cargo run frog poem.txt
+   Compiling minigrep v0.1.0 (file:///projects/minigrep)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.38 secs
+     Running `target/debug/minigrep frog poem.txt`
+How public, like a frog
+</code></pre>
+<p>かっこいい！今度は、複数行にマッチするであろう言葉を試しましょう。&quot;body&quot;とかね:</p>
+<pre><code>$ cargo run body poem.txt
+    Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
+     Running `target/debug/minigrep body poem.txt`
+I’m nobody! Who are you?
+Are you nobody, too?
+How dreary to be somebody!
+</code></pre>
+<p>そして最後に、詩のどこにも現れない単語を探したときに、何も出力がないことを確かめましょう。 &quot;monomorphization&quot;などね:</p>
+<pre><code>$ cargo run monomorphization poem.txt
+    Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
+     Running `target/debug/minigrep monomorphization poem.txt`
+</code></pre>
+<p>最高です！古典的なツールの独自のミニバージョンを構築し、アプリケーションを構造化する方法を多く学びました。 また、ファイル入出力、ライフタイム、テスト、コマンドライン引数の解析についても、少し学びました。</p>
+<p>このプロジェクトをまとめ上げるために、環境変数を扱う方法と標準エラー出力に出力する方法を少しだけデモします。 これらはどちらも、コマンドラインプログラムを書く際に有用です。</p>
+<blockquote>
+<p>こういった感じのテスト駆動開発を訓練によって磨かれます。</p>
+</blockquote>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="環境変数を取り扱う"><a class="header" href="#環境変数を取り扱う">環境変数を取り扱う</a></h1>
+<p>おまけの機能を追加してminigrepを改善します: 環境変数でユーザがオンにできる大文字小文字無視の検索用のオプションです。 この機能をコマンドラインオプションにして、適用したい度にユーザが入力しなければならないようにすることもできますが、 代わりに環境変数を使用します。そうすることでユーザは1回環境変数をセットすれば、そのターミナルセッションの間は、 大文字小文字無視の検索を行うことができるようになるわけです。</p>
+<blockquote>
+<p>大文字小文字の区別です。（これ結構楽しい）</p>
+</blockquote>
+<h2 id="大文字小文字を区別しないsearch関数用に失敗するテストを書く"><a class="header" href="#大文字小文字を区別しないsearch関数用に失敗するテストを書く">大文字小文字を区別しないsearch関数用に失敗するテストを書く</a></h2>
+<p>環境変数がオンの場合に呼び出すsearch_case_insensitive関数を新しく追加したいです。テスト駆動開発の過程に従い続けるので、 最初の手順は、今回も失敗するテストを書くことです。新しいsearch_case_insensitive関数用の新規テストを追加し、 古いテストをone_resultからcase_sensitiveに名前変更して、二つのテストの差異を明確化します。 リスト12-20に示したようにですね。</p>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">
+#![allow(unused)]
+fn main() {
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn case_sensitive() {
+        let query = &quot;duct&quot;;
+// Rust
+// 安全かつ高速で生産的
+// 三つを選んで
+// ガムテープ
+        let contents = &quot;\
+Rust:
+safe, fast, productive.
+Pick three.
+Duct tape.&quot;;
+
+        assert_eq!(
+            vec![&quot;safe, fast, productive.&quot;],
+            search(query, contents)
+        );
+    }
+
+    #[test]
+    fn case_insensitive() {
+        let query = &quot;rUsT&quot;;
+// (最後の行のみ)
+// 私を信じて
+        let contents = &quot;\
+Rust:
+safe, fast, productive.
+Pick three.
+Trust me.&quot;;
+
+        assert_eq!(
+            vec![&quot;Rust:&quot;, &quot;Trust me.&quot;],
+            search_case_insensitive(query, contents)
+        );
+    }
+}
+}
+</code></pre></pre>
+<p>リスト12-20: 追加しようとしている大文字小文字を区別しない関数用の失敗するテストを新しく追加する</p>
+<p>古いテストのcontentsも変更していることに注意してください。大文字小文字を区別する検索を行う際に、 &quot;duct&quot;というクエリに合致しないはずの大文字Dを使用した&quot;Duct tape&quot;(ガムテープ)という新しい行を追加しました。 このように古いテストを変更することで、既に実装済みの大文字小文字を区別する検索機能を誤って壊してしまわないことを保証する助けになります。 このテストはもう通り、大文字小文字を区別しない検索に取り掛かっても通り続けるはずです。</p>
+<p>大文字小文字を区別しない検索の新しいテストは、クエリに&quot;rUsT&quot;を使用しています。 追加直前のsearch_case_insensitive関数では、&quot;rUsT&quot;というクエリは、 両方ともクエリとは大文字小文字が異なるのに、大文字Rの&quot;Rust:&quot;を含む行と、 “Trust me.”という行にもマッチするはずです。これが失敗するテストであり、まだsearch_case_insensitive関数を定義していないので、 コンパイルは失敗するでしょう。リスト12-16のsearch関数で行ったのと同様に空のベクタを常に返すような仮実装を追加し、テストがコンパイルされるものの、失敗する様をご自由に確認してください。</p>
+<h2 id="search_case_insensitive関数を実装する"><a class="header" href="#search_case_insensitive関数を実装する">search_case_insensitive関数を実装する</a></h2>
+<p>search_case_insensitive関数は、リスト12-21に示しましたが、search関数とほぼ同じです。 唯一の違いは、queryと各lineを小文字化していることなので、入力引数の大文字小文字によらず、 行がクエリを含んでいるか確認する際には、同じになるわけです。</p>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">
+#![allow(unused)]
+fn main() {
+pub fn search_case_insensitive&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+    let query = query.to_lowercase();
+    let mut results = Vec::new();
+
+    for line in contents.lines() {
+        if line.to_lowercase().contains(&amp;query) {
+            results.push(line);
+        }
+    }
+
+    results
+}
+}
+</code></pre></pre>
+<p>リスト12-21: 比較する前にクエリと行を小文字化するよう、search_case_insensitive関数を定義する</p>
+<p>まず、query文字列を小文字化し、同じ名前の覆い隠された変数に保存します。ユーザのクエリが&quot;rust&quot;や&quot;RUST&quot;、 &quot;Rust&quot;、&quot;rUsT&quot;などだったりしても、&quot;rust&quot;であり、大文字小文字を区別しないかのようにクエリを扱えるように、 to_lowercaseをクエリに対して呼び出すことは必須です。</p>
+<p>queryは最早、文字列スライスではなくStringであることに注意してください。というのも、 to_lowercaseを呼び出すと、既存のデータを参照するというよりも、新しいデータを作成するからです。 例として、クエリは&quot;rUsT&quot;だとしましょう: その文字列スライスは、小文字のuやtを使えるように含んでいないので、 &quot;rust&quot;を含む新しいStringのメモリを確保しなければならないのです。今、containsメソッドに引数としてqueryを渡すと、 アンド記号を追加する必要があります。containsのシグニチャは、文字列スライスを取るよう定義されているからです。</p>
+<p>次に、各lineがqueryを含むか確かめる前にto_lowercaseの呼び出しを追加し、全文字を小文字化しています。 今やlineとqueryを小文字に変換したので、クエリが大文字であろうと小文字であろうとマッチを検索するでしょう。</p>
+<p>この実装がテストを通過するか確認しましょう:</p>
+<pre><code>running 2 tests
+test test::case_insensitive ... ok
+test test::case_sensitive ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+</code></pre>
+<p>素晴らしい！どちらも通りました。では、run関数から新しいsearch_case_insensitive関数を呼び出しましょう。 1番目に大文字小文字の区別を切り替えられるよう、Config構造体に設定オプションを追加します。 まだどこでも、このフィールドの初期化をしていないので、追加するとコンパイルエラーが起きます:</p>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">
+#![allow(unused)]
+fn main() {
+pub struct Config {
+    pub query: String,
+    pub filename: String,
+    pub case_sensitive: bool,
+}
+}
+</code></pre></pre>
+<p>論理値を持つcase_sensitiveフィールドを追加したことに注意してください。次に、run関数に、 case_sensitiveフィールドの値を確認し、search関数かsearch_case_insensitive関数を呼ぶかを決定するのに使ってもらう必要があります。 リスト12-22のようにですね。それでも、これはまだコンパイルできないことに注意してください。</p>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span>#![allow(unused)]
+<span class="boring">fn main() {
+</span><span class="boring">use std::error::Error;
+</span><span class="boring">use std::fs;
+</span><span class="boring">use std::env;
+</span><span class="boring">
+</span>pub fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
+    let contents = fs::read_to_string(config.filename)?;
+
+    let results = if config.case_sensitive {
+      search(&amp;config.query, &amp;contents)
+    } else {
+      search_case_insensitive(&amp;config.query, &amp;contents)
+    };
+
+    for line in results {
+        println!(&quot;{}&quot;, line);
+    }
+
+    Ok(())
+}
+<span class="boring">
+</span><span class="boring">pub struct Config {
+</span><span class="boring">   pub query: String,
+</span><span class="boring">   pub filename: String,
+</span><span class="boring">   pub case_sensitive: bool,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Config {
+</span><span class="boring">   pub fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;str&gt; {
+</span><span class="boring">       if args.len() &lt; 3 {
+</span><span class="boring">           return Err(&quot;not enough arguments&quot;);
+</span><span class="boring">       }
+</span><span class="boring">       let query = args[1].clone();
+</span><span class="boring">       let filename = args[2].clone();
+</span><span class="boring">
+</span><span class="boring">       let case_sensitive = env::var(&quot;CASE_INSENSITIVE&quot;).is_err();
+</span><span class="boring">
+</span><span class="boring">       Ok(Config { query, filename, case_sensitive })
+</span><span class="boring">   }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+</span><span class="boring">   let mut results = Vec::new();
+</span><span class="boring">
+</span><span class="boring">   for line in contents.lines() {
+</span><span class="boring">       if line.contains(query) {
+</span><span class="boring">           results.push(line);
+</span><span class="boring">       }
+</span><span class="boring">   }
+</span><span class="boring">
+</span><span class="boring">   results
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">pub fn search_case_insensitive&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+</span><span class="boring">   let query = query.to_lowercase();
+</span><span class="boring">   let mut results = Vec::new();
+</span><span class="boring">
+</span><span class="boring">   for line in contents.lines() {
+</span><span class="boring">     if line.to_lowercase().contains(&amp;query) {
+</span><span class="boring">       results.push(line);
+</span><span class="boring">     }
+</span><span class="boring">   }
+</span><span class="boring">
+</span><span class="boring">   results
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">#[cfg(test)]
+</span><span class="boring">mod tests {
+</span><span class="boring">   use super::*;
+</span><span class="boring">
+</span><span class="boring">   #[test]
+</span><span class="boring">   fn case_sensitive() {
+</span><span class="boring">       let query = &quot;duct&quot;;
+</span><span class="boring">       let contents = &quot;\
+</span><span class="boring">Rust:
+</span><span class="boring">safe, fast, productive.
+</span><span class="boring">Pick three.
+</span><span class="boring">Duct tape&quot;;
+</span><span class="boring">       assert_eq!(vec![&quot;safe, fast, productive.&quot;], search(query, contents));
+</span><span class="boring">   }
+</span><span class="boring">
+</span><span class="boring">   #[test]
+</span><span class="boring">   fn case_insensitive() {
+</span><span class="boring">       let query = &quot;rUsT&quot;;
+</span><span class="boring">       let contents = &quot;\
+</span><span class="boring">Rust:
+</span><span class="boring">safe, fast, productive.
+</span><span class="boring">Pick three.
+</span><span class="boring">Trust me.&quot;;
+</span><span class="boring">       assert_eq!(
+</span><span class="boring">           vec![&quot;Rust:&quot;, &quot;Trust me.&quot;],
+</span><span class="boring">           search_case_insensitive(query, contents)
+</span><span class="boring">       )
+</span><span class="boring">   }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>リスト12-22: config.case_sensitiveの値に基づいてsearchかsearch_case_insensitiveを呼び出す</p>
+<p>最後に、環境変数を確認する必要があります。環境変数を扱う関数は、標準ライブラリのenvモジュールにあるので、 use std::env;行でsrc/lib.rsの冒頭でそのモジュールをスコープに持ってくる必要があります。そして、 envモジュールからvar関数を使用してCASE_INSENSITIVEという環境変数のチェックを行います。 リスト12-23のようにですね。</p>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::env;
+
+impl Config {
+    pub fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;str&gt; {
+        if args.len() &lt; 3 {
+            return Err(&quot;not enough arguments&quot;);
+        }
+        let query = args[1].clone();
+        let filename = args[2].clone();
+
+        let case_sensitive = env::var(&quot;CASE_INSENSITIVE&quot;).is_err();
+
+        Ok(Config { query, filename, case_sensitive })
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>リスト12-23: CASE_INSENSITIVEという環境変数のチェックを行う</p>
+<p>ここで、case_sensitiveという新しい変数を生成しています。その値をセットするために、 env::var関数を呼び出し、CASE_INSENSITIVE環境変数の名前を渡しています。env::var関数は、 環境変数がセットされていたら、環境変数の値を含むOk列挙子の成功値になるResultを返します。 環境変数がセットされていなければ、Err列挙子を返すでしょう。</p>
+<p>Resultのis_errメソッドを使用して、エラーでありゆえに、セットされていないことを確認しています。 これは大文字小文字を区別する検索をすべきことを意味します。CASE_INSENSITIVE環境変数が何かにセットされていれば、 is_errはfalseを返し、プログラムは大文字小文字を区別しない検索を実行するでしょう。環境変数の値はどうでもよく、 セットされているかどうかだけ気にするので、unwrapやexpectあるいは、他のここまで見かけたResultのメソッドではなく、 is_errをチェックしています。</p>
+<p>case_sensitive変数の値をConfigインスタンスに渡しているので、リスト12-22で実装したように、 run関数はその値を読み取り、searchかsearch_case_insensitiveを呼び出すか決定できるのです。</p>
+<p>試行してみましょう！まず、環境変数をセットせずにクエリはtoでプログラムを実行し、 この時は全て小文字で&quot;to&quot;という言葉を含むあらゆる行が合致するはずです。</p>
+<pre><code>$ cargo run to poem.txt
+   Compiling minigrep v0.1.0 (file:///projects/minigrep)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
+     Running `target/debug/minigrep to poem.txt`
+Are you nobody, too?
+How dreary to be somebody!
+</code></pre>
+<p>まだ機能しているようです！では、CASE_INSENSITIVEを1にしつつ、同じクエリのtoでプログラムを実行しましょう。</p>
+<p>PowerShellを使用しているなら、1コマンドではなく、2コマンドで環境変数をセットし、プログラムを実行する必要があるでしょう:</p>
+<pre><code>$ export CASE_INSENSITIVE=true
+$ cargo run to poem.txt
+</code></pre>
+<p>大文字も含む可能性のある&quot;to&quot;を含有する行が得られるはずです:</p>
+<p>解除する場合は</p>
+<pre><code>$ unset CASE_INSENSITIVE
+</code></pre>
+<blockquote>
+<p>ここはいい感じに楽しかった。</p>
+</blockquote>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="標準出力ではなく標準エラーにエラーメッセージを書き込む"><a class="header" href="#標準出力ではなく標準エラーにエラーメッセージを書き込む">標準出力ではなく標準エラーにエラーメッセージを書き込む</a></h1>
+<p>現時点では、すべての出力をprintln!関数を使用して端末に書き込んでいます。多くの端末は、 2種類の出力を提供します: 普通の情報用の標準出力(stdout)とエラーメッセージ用の標準エラー出力(stderr)です。 この差異のおかげで、ユーザは、エラーメッセージを画面に表示しつつ、 プログラムの成功した出力をファイルにリダイレクトすることを選択できます。</p>
+<p>println!関数は、標準出力に出力する能力しかないので、標準エラーに出力するには他のものを使用しなければなりません。</p>
+<h2 id="エラーが書き込まれる場所を確認する"><a class="header" href="#エラーが書き込まれる場所を確認する">エラーが書き込まれる場所を確認する</a></h2>
+<p>まず、minigrepに出力される中身が、代わりに標準エラーに書き込みたいいかなるエラーメッセージも含め、 どのように標準出力に書き込まれているかを観察しましょう。意図的にエラーを起こしつつ、 ファイルに標準出力ストリームをリダイレクトすることでそうします。標準エラーストリームはリダイレクトしないので、 標準エラーに送られる内容は、すべて画面に表示され続けます。</p>
+<p>コマンドラインプログラムは、エラーメッセージを標準エラー出力に送信していると期待されているので、 標準出力ストリームをファイルにリダイレクトしても、画面にエラーメッセージが見られます。 我々のプログラムは、現状、いい振る舞いをしていません: 代わりにファイルにエラーメッセージ出力を保存するところを、 目撃するところです！</p>
+<p>この動作をデモする方法は、&gt;と標準出力ストリームをリダイレクトする先のファイル名、output.txtでプログラムを走らせることによります。 引数は何も渡さず、そうするとエラーが起きるはずです:</p>
+<pre><code>$ cargo run &gt; output.txt
+</code></pre>
+<blockquote>
+<p>記法により、標準出力の中身を画面の代わりにoutput.txtに書き込むようシェルは指示されます。 画面に出力されると期待していたエラーメッセージは見られないので、ファイルに入っているということでしょう。 以下がoutput.txtが含んでいる内容です:</p>
+</blockquote>
+<pre><code>Problem parsing arguments: not enough arguments
+</code></pre>
+<p>そうです。エラーメッセージは標準出力に出力されているのです。このようなエラーメッセージは標準エラーに出力され、 成功した状態のデータのみがファイルに残ると遥かに有用です。それを変更します。</p>
+<h2 id="エラーを標準エラーに出力する"><a class="header" href="#エラーを標準エラーに出力する">エラーを標準エラーに出力する</a></h2>
+<p>リスト12-24のコードを使用して、エラーメッセージの出力の仕方を変更します。この章の前で行ったリファクタリングのため、 エラーメッセージを出力するコードはすべて1関数、mainにあります。標準ライブラリは、 標準エラーストリームに出力するeprintln!マクロを提供しているので、 println!を呼び出してエラーを出力していた2箇所を代わりにeprintln!を使うように変更しましょう。</p>
+<p>ファイル名: src/main.rs</p>
+<pre><pre class="playground"><code class="language-rust">use std::env;
+use std::process;
+
+mod lib;
+use lib::{Config, run};
+
+fn main() {
+    let args: Vec&lt;String&gt; = env::args().collect();
+
+    let config = Config::new(&amp;args).unwrap_or_else(|err| {
+        eprintln!(&quot;Problem parsing arguments: {}&quot;, err);
+        process::exit(1);
+    });
+
+    println!(&quot;Searching for {}&quot;, config.query);
+    println!(&quot;In file {}&quot;, config.filename);
+
+    if let Err(e) = run(config) {
+        eprintln!(&quot;Application error: {}&quot;, e);
+        process::exit(1);
+    }
+}
+</code></pre></pre>
+<p>リスト12-24: eprintln!を使って標準出力ではなく、標準エラーにエラーメッセージを書き込む</p>
+<p>println!をeprintln!に変えてから、再度同じようにプログラムを実行しましょう。 引数なしかつ、標準出力を&gt;でリダイレクトしてね:</p>
+<pre><code>$ cargo run &gt; output.txt
+Problem parsing arguments: not enough arguments
+</code></pre>
+<blockquote>
+<p>eprintlnを使うことによってエラーが発生した場合はコマンド上に成功した時のログは別ファイルに出力します。</p>
+</blockquote>
+<p>これで、エラーは画面に見えつつ、output.txtは何も含まなくなり、これはコマンドラインプログラムに期待する動作です。</p>
+<p>再度、標準出力をファイルにリダイレクトしてエラーは起こさない引数でプログラムを走らせましょう。以下のようにですね:</p>
+<pre><code>$ cargo run to poem.txt &gt; output.txt
+</code></pre>
+<p>ターミナルには出力は見られず、output.txtに結果が含まれます:</p>
+<p>ファイル名: output.txt</p>
+<pre><code>Are you nobody, too?
+How dreary to be somebody!
+</code></pre>
+<p>これは、もう成功した出力には標準出力を、エラー出力には標準エラーを適切に使用していることをデモしています。</p>
+<h1 id="まとめ-2"><a class="header" href="#まとめ-2">まとめ</a></h1>
+<p>この章では、ここまでに学んできた主要な概念の一部を念押しし、Rustで入出力処理を行う方法を講義しました。 コマンドライン引数、ファイル、環境変数、そしてエラー出力にeprintln!マクロを使用することで、 もう、コマンドラインアプリケーションを書く準備ができています。以前の章の概念を使用することで、 コードはうまく体系化され、適切なデータ構造に効率的にデータを保存し、エラーをうまく扱い、 よくテストされるでしょう。</p>
+<p>次は、関数型言語に影響されたRust機能を一部探究します: クロージャとイテレータです。</p>
+<blockquote>
+<p>楽しくなってきた。特に動画を見ながら実施していくと楽しかった（コードがうまくいかなかったりして、混乱したけどこういう動画があると助かる</p>
+</blockquote>
+<p><a href="https://www.youtube.com/watch?v=AABHxixn6Cw&amp;list=PLai5B987bZ9CoVR-QEIN9foz4QCJ0H2Y8&amp;index=16">動画</a></p>
 
                     </main>
 

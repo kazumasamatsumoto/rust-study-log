@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../generic_trait_liftime/june.html"><strong aria-hidden="true">1.</strong> ジェネリック型、トレイト、ライフタイム</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../generic_trait_liftime/generic.html"><strong aria-hidden="true">1.1.</strong> ジェネリックなデータ型</a></li><li class="chapter-item expanded "><a href="../generic_trait_liftime/trait.html"><strong aria-hidden="true">1.2.</strong> トレイト：共通の振る舞いを定義する</a></li><li class="chapter-item expanded "><a href="../generic_trait_liftime/lifetime.html"><strong aria-hidden="true">1.3.</strong> ライフタイムで参照を検証する</a></li></ol></li><li class="chapter-item expanded "><a href="../auto_tests/writing_automated_tests.html"><strong aria-hidden="true">2.</strong> 自動テストを書く</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../auto_tests/how_to_wirite_tests.html"><strong aria-hidden="true">2.1.</strong> テストの記述法</a></li><li class="chapter-item expanded "><a href="../auto_tests/control_how_test_are_executed.html"><strong aria-hidden="true">2.2.</strong> テストの実行のされ方を制御する</a></li><li class="chapter-item expanded "><a href="../auto_tests/systematization_of_testing.html"><strong aria-hidden="true">2.3.</strong> テストの体系化</a></li></ol></li><li class="chapter-item expanded "><a href="../input_output_project/command_line_program.html" class="active"><strong aria-hidden="true">3.</strong> 入出力プロジェクト: コマンドラインプログラムを構築する</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../generic_trait_liftime/june.html"><strong aria-hidden="true">1.</strong> ジェネリック型、トレイト、ライフタイム</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../generic_trait_liftime/generic.html"><strong aria-hidden="true">1.1.</strong> ジェネリックなデータ型</a></li><li class="chapter-item expanded "><a href="../generic_trait_liftime/trait.html"><strong aria-hidden="true">1.2.</strong> トレイト：共通の振る舞いを定義する</a></li><li class="chapter-item expanded "><a href="../generic_trait_liftime/lifetime.html"><strong aria-hidden="true">1.3.</strong> ライフタイムで参照を検証する</a></li></ol></li><li class="chapter-item expanded "><a href="../auto_tests/writing_automated_tests.html"><strong aria-hidden="true">2.</strong> 自動テストを書く</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../auto_tests/how_to_wirite_tests.html"><strong aria-hidden="true">2.1.</strong> テストの記述法</a></li><li class="chapter-item expanded "><a href="../auto_tests/control_how_test_are_executed.html"><strong aria-hidden="true">2.2.</strong> テストの実行のされ方を制御する</a></li><li class="chapter-item expanded "><a href="../auto_tests/systematization_of_testing.html"><strong aria-hidden="true">2.3.</strong> テストの体系化</a></li></ol></li><li class="chapter-item expanded "><a href="../input_output_project/command_line_program.html" class="active"><strong aria-hidden="true">3.</strong> 入出力プロジェクト: コマンドラインプログラムを構築する</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../input_output_project/accepts_command_line_arguments.html"><strong aria-hidden="true">3.1.</strong> コマンドライン引数を受け付ける</a></li><li class="chapter-item expanded "><a href="../input_output_project/read_file.html"><strong aria-hidden="true">3.2.</strong> ファイルを読み込む</a></li><li class="chapter-item expanded "><a href="../input_output_project/refactoring_to_improve_modularity_and_error_handling.html"><strong aria-hidden="true">3.3.</strong> リファクタリングしてモジュール性とエラー処理を向上させる</a></li><li class="chapter-item expanded "><a href="../input_output_project/develop_library_functionality_with_test-driven_development.html"><strong aria-hidden="true">3.4.</strong> テスト駆動開発でライブラリの機能を開発する</a></li><li class="chapter-item expanded "><a href="../input_output_project/handling_environment_variables.html"><strong aria-hidden="true">3.5.</strong> 環境変数を取り扱う</a></li><li class="chapter-item expanded "><a href="../input_output_project/write_error_messages_to_stderr_instead_of_stdout.html"><strong aria-hidden="true">3.6.</strong> 標準出力ではなく標準エラーにエラーメッセージを書き込む</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -171,12 +171,14 @@
 <p>その過程で、多くのコマンドラインツールが使用している端末の機能を使用させる方法を示します。 環境変数の値を読み取ってユーザがこのツールの振る舞いを設定できるようにします。また、 標準出力(stdout)の代わりに、標準エラーに出力(stderr)するので、例えば、 ユーザはエラーメッセージは画面上で確認しつつ、成功した出力はファイルにリダイレクトできます。</p>
 <p>Rustコミュニティのあるメンバであるアンドリュー・ガラント(Andrew Gallant)が既に全機能装備の非常に高速なgrep、 ripgrepと呼ばれるものを作成しました。比較対象として、我々のgrepはとても単純ですが、 この章により、ripgrepのような現実世界のプロジェクトを理解するのに必要な背景知識の一部を身に付けられるでしょう。</p>
 <p>このgrepプロジェクトは、ここまでに学んできた多くの概念を集結させます:</p>
-<p>コードを体系化する(モジュール、第7章で学んだことを使用)
-ベクタと文字列を使用する(コレクション、第8章)
-エラーを処理する(第9章)
-適切な箇所でトレイトとライフタイムを使用する(第10章)
-テストを記述する(第11章)
-さらに、クロージャ、イテレータ、トレイトオブジェクトなど、第13章、17章で詳しく講義するものもちょっとだけ紹介します。</p>
+<ul>
+<li>コードを体系化する(モジュール、第7章で学んだことを使用)</li>
+<li>ベクタと文字列を使用する(コレクション、第8章)</li>
+<li>エラーを処理する(第9章)</li>
+<li>適切な箇所でトレイトとライフタイムを使用する(第10章)</li>
+<li>テストを記述する(第11章)</li>
+</ul>
+<p>さらに、クロージャ、イテレータ、トレイトオブジェクトなど、第13章、17章で詳しく講義するものもちょっとだけ紹介します。</p>
 
                     </main>
 
@@ -188,6 +190,10 @@
                             </a>
                         
 
+                        
+                            <a rel="next" href="../input_output_project/accepts_command_line_arguments.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -202,6 +208,10 @@
                     </a>
                 
 
+                
+                    <a rel="next" href="../input_output_project/accepts_command_line_arguments.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
                 
             </nav>
 

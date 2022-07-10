@@ -1,0 +1,461 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>テスト駆動開発でライブラリの機能を開発する - rust-study-log</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../generic_trait_liftime/june.html"><strong aria-hidden="true">1.</strong> ジェネリック型、トレイト、ライフタイム</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../generic_trait_liftime/generic.html"><strong aria-hidden="true">1.1.</strong> ジェネリックなデータ型</a></li><li class="chapter-item expanded "><a href="../generic_trait_liftime/trait.html"><strong aria-hidden="true">1.2.</strong> トレイト：共通の振る舞いを定義する</a></li><li class="chapter-item expanded "><a href="../generic_trait_liftime/lifetime.html"><strong aria-hidden="true">1.3.</strong> ライフタイムで参照を検証する</a></li></ol></li><li class="chapter-item expanded "><a href="../auto_tests/writing_automated_tests.html"><strong aria-hidden="true">2.</strong> 自動テストを書く</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../auto_tests/how_to_wirite_tests.html"><strong aria-hidden="true">2.1.</strong> テストの記述法</a></li><li class="chapter-item expanded "><a href="../auto_tests/control_how_test_are_executed.html"><strong aria-hidden="true">2.2.</strong> テストの実行のされ方を制御する</a></li><li class="chapter-item expanded "><a href="../auto_tests/systematization_of_testing.html"><strong aria-hidden="true">2.3.</strong> テストの体系化</a></li></ol></li><li class="chapter-item expanded "><a href="../input_output_project/command_line_program.html"><strong aria-hidden="true">3.</strong> 入出力プロジェクト: コマンドラインプログラムを構築する</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../input_output_project/accepts_command_line_arguments.html"><strong aria-hidden="true">3.1.</strong> コマンドライン引数を受け付ける</a></li><li class="chapter-item expanded "><a href="../input_output_project/read_file.html"><strong aria-hidden="true">3.2.</strong> ファイルを読み込む</a></li><li class="chapter-item expanded "><a href="../input_output_project/refactoring_to_improve_modularity_and_error_handling.html"><strong aria-hidden="true">3.3.</strong> リファクタリングしてモジュール性とエラー処理を向上させる</a></li><li class="chapter-item expanded "><a href="../input_output_project/develop_library_functionality_with_test-driven_development.html" class="active"><strong aria-hidden="true">3.4.</strong> テスト駆動開発でライブラリの機能を開発する</a></li><li class="chapter-item expanded "><a href="../input_output_project/handling_environment_variables.html"><strong aria-hidden="true">3.5.</strong> 環境変数を取り扱う</a></li><li class="chapter-item expanded "><a href="../input_output_project/write_error_messages_to_stderr_instead_of_stdout.html"><strong aria-hidden="true">3.6.</strong> 標準出力ではなく標準エラーにエラーメッセージを書き込む</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">rust-study-log</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        
+
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="テスト駆動開発でライブラリの機能を開発する"><a class="header" href="#テスト駆動開発でライブラリの機能を開発する">テスト駆動開発でライブラリの機能を開発する</a></h1>
+<p>今や、ロジックをsrc/lib.rsに抜き出し、引数集めとエラー処理をsrc/main.rsに残したので、 コードの核となる機能のテストを書くのが非常に容易になりました。いろんな引数で関数を直接呼び出し、 コマンドラインからバイナリを呼び出す必要なく戻り値を確認できます。ご自由にConfig::newやrun関数の機能のテストは、 ご自身でお書きください。</p>
+<p>この節では、テスト駆動開発(TDD)過程を活用してminigrepプログラムに検索ロジックを追加します。 このソフトウェア開発テクニックは、以下の手順に従います:</p>
+<ol>
+<li>失敗するテストを書き、走らせて想定通りの理由で失敗することを確かめる。</li>
+<li>十分な量のコードを書くか変更して新しいテストを通過するようにする。</li>
+<li>追加または変更したばかりのコードをリファクタリングし、テストが通り続けることを確認する。</li>
+<li>手順1から繰り返す！</li>
+</ol>
+<p>この過程は、ソフトウェアを書く多くの方法のうちの一つに過ぎませんが、TDDによりコードデザインも駆動することができます。 テストを通過させるコードを書く前にテストを書くことで、過程を通して高いテストカバー率を保つ助けになります。</p>
+<p>実際にクエリ文字列の検索を行う機能の実装をテスト駆動し、クエリに合致する行のリストを生成します。 この機能をsearchという関数に追加しましょう。</p>
+<h2 id="失敗するテストを記述する"><a class="header" href="#失敗するテストを記述する">失敗するテストを記述する</a></h2>
+<p>もう必要ないので、プログラムの振る舞いを確認していたprintln!文をsrc/lib.rsとsrc/main.rsから削除しましょう。 それからsrc/lib.rsで、テスト関数のあるtestモジュールを追加します。第11章のようにですね。 このテスト関数がsearch関数に欲しい振る舞いを指定します: クエリとそれを検索するテキストを受け取り、 クエリを含む行だけをテキストから返します。リスト12-15にこのテストを示していますが、まだコンパイルは通りません。</p>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">#![allow(unused)]
+fn main() {
+fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+     vec![]
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn one_result() {
+        let query = &quot;duct&quot;;
+        // Rustは
+        // 安全で速く生産性も高い。
+        // 3つ選んで。
+        let contents = &quot;\
+Rust:
+safe, fast, productive.
+Pick three.&quot;;
+
+        assert_eq!(
+            vec![&quot;safe, fast, productive.&quot;],
+            search(query, contents)
+        );
+    }
+}
+}
+</code></pre></pre>
+<p>リスト12-15: こうだったらいいなというsearch関数の失敗するテストを作成する</p>
+<p>このテストは、&quot;duct&quot;という文字列を検索します。検索対象の文字列は3行で、うち1行だけが&quot;duct&quot;を含みます。 search関数から返る値が想定している行だけを含むことをアサーションします。</p>
+<p>このテストを走らせ、失敗するところを観察することはできません。このテストはコンパイルもできないからです: まだsearch関数が存在していません！ゆえに今度は、空のベクタを常に返すsearch関数の定義を追加することで、 テストをコンパイルし走らせるだけのコードを追記します。リスト12-16に示したようにですね。そうすれば、 テストはコンパイルでき、失敗するはずです。なぜなら、空のベクタは、 &quot;safe, fast, productive.&quot;という行を含むベクタとは合致しないからです。</p>
+<blockquote>
+<p>こうだったらいいなというsearch関数の失敗するテストを作成する</p>
+<p>マジでこの表現</p>
+</blockquote>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">#![allow(unused)]
+fn main() {
+pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+    vec![]
+}
+}
+</code></pre></pre>
+<p>これライフタイムとかやvecの返り値はしっかり定義する必要があるよ。</p>
+<p>リスト12-16: テストがコンパイルできるのに十分なだけsearch関数を定義する</p>
+<p>明示的なライフタイムの'aがsearchのシグニチャで定義され、contents引数と戻り値で使用されていることに注目してください。 第10章からライフタイム仮引数は、どの実引数のライフタイムが戻り値のライフタイムに関連づけられているかを指定することを思い出してください。 この場合、返却されるベクタは、 (query引数ではなく)contents引数のスライスを参照する文字列スライスを含むべきと示唆しています。</p>
+<p>言い換えると、コンパイラにsearch関数に返されるデータは、 search関数にcontents引数で渡されているデータと同期間生きることを教えています。 これは重要なことです！スライスに参照されるデータは、参照が有効になるために有効である必要があるのです; コンパイラがcontentsではなくqueryの文字列スライスを生成すると想定してしまったら、 安全性チェックを間違って行うことになってしまいます。</p>
+<p>ライフタイム注釈を忘れてこの関数をコンパイルしようとすると、こんなエラーが出ます:</p>
+<pre><code>error[E0106]: missing lifetime specifier
+(エラー: ライフタイム指定子が欠けています)
+ --&gt; src/lib.rs:5:51
+  |
+5 | pub fn search(query: &amp;str, contents: &amp;str) -&gt; Vec&lt;&amp;str&gt; {
+  |                                                   ^ expected lifetime
+parameter
+  |
+  = help: this function's return type contains a borrowed value, but the
+  signature does not say whether it is borrowed from `query` or `contents`
+  (助言: この関数の戻り値は、借用された値を含んでいますが、シグニチャにはそれが、
+  `query`か`contents`から借用されたものであるかが示されていません)
+</code></pre>
+<p>これはqueryもcontentsも同じ型情報やからどっちを返すの？とわからないためにライフタイムの宣言をすることによって返り値の中に含まれるものがなんなのか？明確にできます。</p>
+<p>コンパイラには、二つの引数のどちらが必要なのか知る由がないので、教えてあげる必要があるのです。 contentsがテキストを全て含む引数で、合致するそのテキストの一部を返したいので、 contentsがライフタイム記法で戻り値に関連づくはずの引数であることをプログラマは知っています。</p>
+<p>他のプログラミング言語では、シグニチャで引数と戻り値を関連づける必要はありません。これは奇妙に思えるかもしれませんが、 時間とともに楽になっていきます。この例を第10章、「ライフタイムで参照を有効化する」節と比較したくなるかもしれません。</p>
+<p>さあ、テストを実行しましょう:</p>
+<pre><code>$ cargo test
+   Compiling minigrep v0.1.0 (file:///projects/minigrep)
+--warnings--
+    Finished dev [unoptimized + debuginfo] target(s) in 0.43 secs
+     Running target/debug/deps/minigrep-abcabcabc
+
+running 1 test
+test test::one_result ... FAILED
+
+failures:
+
+---- test::one_result stdout ----
+        thread 'test::one_result' panicked at 'assertion failed: `(left ==
+right)`
+left: `[&quot;safe, fast, productive.&quot;]`,
+right: `[]`)', src/lib.rs:48:8
+note: Run with `RUST_BACKTRACE=1` for a backtrace.
+
+
+failures:
+    test::one_result
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+
+error: test failed, to rerun pass '--lib'
+</code></pre>
+<p>素晴らしい。テストは全く想定通りに失敗しています。テストが通るようにしましょう！</p>
+<h2 id="テストを通過させるコードを書く"><a class="header" href="#テストを通過させるコードを書く">テストを通過させるコードを書く</a></h2>
+<p>空のベクタを常に返しているために、現状テストは失敗しています。それを修正し、searchを実装するには、 プログラムは以下の手順に従う必要があります:</p>
+<ul>
+<li>中身を各行ごとに繰り返す。</li>
+<li>行にクエリ文字列が含まれるか確認する。</li>
+<li>するなら、それを返却する値のリストに追加する。</li>
+<li>しないなら、何もしない。</li>
+<li>一致する結果のリストを返す。</li>
+<li>各行を繰り返す作業から、この手順に順に取り掛かりましょう。</li>
+</ul>
+<h3 id="linesメソッドで各行を繰り返す"><a class="header" href="#linesメソッドで各行を繰り返す">linesメソッドで各行を繰り返す</a></h3>
+<p>Rustには、文字列を行ごとに繰り返す役立つメソッドがあり、利便性のためにlinesと名付けられ、 リスト12-17のように動作します。まだ、これはコンパイルできないことに注意してください。</p>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+    for line in contents.lines() {
+        // 行に対して何かする
+        // do something with line
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>リスト12-17: contentsの各行を繰り返す</p>
+<p>linesメソッドはイテレータを返します。イテレータについて詳しくは、第13章で話しますが、 リスト3-5でこのようなイテレータの使用法は見かけたことを思い出してください。 そこでは、イテレータにforループを使用してコレクションの各要素に対して何らかのコードを走らせていました。</p>
+<h3 id="クエリを求めて各行を検索する"><a class="header" href="#クエリを求めて各行を検索する">クエリを求めて各行を検索する</a></h3>
+<p>次に現在の行がクエリ文字列を含むか確認します。幸運なことに、 文字列にはこれを行ってくれるcontainsという役に立つメソッドがあります！search関数に、 containsメソッドの呼び出しを追加してください。リスト12-18のようにですね。 それでもまだコンパイルできないことに注意してください。</p>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+    for line in contents.lines() {
+        if line.contains(query) {
+            // do something with line
+        }
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>リスト12-18: 行がqueryの文字列を含むか確認する機能を追加する</p>
+<h3 id="合致した行を保存する"><a class="header" href="#合致した行を保存する">合致した行を保存する</a></h3>
+<p>また、クエリ文字列を含む行を保存する方法が必要です。そのために、forループの前に可変なベクタを生成し、 pushメソッドを呼び出してlineをベクタに保存することができます。forループの後でベクタを返却します。 リスト12-19のようにですね。</p>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+    let mut results = Vec::new();
+
+    for line in contents.lines() {
+        if line.contains(query) {
+            results.push(line);
+        }
+    }
+
+    results
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>リスト12-19: 合致する行を保存したので、返すことができる</p>
+<p>これでsearch関数は、queryを含む行だけを返すはずであり、テストも通るはずです。 テストを実行しましょう:</p>
+<pre><code>$ cargo test
+--snip--
+running 1 test
+test test::one_result ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+</code></pre>
+<p>テストが通り、動いていることがわかりました！</p>
+<p>ここで、テストが通過するよう保ったまま、同じ機能を保持しながら、検索関数の実装をリファクタリングする機会を考えることもできます。 検索関数のコードは悪すぎるわけではありませんが、イテレータの有用な機能の一部を活用していません。 この例には第13章で再度触れ、そこでは、イテレータをより深く探究し、さらに改善する方法に目を向けます。</p>
+<h3 id="run関数内でsearch関数を使用する"><a class="header" href="#run関数内でsearch関数を使用する">run関数内でsearch関数を使用する</a></h3>
+<p>search関数が動きテストできたので、run関数からsearchを呼び出す必要があります。config.queryの値と、 ファイルからrunが読み込むcontentsの値をsearch関数に渡す必要があります。 それからrunは、searchから返ってきた各行を出力するでしょう:</p>
+<p>ファイル名: src/lib.rs</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn run(config: Config) -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+    let mut f = File::open(config.filename)?;
+
+    let mut contents = String::new();
+    f.read_to_string(&amp;mut contents)?;
+
+    for line in search(&amp;config.query, &amp;contents) {
+        println!(&quot;{}&quot;, line);
+    }
+
+    Ok(())
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>それでもforループでsearchから各行を返し、出力しています。</p>
+<p>さて、プログラム全体が動くはずです！試してみましょう。まずはエミリー・ディキンソンの詩から、 ちょうど1行だけを返すはずの言葉から。&quot;frog&quot;です:</p>
+<pre><code>$ cargo run frog poem.txt
+   Compiling minigrep v0.1.0 (file:///projects/minigrep)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.38 secs
+     Running `target/debug/minigrep frog poem.txt`
+How public, like a frog
+</code></pre>
+<p>かっこいい！今度は、複数行にマッチするであろう言葉を試しましょう。&quot;body&quot;とかね:</p>
+<pre><code>$ cargo run body poem.txt
+    Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
+     Running `target/debug/minigrep body poem.txt`
+I’m nobody! Who are you?
+Are you nobody, too?
+How dreary to be somebody!
+</code></pre>
+<p>そして最後に、詩のどこにも現れない単語を探したときに、何も出力がないことを確かめましょう。 &quot;monomorphization&quot;などね:</p>
+<pre><code>$ cargo run monomorphization poem.txt
+    Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
+     Running `target/debug/minigrep monomorphization poem.txt`
+</code></pre>
+<p>最高です！古典的なツールの独自のミニバージョンを構築し、アプリケーションを構造化する方法を多く学びました。 また、ファイル入出力、ライフタイム、テスト、コマンドライン引数の解析についても、少し学びました。</p>
+<p>このプロジェクトをまとめ上げるために、環境変数を扱う方法と標準エラー出力に出力する方法を少しだけデモします。 これらはどちらも、コマンドラインプログラムを書く際に有用です。</p>
+<blockquote>
+<p>こういった感じのテスト駆動開発を訓練によって磨かれます。</p>
+</blockquote>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../input_output_project/refactoring_to_improve_modularity_and_error_handling.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../input_output_project/handling_environment_variables.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../input_output_project/refactoring_to_improve_modularity_and_error_handling.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../input_output_project/handling_environment_variables.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
