@@ -9,3 +9,5 @@
   - [テストの記述法](./auto_tests/how_to_wirite_tests.md)
   - [テストの実行のされ方を制御する](./auto_tests/control_how_test_are_executed.md)
   - [テストの体系化](auto_tests/systematization_of_testing.md)
+
+- [入出力プロジェクト: コマンドラインプログラムを構築する](input_output_project/command_line_program.md)
