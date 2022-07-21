@@ -19,3 +19,8 @@
   - [テスト駆動開発でライブラリの機能を開発する](input_output_project/develop_library_functionality_with_test-driven_development.md)
   - [環境変数を取り扱う](input_output_project/handling_environment_variables.md)
   - [標準出力ではなく標準エラーにエラーメッセージを書き込む](input_output_project/write_error_messages_to_stderr_instead_of_stdout.md)
+
+- [関数型言語の機能: イテレータとクロージャ](functional_language_features_iterators_and_closures/functional_language_features_iterators_and_closures.md)
+
+- [ブートキャンプ学習ログ](letsgetrusty/intro.md)
+  - [1日目](letsgetrusty/day_1.md)
