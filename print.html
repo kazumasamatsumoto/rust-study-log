@@ -4114,8 +4114,92 @@ How dreary to be somebody!
 <p>とても高かったです。</p>
 <p>登録が完了したらパスワードの変更を実施しました。</p>
 <p>その次にDiscordのチャンネルへ移動して、自己紹介をしました。</p>
-<p>今日から色々勉強していこうと思います！</p>
-<h2 id=""><a class="header" href="#"></a></h2>
+<p>今日から色々勉強していこうと思います！頑張るぞ！</p>
+<p>大体1日1時間ぐらい勉強する感じで継続していこう。</p>
+<p>##　環境構築</p>
+<p>・rustの環境構築です</p>
+<p><a href="https://rustup.rs/">環境構築のページ</a></p>
+<p>・ターミナルで以下を実行し、画面の指示に従ってください。</p>
+<pre><code class="language-zsh">curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+</code></pre>
+<p>・エディタはVSCodeを使用します。</p>
+<p><a href="https://code.visualstudio.com/">VSCode</a></p>
+<h2 id="vscodeのプラグイン"><a class="header" href="#vscodeのプラグイン">VSCodeのプラグイン</a></h2>
+<h3 id="rust-analyzer"><a class="header" href="#rust-analyzer">Rust Analyzer</a></h3>
+<p><a href="https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer">rust-analyzer</a></p>
+<ul>
+<li>Visual Studio CodeのRust言語サポート</li>
+<li>この拡張モジュールは、プログラミング言語 Rust のサポートを提供します。rust-lang.rustを置き換えるものとして推奨されます。</li>
+</ul>
+<h4 id="機能"><a class="header" href="#機能">機能</a></h4>
+<ul>
+<li>インポートの挿入によるコード補完</li>
+<li>定義、実装、型定義への移動</li>
+<li>全参照の検索、ワークスペースのシンボル検索、シンボル名の変更</li>
+<li>ホバーでの型とドキュメントの表示</li>
+<li>型とパラメータ名のインレイヒント</li>
+<li>セマンティックシンタックスハイライト</li>
+<li>豊富なアシスト機能（コードアクション）</li>
+<li>エラーからの提案の適用</li>
+<li>... その他多数、マニュアルでご確認ください。</li>
+</ul>
+<h4 id="クイックスタート"><a class="header" href="#クイックスタート">クイックスタート</a></h4>
+<ul>
+<li>rustupをインストールします。</li>
+<li>rust-analyzerエクステンションをインストールします。</li>
+<li>コンフィギュレーション</li>
+<li>このエクステンションは、VSCodeのコンフィギュレーション設定を通じて設定を提供します。すべてのコンフィギュレーションはrust-analyzer.*の下にあります。</li>
+</ul>
+<p>VSCode固有のコンフィギュレーションの詳細についてはマニュアルを参照してください。</p>
+<h4 id="コミュニケーション"><a class="header" href="#コミュニケーション">コミュニケーション</a></h4>
+<p>使い方やトラブルシューティングの依頼は、Rustフォーラムの「IDEs and Editors」カテゴリをご利用ください。</p>
+<h4 id="ドキュメンテーション"><a class="header" href="#ドキュメンテーション">ドキュメンテーション</a></h4>
+<p>詳細はrust-analyzer.github.ioを参照してください。</p>
+<h3 id="codelldb"><a class="header" href="#codelldb">CodeLLDB</a></h3>
+<p><a href="https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb">CodeLLDB</a></p>
+<h4 id="概要"><a class="header" href="#概要">概要</a></h4>
+<p>LLDBを搭載したネイティブデバッガ。C++、Rust、その他のコンパイル済み言語をデバッグできます。</p>
+<h4 id="機能紹介"><a class="header" href="#機能紹介">機能紹介</a></h4>
+<p>条件付きブレークポイント、関数ブレークポイント、ログポイント
+ハードウェアデータアクセスブレークポイント(ウォッチポイント)
+統合ターミナルまたは外部ターミナルでのデバッガ起動。
+命令レベルのステップ実行による逆アセンブルビュー。
+ロードされたモジュールの表示。
+Pythonスクリプト。
+高度な視覚化のためのHTMLレンダリング
+起動設定のためのワークスペースレベルのデフォルト。
+リモートデバッグ。
+リバースデバッグ(実験的、互換性のあるバックエンドが必要)
+詳しくはユーザーズマニュアルをご覧ください。</p>
+<h4 id="言語"><a class="header" href="#言語">言語</a></h4>
+<p>CodeLLDB には、ベクトル、文字列、マップ、その他の標準ライブラリ型のビジュアライザーが組み込まれています。
+また、Ada、Fortran、Kotlin Native、Nim、Objective-C、Pascal、Swift、Zigなど、コンパイラが互換性のあるデバッグ情報を生成する他のほとんどのコンパイル済み言語でも使用可能です。</p>
+<h4 id="対応プラットフォーム"><a class="header" href="#対応プラットフォーム">対応プラットフォーム</a></h4>
+<p>ホスト
+glibc 2.18+ が動作する Linux (x86_64、aarch64、armhf 用)。
+MacOS X 10.10+（x86_64）、11.0+（arm64）。
+Windows 10 (x86_64)。
+対象
+CodeLLDBはAArch64, ARM, AVR, MSP430, RISCV, X86アーキテクチャをサポートし、リモートデバッグにより組み込みプラットフォームでのデバッグに使用することができます。</p>
+<h4 id="より詳細な情報"><a class="header" href="#より詳細な情報">より詳細な情報</a></h4>
+<p>CodeLLDB ユーザーズマニュアル - この拡張機能の使用方法です。
+VS Code でのデバッグ - VSCode デバッグを初めて使用する場合。
+LLDB チュートリアル - LLDB の CLI コマンドとスクリプト機能のすべてを CodeLLDB で使用することができます。
+Wikiページ - トラブルシューティングやその他のTipsやTricks。
+ディスカッション - 質問やディスカッションを行うことができます。
+スクリーンショット
+データ可視化によるC++デバッグ (Howto)。
+ソース</p>
+<p>Rustデバッギング。
+ソース</p>
+<h3 id="better-toml"><a class="header" href="#better-toml">Better TOML</a></h3>
+<p><a href="https://marketplace.visualstudio.com/items?itemName=bungcip.better-toml">Better TOML</a></p>
+<p>better-toml README
+Better TOML は、TOML ファイルをサポートするための対コード拡張です。</p>
+<h3 id="vs-codeのオプションプラグインです"><a class="header" href="#vs-codeのオプションプラグインです">VS Codeのオプションプラグインです。</a></h3>
+<p>Error Lens - インラインエラーを取得します。
+crates - Cargo.tomlにある古い依存関係をハイライトします。
+Tabnine AI - AIコードの補完</p>
 
                     </main>
 
