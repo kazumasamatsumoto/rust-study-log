@@ -132,3 +132,74 @@ fn main() {
     println!("{_e}");
 }
 ```
+
+関数
+
+基本的な形はこれ。
+
+```rust
+fn main() {
+    let z = my_function(22);
+    println!("{}", z);
+}
+
+fn my_function(x: i32) -> i32 {
+    println!("my_function called with: {}", x);
+    10
+}
+```
+
+- リターンにはセミコロンをつけない
+- 型情報は正確に
+- 変数に結果を返すことも可能
+
+制御構文
+
+ifやloop、whileやfor in
+
+```rust
+fn main() {
+    // if/else
+    let a = 5;
+
+    if a > 5 {
+        println!("bigger than 5");
+    } else if a > 3 {
+        println!("bigger than 3");
+    } else {
+        println!("smaller or equal to 3");
+    }
+
+    let _b = if a > 5 { 1 } else { -1 };
+
+    // loop
+    // let _x = loop {
+    //     break 5;
+    // };
+
+    // while loop
+    let mut a = 0;
+
+    while a < 5 {
+        println!("a is {a}");
+        a += 1;
+    }
+
+    // for loop
+    let a = [1, 2, 3, 4, 5];
+
+    for element in a {
+        println!("{}", element);
+    }
+}
+```
+
+コメント
+
+```rust
+// １行のコメント
+/*
+* 複数行のコメントアウト
+*
+*/
+```
