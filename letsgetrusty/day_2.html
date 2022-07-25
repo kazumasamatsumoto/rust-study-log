@@ -286,6 +286,71 @@ fn main() {
     println!(&quot;{_e}&quot;);
 }
 </code></pre></pre>
+<p>関数</p>
+<p>基本的な形はこれ。</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let z = my_function(22);
+    println!(&quot;{}&quot;, z);
+}
+
+fn my_function(x: i32) -&gt; i32 {
+    println!(&quot;my_function called with: {}&quot;, x);
+    10
+}
+</code></pre></pre>
+<ul>
+<li>リターンにはセミコロンをつけない</li>
+<li>型情報は正確に</li>
+<li>変数に結果を返すことも可能</li>
+</ul>
+<p>制御構文</p>
+<p>ifやloop、whileやfor in</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    // if/else
+    let a = 5;
+
+    if a &gt; 5 {
+        println!(&quot;bigger than 5&quot;);
+    } else if a &gt; 3 {
+        println!(&quot;bigger than 3&quot;);
+    } else {
+        println!(&quot;smaller or equal to 3&quot;);
+    }
+
+    let _b = if a &gt; 5 { 1 } else { -1 };
+
+    // loop
+    // let _x = loop {
+    //     break 5;
+    // };
+
+    // while loop
+    let mut a = 0;
+
+    while a &lt; 5 {
+        println!(&quot;a is {a}&quot;);
+        a += 1;
+    }
+
+    // for loop
+    let a = [1, 2, 3, 4, 5];
+
+    for element in a {
+        println!(&quot;{}&quot;, element);
+    }
+}
+</code></pre></pre>
+<p>コメント</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// １行のコメント
+/*
+* 複数行のコメントアウト
+*
+*/
+<span class="boring">}
+</span></code></pre></pre>
 
                     </main>
 
