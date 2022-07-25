@@ -25,3 +25,4 @@
 - [ブートキャンプ学習ログ](letsgetrusty/intro.md)
   - [1日目](letsgetrusty/day_1.md)
   - [2日目](letsgetrusty/day_2.md)
+  - [3日目](letsgetrusty/day_3.md)
