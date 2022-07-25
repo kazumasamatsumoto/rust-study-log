@@ -3,10 +3,13 @@
     "aarch",
     "armhf",
     "Howto",
+    "letsgetrusty",
+    "liftime",
     "LLDB",
     "RISCV",
     "rustup",
     "Tabnine",
-    "tlsv"
+    "tlsv",
+    "wirite"
   ]
 }
