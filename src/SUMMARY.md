@@ -26,3 +26,4 @@
   - [1日目](letsgetrusty/day_1.md)
   - [2日目](letsgetrusty/day_2.md)
   - [3日目](letsgetrusty/day_3.md)
+  - [4日目](letsgetrusty/day_3.md)
