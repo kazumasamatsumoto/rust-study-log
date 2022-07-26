@@ -9,6 +9,7 @@
     "RISCV",
     "rustup",
     "Tabnine",
+    "thiserror",
     "tlsv",
     "wirite"
   ]
